@@ -1,3 +1,6 @@
+# Config & Tooling
+opencode.json
+
 # Laravel & Node
 /src/vendor/
 /src/node_modules/

@@ -8,5 +8,6 @@
             <line x1="12" y1="16" x2="12.01" y2="16"/>
         </svg>
     </div>
+    <p class="empty-state-title">Belum ada data</p>
     <p class="empty-state-text">{{ $label }}</p>
 </div>

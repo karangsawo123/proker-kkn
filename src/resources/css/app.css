@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@400;500;600&display=swap');
+
 /* ==========================================================================
    Portal Informasi Desa Bendung — Design System
    Visual Direction: Warm Natural
@@ -29,6 +31,14 @@
     /* Typography */
     --font-heading: "Lora", Georgia, serif;
     --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+
+    /* Homepage redesign tokens */
+    --color-forest: #1e3d2a;
+    --color-accent: #c46a3a;
+    --color-hero-overlay-start: rgba(12, 24, 16, 0.72);
+    --color-hero-overlay-end: rgba(12, 24, 16, 0.12);
+    --font-display: "Playfair Display", "Lora", Georgia, serif;
+    --font-ui: "Source Sans 3", "Inter", system-ui, sans-serif;
 
     /* Spacing — 8px base */
     --space-1: 8px;
@@ -2612,5 +2622,926 @@ ol {
 .map-popup-card {
     min-width: 180px;
     padding: 4px;
+}
+
+/* ==========================================================================
+   28. Homepage Redesign — Public Scoped
+   All selectors prefixed with .public-layout to avoid collision with admin
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   28.1 Base overrides — fonts for public pages
+   -------------------------------------------------------------------------- */
+
+.public-layout {
+    font-family: var(--font-ui);
+}
+
+.public-layout h1,
+.public-layout h2,
+.public-layout h3,
+.public-layout h4 {
+    font-family: var(--font-display);
+}
+
+/* --------------------------------------------------------------------------
+   28.2 Header — compact, editorial, no heavy shadow
+   -------------------------------------------------------------------------- */
+
+.public-layout .public-header {
+    background: var(--color-cream);
+    border-bottom: 1px solid rgba(43, 47, 35, 0.10);
+    box-shadow: none;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.public-layout .public-header-inner {
+    padding-block: 10px;
+    gap: var(--space-2);
+}
+
+.public-layout .public-brand-name {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+}
+
+.public-layout .public-brand-sub {
+    font-family: var(--font-ui);
+    font-size: 0.6875rem;
+    color: var(--color-sage);
+    font-weight: 400;
+    letter-spacing: 0.02em;
+}
+
+/* Active nav underline — terracotta accent */
+.public-layout .public-nav-link {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-dark-olive);
+    padding: 8px 10px;
+    border-radius: 0;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.public-layout .public-nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 4px;
+    left: 10px;
+    right: 10px;
+    height: 2px;
+    background: var(--color-accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.2s ease;
+    border-radius: 1px;
+}
+
+.public-layout .public-nav-link:hover {
+    background: transparent;
+    color: var(--color-moss);
+}
+
+.public-layout .public-nav-link:hover::after {
+    transform: scaleX(1);
+}
+
+.public-layout .public-nav-link.active {
+    color: var(--color-moss);
+    font-weight: 600;
+}
+
+.public-layout .public-nav-link.active::after {
+    transform: scaleX(1);
+}
+
+/* Header CTA button */
+.public-layout .header-cta {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: var(--color-forest);
+    color: var(--color-cream);
+    border: none;
+    border-radius: var(--radius-1);
+    font-family: var(--font-ui);
+    font-size: 0.8375rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.public-layout .header-cta:hover {
+    background: var(--color-primary-hover);
+    color: var(--color-cream);
+}
+
+.public-layout .header-cta svg {
+    display: inline-block;
+    flex-shrink: 0;
+}
+
+@media (min-width: 60rem) {
+    .public-layout .header-cta {
+        display: inline-flex;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   28.3 Hero — full-width cinematic with photo background
+   -------------------------------------------------------------------------- */
+
+.public-layout .hero {
+    background: var(--color-forest);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    min-height: 480px;
+    display: flex;
+    align-items: flex-end;
+    padding-block: 0;
+}
+
+@media (min-width: 60rem) {
+    .public-layout .hero {
+        min-height: 580px;
+    }
+}
+
+.public-layout .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to right,
+        rgba(12, 24, 16, 0.78) 0%,
+        rgba(12, 24, 16, 0.48) 55%,
+        rgba(12, 24, 16, 0.10) 100%
+    );
+    /* Additional bottom gradient for legibility on all photos */
+    background: linear-gradient(
+        to top,
+        rgba(12, 24, 16, 0.72) 0%,
+        rgba(12, 24, 16, 0.40) 40%,
+        rgba(12, 24, 16, 0.10) 100%
+    ),
+    linear-gradient(
+        to right,
+        rgba(12, 24, 16, 0.68) 0%,
+        rgba(12, 24, 16, 0.28) 50%,
+        rgba(12, 24, 16, 0.0) 100%
+    );
+    pointer-events: none;
+}
+
+.public-layout .hero-body {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding: var(--space-5) var(--space-2) var(--space-4);
+}
+
+@media (min-width: 48rem) {
+    .public-layout .hero-body {
+        padding: var(--space-5) var(--space-3) var(--space-5);
+    }
+}
+
+.public-layout .hero-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: rgba(241, 231, 211, 0.75);
+    margin-bottom: 12px;
+}
+
+.public-layout .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    font-weight: 700;
+    line-height: 1.12;
+    color: var(--color-cream);
+    margin-bottom: 12px;
+    text-wrap: balance;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+}
+
+.public-layout .hero-accent-line {
+    width: 48px;
+    height: 3px;
+    background: var(--color-accent);
+    border-radius: 2px;
+    margin-bottom: var(--space-2);
+}
+
+.public-layout .hero-desc {
+    font-family: var(--font-ui);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    color: rgba(250, 247, 242, 0.88);
+    max-width: 42ch;
+    margin-bottom: 0;
+}
+
+/* Hero fallback: no banner image */
+.public-layout .hero-fallback {
+    background: var(--color-forest);
+    background-image:
+        repeating-linear-gradient(
+            45deg,
+            rgba(255,255,255,0.025) 0px,
+            rgba(255,255,255,0.025) 1px,
+            transparent 1px,
+            transparent 40px
+        ),
+        repeating-linear-gradient(
+            -45deg,
+            rgba(255,255,255,0.015) 0px,
+            rgba(255,255,255,0.015) 1px,
+            transparent 1px,
+            transparent 40px
+        );
+}
+
+/* --------------------------------------------------------------------------
+   28.4 Section Styles — public sections
+   -------------------------------------------------------------------------- */
+
+.public-layout .section-public {
+    padding-block: var(--space-5);
+}
+
+.public-layout .section-alt {
+    background: var(--color-surface-alt);
+    padding-block: var(--space-5);
+}
+
+.public-layout .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 2.5vw, 1.875rem);
+    color: var(--color-dark-olive);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 0;
+}
+
+.public-layout .section-heading {
+    align-items: center;
+    display: flex;
+    gap: var(--space-2);
+    justify-content: space-between;
+    margin-bottom: var(--space-3);
+}
+
+.public-layout .section-heading .btn-link {
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   28.5 Dusun Grid — compact
+   -------------------------------------------------------------------------- */
+
+.public-layout .dusun-compact-grid {
+    display: grid;
+    gap: 10px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+@media (min-width: 40rem) {
+    .public-layout .dusun-compact-grid {
+        grid-template-columns: repeat(6, 1fr);
+        gap: var(--space-2);
+    }
+}
+
+.public-layout .dusun-ccard {
+    align-items: center;
+    background: var(--color-cream);
+    border: 1px solid rgba(43, 47, 35, 0.10);
+    border-radius: var(--radius-2);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 14px 8px;
+    text-align: center;
+    text-decoration: none;
+    transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+    position: relative;
+}
+
+.public-layout .dusun-ccard:hover {
+    border-color: var(--color-sage);
+    background: var(--color-warm-beige);
+    color: var(--color-moss);
+    transform: translateY(-2px);
+}
+
+.public-layout .dusun-ccard-icon {
+    color: var(--color-moss);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+}
+
+.public-layout .dusun-ccard-name {
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-dark-olive);
+    line-height: 1.3;
+}
+
+.public-layout .dusun-ccard-arrow {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    color: var(--color-sage);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.public-layout .dusun-ccard:hover .dusun-ccard-arrow {
+    opacity: 1;
+}
+
+/* --------------------------------------------------------------------------
+   28.6 Informasi Desa — Summary Card Panels
+   -------------------------------------------------------------------------- */
+
+.public-layout .info-summary-grid {
+    display: grid;
+    gap: var(--space-2);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 48rem) {
+    .public-layout .info-summary-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.public-layout .info-panel-card {
+    background: var(--color-cream);
+    border: 1px solid rgba(43, 47, 35, 0.10);
+    border-radius: var(--radius-2);
+    padding: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.public-layout .info-panel-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+}
+
+.public-layout .info-panel-icon {
+    color: var(--color-moss);
+    background: rgba(46, 94, 62, 0.08);
+    border-radius: var(--radius-1);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.public-layout .info-panel-label {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-sage);
+    margin-bottom: 2px;
+}
+
+.public-layout .info-panel-title {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--color-dark-olive);
+    margin: 0;
+    line-height: 1.3;
+}
+
+.public-layout .info-panel-body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.public-layout .info-panel-row {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.public-layout .info-panel-key {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--color-sage);
+    font-weight: 500;
+}
+
+.public-layout .info-panel-val {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    color: var(--color-dark-olive);
+    line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   28.7 Pengumuman Card Grid
+   -------------------------------------------------------------------------- */
+
+.public-layout .pengumuman-grid {
+    display: grid;
+    gap: var(--space-2);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 48rem) {
+    .public-layout .pengumuman-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.public-layout .pengumuman-card {
+    background: var(--color-cream);
+    border: 1px solid rgba(43, 47, 35, 0.09);
+    border-radius: var(--radius-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.public-layout .pengumuman-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(43, 47, 35, 0.2);
+}
+
+.public-layout .pengumuman-card-visual {
+    aspect-ratio: 16/9;
+    position: relative;
+    background: var(--color-forest);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+
+.public-layout .pengumuman-card-visual img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.public-layout .pengumuman-card-visual-icon {
+    color: rgba(250, 247, 242, 0.35);
+}
+
+.public-layout .pengumuman-card-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    font-family: var(--font-ui);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 3px;
+    background: var(--color-accent);
+    color: #fff;
+}
+
+.public-layout .pengumuman-card-body {
+    padding: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.public-layout .pengumuman-card-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-dark-olive);
+    margin: 0;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.public-layout .pengumuman-card-meta {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--color-sage);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.public-layout .pengumuman-card-link {
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-moss);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin-top: auto;
+    padding-top: 6px;
+    border-top: 1px solid rgba(43, 47, 35, 0.07);
+    transition: color 0.15s;
+}
+
+.public-layout .pengumuman-card-link:hover {
+    color: var(--color-primary-hover);
+}
+
+/* Mobile compact variant — pengumuman as row */
+@media (max-width: 47.9375rem) {
+    .public-layout .pengumuman-card {
+        flex-direction: row;
+        border-radius: var(--radius-1);
+    }
+
+    .public-layout .pengumuman-card-visual {
+        width: 90px;
+        aspect-ratio: auto;
+        flex-shrink: 0;
+        border-radius: 0;
+    }
+
+    .public-layout .pengumuman-card-body {
+        padding: 12px;
+        gap: 6px;
+    }
+
+    .public-layout .pengumuman-card-title {
+        font-size: 0.9rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   28.8 Agenda Card Grid
+   -------------------------------------------------------------------------- */
+
+.public-layout .agenda-grid {
+    display: grid;
+    gap: var(--space-2);
+    grid-template-columns: 1fr;
+}
+
+@media (min-width: 48rem) {
+    .public-layout .agenda-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.public-layout .agenda-card {
+    background: var(--color-cream);
+    border: 1px solid rgba(43, 47, 35, 0.09);
+    border-radius: var(--radius-2);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.public-layout .agenda-card:hover {
+    transform: translateY(-2px);
+    border-color: rgba(43, 47, 35, 0.2);
+}
+
+.public-layout .agenda-card-visual {
+    aspect-ratio: 16/9;
+    background: #2a4535;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+.public-layout .agenda-card-visual-icon {
+    color: rgba(250, 247, 242, 0.30);
+}
+
+.public-layout .agenda-card-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+}
+
+/* Override badge colors for agenda visual context */
+.public-layout .agenda-card-badge .badge-akan-datang {
+    background: rgba(46, 94, 62, 0.90);
+    color: #fff;
+}
+
+.public-layout .agenda-card-badge .badge-berlangsung {
+    background: var(--color-accent);
+    color: #fff;
+}
+
+.public-layout .agenda-card-badge .badge-selesai {
+    background: rgba(43, 47, 35, 0.55);
+    color: rgba(250,247,242,0.85);
+}
+
+.public-layout .agenda-card-body {
+    padding: var(--space-2);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+}
+
+.public-layout .agenda-card-title {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-dark-olive);
+    margin: 0;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.public-layout .agenda-card-meta {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--color-sage);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid rgba(43, 47, 35, 0.07);
+}
+
+.public-layout .agenda-card-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.public-layout .agenda-card-detail {
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-moss);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.15s;
+    align-self: flex-start;
+}
+
+.public-layout .agenda-card-detail:hover {
+    color: var(--color-primary-hover);
+}
+
+/* Mobile compact variant — agenda as row */
+@media (max-width: 47.9375rem) {
+    .public-layout .agenda-card {
+        flex-direction: row;
+        border-radius: var(--radius-1);
+    }
+
+    .public-layout .agenda-card-visual {
+        width: 90px;
+        aspect-ratio: auto;
+        flex-shrink: 0;
+        border-radius: 0;
+    }
+
+    .public-layout .agenda-card-body {
+        padding: 12px;
+        gap: 6px;
+    }
+
+    .public-layout .agenda-card-title {
+        font-size: 0.9rem;
+    }
+}
+
+/* --------------------------------------------------------------------------
+   28.9 Peta + Kontak side-by-side grid
+   -------------------------------------------------------------------------- */
+
+.public-layout .peta-kontak-section {
+    padding-block: var(--space-5);
+    background: var(--color-cream);
+}
+
+.public-layout .peta-kontak-wrapper {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    align-items: start;
+}
+
+@media (min-width: 60rem) {
+    .public-layout .peta-kontak-wrapper {
+        grid-template-columns: 1fr 320px;
+        gap: var(--space-3);
+    }
+}
+
+.public-layout .peta-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.public-layout .peta-col .map-wrap {
+    height: 360px;
+}
+
+@media (min-width: 60rem) {
+    .public-layout .peta-col .map-wrap {
+        height: 400px;
+    }
+}
+
+.public-layout .kontak-col {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.public-layout .kontak-col-heading {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
+    color: var(--color-dark-olive);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.public-layout .kontak-ccard {
+    background: var(--color-cream);
+    border: 1px solid rgba(43, 47, 35, 0.10);
+    border-radius: var(--radius-1);
+    padding: 14px var(--space-2);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.public-layout .kontak-ccard-icon {
+    color: var(--color-moss);
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    background: rgba(46, 94, 62, 0.08);
+    border-radius: var(--radius-1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+}
+
+.public-layout .kontak-ccard-label {
+    font-family: var(--font-ui);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-sage);
+    margin-bottom: 3px;
+}
+
+.public-layout .kontak-ccard-value {
+    font-family: var(--font-ui);
+    font-size: 0.9375rem;
+    color: var(--color-dark-olive);
+    line-height: 1.4;
+    margin: 0;
+}
+
+.public-layout .kontak-wa-wrap {
+    margin-top: var(--space-1);
+}
+
+/* --------------------------------------------------------------------------
+   28.10 Footer — dark forest green
+   -------------------------------------------------------------------------- */
+
+.public-layout .public-footer {
+    background: var(--color-forest);
+    color: var(--color-cream);
+    padding-block: var(--space-4);
+    margin-top: auto;
+}
+
+.public-layout .public-footer-inner {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+@media (min-width: 48rem) {
+    .public-layout .public-footer-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        gap: var(--space-5);
+    }
+}
+
+.public-layout .footer-brand-name {
+    font-family: var(--font-display);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    color: var(--color-cream);
+    margin-block: 0;
+    letter-spacing: -0.01em;
+}
+
+.public-layout .footer-brand-tagline {
+    font-family: var(--font-ui);
+    font-size: 0.8125rem;
+    color: rgba(163, 196, 171, 0.85);
+    margin-top: 3px;
+}
+
+.public-layout .footer-address {
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: rgba(163, 196, 171, 0.75);
+    line-height: 1.5;
+    margin-top: 6px;
+}
+
+.public-layout .footer-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.public-layout .footer-nav-link {
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    color: rgba(241, 231, 211, 0.8);
+    text-decoration: none;
+    transition: color 0.15s;
+}
+
+.public-layout .footer-nav-link:hover {
+    color: var(--color-cream);
+}
+
+.public-layout .footer-bottom {
+    border-top: 1px solid rgba(250, 247, 242, 0.12);
+    color: rgba(163, 196, 171, 0.65);
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    margin-top: var(--space-3);
+    padding-top: var(--space-2);
+    text-align: center;
 }
 

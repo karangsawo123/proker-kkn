@@ -9,6 +9,11 @@
 
     @stack('meta')
 
+    {{-- Google Fonts: Playfair Display (heading) + Source Sans 3 (body/UI) --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@400;500;600&display=swap">
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
@@ -60,6 +65,12 @@
                     </ul>
                 </nav>
 
+                {{-- Header CTA (desktop only) --}}
+                <a href="{{ route('home') }}#kontak-desa" class="header-cta" aria-label="Hubungi Pelayanan Desa">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 13.5a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.77 3h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 10.09a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    Hubungi Pelayanan
+                </a>
+
                 {{-- Mobile menu button --}}
                 <button
                     id="mobile-menu-toggle"
@@ -110,10 +121,10 @@
                     <h2 class="footer-brand-name">{{ $desa?->nama_desa ?? 'Desa Bendung' }}</h2>
                     <p class="footer-brand-tagline">Informasi publik Desa dan Dusun</p>
                     @if($desa?->alamat_kantor)
-                        <p style="color:var(--color-warm-beige);font-size:0.8125rem;margin-top:var(--space-1);">{{ $desa->alamat_kantor }}</p>
+                        <p class="footer-address">{{ $desa->alamat_kantor }}</p>
                     @endif
                     @if($desa?->nomor_kontak)
-                        <p style="color:var(--color-warm-beige);font-size:0.8125rem;">{{ $desa->nomor_kontak }}</p>
+                        <p class="footer-address">{{ $desa->nomor_kontak }}</p>
                     @endif
                 </div>
 

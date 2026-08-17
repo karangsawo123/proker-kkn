@@ -519,6 +519,7 @@ Context-dependent.
 Catatan: Sticky/floating hanya presentation dari action yang memang sudah ada.
 
 **Jawaban:**
+A. Tetap di dalam flow konten dan header kartu kontak — Tombol aksi WhatsApp dan Petunjuk Arah diletakkan jelas dan mudah diakses di dalam alur konten utama tanpa sticky bottom bar yang menutupi konten di layar mobile.
 
 ---
 

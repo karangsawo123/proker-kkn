@@ -6,160 +6,180 @@
 @endpush
 
 @section('content')
+<div class="page-dusun">
 
 {{-- ============================================================
-     UX-SCR-002 | SECTION 1: Banner + Nama Dusun
+     UX-SCR-002 | HERO / IDENTITAS DUSUN (Compact Gazette Masthead)
      ============================================================ --}}
-<div
-    class="dusun-hero{{ !$dusun->banner_path ? ' hero-fallback' : '' }}"
-    id="header-dusun"
-    aria-labelledby="dusun-page-title"
-    @if($dusun->banner_path)
-        style="background-image: url('{{ asset('storage/' . $dusun->banner_path) }}');"
-    @endif
->
-    <div class="hero-overlay" aria-hidden="true"></div>
-    <div class="dusun-hero-body">
-        <div class="container">
-            <div class="dusun-hero-lockup" data-reveal>
-                <p class="hero-eyebrow">
-                    <span class="hero-eyebrow-rule" aria-hidden="true"></span>
-                    Portal Informasi Dusun
-                </p>
-                <h1 class="hero-title" id="dusun-page-title">{{ $dusun->nama_dusun }}</h1>
-                @if($dusun->deskripsi_singkat)
-                    <p class="hero-desc">{{ Str::limit($dusun->deskripsi_singkat, 180) }}</p>
-                @endif
-            </div>
+<header class="dusun-hero" id="header-dusun" aria-labelledby="dusun-page-title">
+    <div class="container">
+        <div class="dusun-hero-lockup" data-reveal>
+            <a href="{{ route('home') }}#dusun" class="dusun-hero-back">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Semua Dusun</span>
+            </a>
+            <p class="dusun-hero-eyebrow">
+                <span class="dusun-hero-eyebrow-rule" aria-hidden="true"></span>
+                <span>Portal Informasi Dusun</span>
+            </p>
+            <h1 class="dusun-hero-title" id="dusun-page-title">{{ $dusun->nama_dusun }}</h1>
+            @if($dusun->deskripsi_singkat)
+                <p class="dusun-hero-desc">{{ Str::limit($dusun->deskripsi_singkat, 180) }}</p>
+            @endif
         </div>
     </div>
-</div>
+</header>
 
 {{-- ============================================================
-     UX-SCR-002 | SECTION 2: Navigasi Cepat
+     UX-SCR-002 | QUICK NAVIGATION (Non-sticky Gazette Index)
      ============================================================ --}}
 <nav class="quick-nav" aria-label="Navigasi cepat halaman {{ $dusun->nama_dusun }}">
     <div class="container">
         <ul class="quick-nav-list" role="list">
-            <li><a href="#profil-dusun"      class="quick-nav-link">Profil Dusun</a></li>
-            <li><a href="#kepala-dusun"       class="quick-nav-link">Kepala Dusun</a></li>
-            <li><a href="#kontak-pelayanan"   class="quick-nav-link">Kontak Pelayanan</a></li>
-            <li><a href="#umkm"              class="quick-nav-link">UMKM</a></li>
-            <li><a href="#fasilitas"         class="quick-nav-link">Fasilitas</a></li>
-            <li><a href="#agenda"            class="quick-nav-link">Agenda &amp; Kegiatan</a></li>
-            <li><a href="#pengumuman"        class="quick-nav-link">Pengumuman</a></li>
-            <li><a href="#peta-dusun"        class="quick-nav-link">Peta Dusun</a></li>
+            <li><a href="#profil-dusun"      class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">01</span>Profil Dusun</a></li>
+            <li><a href="#peta-dusun"        class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">02</span>Peta Dusun</a></li>
+            <li><a href="#kontak-pelayanan"  class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">03</span>Kontak Pelayanan</a></li>
+            <li><a href="#umkm"              class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">04</span>UMKM</a></li>
+            <li><a href="#fasilitas"         class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">05</span>Fasilitas</a></li>
+            <li><a href="#agenda"            class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">06</span>Agenda &amp; Kegiatan</a></li>
+            <li><a href="#pengumuman"        class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">07</span>Pengumuman</a></li>
         </ul>
     </div>
 </nav>
 
 {{-- ============================================================
-     UX-SCR-002 | SECTION 3: Profil Dusun
+     UX-SCR-002 | TENTANG DUSUN (Profil + Fakta + Kepala Dusun)
      ============================================================ --}}
-<section class="section-public" id="profil-dusun" aria-labelledby="profil-heading">
+<section class="section-tentang" id="profil-dusun" aria-labelledby="profil-heading">
     <div class="container">
-        <div class="dusun-profile-spread">
+        <div class="tentang-spread">
 
-            {{-- Kolom Kiri: Narasi --}}
-            <div class="dusun-profile-prose" data-reveal>
+            {{-- Kolom Kiri: Narasi + Fakta + Kepala Dusun --}}
+            <div class="tentang-main" data-reveal>
                 <div class="section-badge" aria-hidden="true">Tentang Dusun</div>
                 <h2 class="section-title" id="profil-heading">Profil Dusun</h2>
 
                 @if($dusun->deskripsi_singkat)
-                    <p class="dusun-profile-body">{{ $dusun->deskripsi_singkat }}</p>
+                    <div class="tentang-narasi">
+                        <p>{{ $dusun->deskripsi_singkat }}</p>
+                    </div>
                 @else
                     <x-partials.empty-state label="Profil Dusun belum tersedia." />
                 @endif
 
                 {{-- Fakta ringkas dusun --}}
-                <dl class="dusun-facts">
-                    <div class="dusun-fact">
-                        <dt>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg>
-                            <span>Wilayah</span>
-                        </dt>
-                        <dd>{{ $dusun->nama_dusun }}</dd>
+                <dl class="tentang-facts">
+                    <div class="tentang-fact">
+                        <dt>Rukun Tetangga</dt>
+                        <dd>{{ $dusun->jumlah_rt }} RT</dd>
                     </div>
-                    <div class="dusun-fact">
-                        <dt>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                            <span>Perangkat Desa</span>
-                        </dt>
-                        <dd>{{ $kontaks->count() }} Kontak Pelayanan</dd>
+                    <div class="tentang-fact">
+                        <dt>Rukun Warga</dt>
+                        <dd>{{ $dusun->jumlah_rw }} RW</dd>
                     </div>
-                    <div class="dusun-fact">
-                        <dt>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                            <span>Fasilitas Umum</span>
-                        </dt>
-                        <dd>{{ $fasilitas->count() }} Fasilitas</dd>
+                    <div class="tentang-fact">
+                        <dt>Fasilitas Umum</dt>
+                        <dd>{{ $fasilitas->count() }} Titik</dd>
                     </div>
-                    <div class="dusun-fact">
-                        <dt>
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-                            <span>UMKM</span>
-                        </dt>
-                        <dd>{{ $umkms->count() }} Usaha Terdaftar</dd>
+                    <div class="tentang-fact">
+                        <dt>UMKM</dt>
+                        <dd>{{ $umkms->count() }} Usaha</dd>
                     </div>
                 </dl>
+
+                {{-- Kepala Dusun sebagai sign-off dokumen --}}
+                <div class="tentang-kades" id="kepala-dusun">
+                    <span class="tentang-kades-label">Kepala Dusun</span>
+                    <strong class="tentang-kades-name">{{ $dusun->nama_kepala_dusun }}</strong>
+                </div>
             </div>
 
-            {{-- Kolom Kanan: Foto Dusun --}}
-            <div class="dusun-profile-media" data-reveal>
+            {{-- Kolom Kanan: Foto Dusun (framed plate) --}}
+            <figure class="tentang-media" data-reveal>
                 <x-partials.media-placeholder
                     :src="$dusun->banner_path"
                     :alt="'Foto ' . $dusun->nama_dusun"
-                    class="dusun-profile-img"
+                    class="tentang-img"
                 />
-            </div>
+                <figcaption class="tentang-media-caption">
+                    <span class="tentang-media-caption-rule" aria-hidden="true"></span>
+                    Dokumentasi wilayah {{ $dusun->nama_dusun }}
+                </figcaption>
+            </figure>
 
         </div>
     </div>
 </section>
 
 {{-- ============================================================
-     UX-SCR-002 | SECTION 4: Kepala Dusun
+     UX-SCR-009 | PETA DUSUN (Atlas Frame — orientasi wilayah)
      ============================================================ --}}
-<section class="section-alt" id="kepala-dusun" aria-labelledby="kepala-heading">
+<section class="section-peta" id="peta-dusun" aria-labelledby="peta-dusun-heading">
     <div class="container">
-        <div class="section-badge" aria-hidden="true">Pimpinan Wilayah</div>
-        <h2 class="section-title" id="kepala-heading">Kepala Dusun</h2>
+        <div class="peta-head" data-reveal>
+            <div class="section-badge" aria-hidden="true">Peta Interaktif</div>
+            <h2 class="section-title" id="peta-dusun-heading">Peta Dusun</h2>
+            <p class="section-desc">Sebaran lokasi fasilitas, UMKM, dan titik pelayanan di wilayah {{ $dusun->nama_dusun }}.</p>
+        </div>
 
-        <div class="leader-card" data-reveal>
-            <div class="leader-avatar" aria-hidden="true">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <div class="atlas" data-reveal>
+            {{-- Category filter (no dusun selector — dusun is implicit) --}}
+            <div class="map-toolbar">
+                <div class="map-filter-group">
+                    <label for="map-dusun-filter-cat" class="map-filter-label">
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18"/></svg>
+                        <span>Filter Kategori</span>
+                    </label>
+                    <select id="map-dusun-filter-cat" class="map-filter-select" aria-label="Filter berdasarkan kategori">
+                        <option value="semua">Semua Kategori</option>
+                        @foreach($categoryOptions as $cat)
+                            <option value="{{ e($cat) }}">{{ $cat }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
-            <div class="leader-body">
-                <span class="leader-role">Kepala Dusun</span>
-                <strong class="leader-name">{{ $dusun->nama_kepala_dusun }}</strong>
-                <p class="leader-desc">Bertanggung jawab atas penyelenggaraan pemerintahan dan pemberdayaan masyarakat di wilayah {{ $dusun->nama_dusun }}.</p>
+
+            <div class="map-frame">
+                <div
+                    id="map-dusun"
+                    data-map
+                    style="height:100%;width:100%;"
+                    aria-label="Peta {{ $dusun->nama_dusun }}"
+                    role="img"
+                ></div>
             </div>
-            <div class="leader-badge-wrap" aria-hidden="true">
-                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+
+            <div class="atlas-caption">
+                <span class="atlas-caption-text">Peta Dusun &mdash; {{ $dusun->nama_dusun }}</span>
+                <span class="atlas-legend" aria-hidden="true">
+                    <span class="atlas-legend-item"><span class="atlas-dot atlas-dot-umkm"></span>UMKM</span>
+                    <span class="atlas-legend-item"><span class="atlas-dot atlas-dot-pelayanan"></span>Pelayanan</span>
+                    <span class="atlas-legend-item"><span class="atlas-dot atlas-dot-fasilitas"></span>Fasilitas</span>
+                </span>
             </div>
         </div>
     </div>
 </section>
 
 {{-- ============================================================
-     UX-SCR-002 | SECTION 5: Kontak Pelayanan
+     UX-SCR-002 | KONTAK PELAYANAN (Forest Band — swipeable people)
      ============================================================ --}}
-<section class="section-public" id="kontak-pelayanan" aria-labelledby="kontak-pel-heading">
+<section class="section-kontak" id="kontak-pelayanan" aria-labelledby="kontak-pel-heading">
     <div class="container">
-        <div class="section-headbar">
+        <div class="section-headbar" data-reveal>
             <div>
-                <div class="section-badge" aria-hidden="true">Perangkat Dusun</div>
-                <h2 class="section-title" id="kontak-pel-heading">Kontak Pelayanan</h2>
+                <div class="section-badge section-badge-dark" aria-hidden="true">Perangkat Dusun</div>
+                <h2 class="section-title kontak-title" id="kontak-pel-heading">Kontak Pelayanan</h2>
             </div>
             @if($kontaks->isNotEmpty())
-                <p class="section-note">{{ $kontaks->count() }} petugas pelayanan tersedia untuk membantu warga.</p>
+                <p class="kontak-note">{{ $kontaks->count() }} petugas pelayanan tersedia untuk membantu warga.</p>
             @endif
         </div>
 
         @if($kontaks->isEmpty())
             <x-partials.empty-state label="Belum ada kontak pelayanan yang terdaftar." />
         @else
-            <div class="kontak-card-grid" data-reveal>
+            <div class="kontak-strip snap-strip" data-reveal role="region" tabindex="0" aria-label="Daftar petugas pelayanan, geser untuk melihat">
                 @foreach($kontaks as $k)
                     <div class="kontak-card" id="kontak-{{ $k->id }}">
                         <div class="kontak-card-top">
@@ -169,11 +189,11 @@
                                     alt="Foto {{ $k->nama }}"
                                     class="kontak-card-photo"
                                     loading="lazy"
-                                    width="64" height="64"
+                                    width="52" height="52"
                                 >
                             @else
                                 <div class="kontak-card-photo kontak-card-photo-fallback" aria-hidden="true">
-                                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                                 </div>
                             @endif
                             <div class="kontak-card-id">
@@ -192,11 +212,11 @@
 </section>
 
 {{-- ============================================================
-     UX-SCR-002 | SECTION 6: UMKM
+     UX-SCR-002 | UMKM (Visual Showcase — ekonomi warga)
      ============================================================ --}}
-<section class="section-alt" id="umkm" aria-labelledby="umkm-heading">
+<section class="section-umkm" id="umkm" aria-labelledby="umkm-heading">
     <div class="container">
-        <div class="section-headbar">
+        <div class="section-headbar" data-reveal>
             <div>
                 <div class="section-badge" aria-hidden="true">Ekonomi Lokal</div>
                 <h2 class="section-title" id="umkm-heading">UMKM</h2>
@@ -209,7 +229,7 @@
         @if($umkms->isEmpty())
             <x-partials.empty-state label="Belum ada UMKM yang terdaftar." />
         @else
-            <div class="umkm-grid" data-reveal>
+            <div class="umkm-strip snap-strip" data-reveal role="region" tabindex="0" aria-label="Daftar UMKM, geser untuk melihat">
                 @foreach($umkms as $u)
                     <article class="umkm-card" id="umkm-{{ $u->id }}" aria-label="{{ $u->nama_umkm }}">
                         <div class="umkm-card-media">
@@ -235,7 +255,7 @@
                             @endif
                         </div>
                         <div class="umkm-card-footer">
-                            <a href="{{ route('umkm.show', $u->id) }}" class="agenda-link" aria-label="Lihat detail {{ $u->nama_umkm }}">
+                            <a href="{{ route('umkm.show', $u->id) }}" class="umkm-card-link" aria-label="Lihat detail {{ $u->nama_umkm }}">
                                 Lihat Detail
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
                             </a>
@@ -248,11 +268,11 @@
 </section>
 
 {{-- ============================================================
-     UX-SCR-002 | SECTION 7: Fasilitas
+     UX-SCR-002 | FASILITAS (Compact Resource Cards)
      ============================================================ --}}
-<section class="section-public" id="fasilitas" aria-labelledby="fasilitas-heading">
+<section class="section-fasilitas" id="fasilitas" aria-labelledby="fasilitas-heading">
     <div class="container">
-        <div class="section-headbar">
+        <div class="section-headbar" data-reveal>
             <div>
                 <div class="section-badge" aria-hidden="true">Infrastruktur</div>
                 <h2 class="section-title" id="fasilitas-heading">Fasilitas</h2>
@@ -265,29 +285,22 @@
         @if($fasilitas->isEmpty())
             <x-partials.empty-state label="Belum ada fasilitas yang terdaftar." />
         @else
-            <div class="facility-list" data-reveal>
+            <div class="fasilitas-strip snap-strip" data-reveal role="region" tabindex="0" aria-label="Daftar fasilitas, geser untuk melihat">
                 @foreach($fasilitas as $f)
-                    <article class="facility-item" id="fasilitas-{{ $f->id }}">
-                        <div class="facility-item-icon" aria-hidden="true">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                    <article class="facility-card" id="fasilitas-{{ $f->id }}">
+                        <div class="facility-card-head">
+                            @if($f->kategoriFasilitas?->nama_kategori)
+                                <span class="facility-cat">{{ $f->kategoriFasilitas->nama_kategori }}</span>
+                            @endif
+                            <h3 class="facility-card-name">{{ $f->nama }}</h3>
+                            @if($f->alamat)
+                                <p class="facility-card-addr">{{ $f->alamat }}</p>
+                            @endif
                         </div>
-                        <div class="facility-item-body">
-                            <h3 class="facility-item-name">{{ $f->nama }}</h3>
-                            <p class="facility-item-meta">
-                                @if($f->kategoriFasilitas?->nama_kategori)
-                                    <span class="facility-cat-tag">{{ $f->kategoriFasilitas->nama_kategori }}</span>
-                                @endif
-                                @if($f->alamat)
-                                    <span class="facility-addr">{{ $f->alamat }}</span>
-                                @endif
-                            </p>
-                        </div>
-                        <div class="facility-item-action">
-                            <a href="{{ route('fasilitas.show', $f->id) }}" class="facility-link" aria-label="Lihat lokasi {{ $f->nama }}">
-                                Lihat Lokasi
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-                            </a>
-                        </div>
+                        <a href="{{ route('fasilitas.show', $f->id) }}" class="facility-card-link" aria-label="Lihat lokasi {{ $f->nama }}">
+                            Lihat Lokasi
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
+                        </a>
                     </article>
                 @endforeach
             </div>
@@ -296,147 +309,115 @@
 </section>
 
 {{-- ============================================================
-     UX-SCR-002 | SECTION 8: Agenda & Kegiatan (dusun scope)
+     UX-SCR-002 | INFORMASI TERKINI (Agenda + Pengumuman)
      ============================================================ --}}
-<section class="section-alt" id="agenda" aria-labelledby="agenda-dusun-heading">
+<section class="section-terkini" aria-labelledby="terkini-heading">
     <div class="container">
-        <div class="section-headbar">
-            <div>
-                <div class="section-badge" aria-hidden="true">Jadwal & Kegiatan</div>
-                <h2 class="section-title" id="agenda-dusun-heading">Agenda &amp; Kegiatan</h2>
-            </div>
+        <div class="terkini-head" data-reveal>
+            <div class="section-badge" aria-hidden="true">Warta Wilayah</div>
+            <h2 class="section-title" id="terkini-heading">Informasi Terkini</h2>
         </div>
 
-        @if($agendas->isEmpty())
-            <x-partials.empty-state label="Belum ada agenda atau kegiatan." />
-        @else
-            <ul class="notice-list" data-reveal>
-                @foreach($agendas as $ag)
-                    @php
-                        $now = \Illuminate\Support\Carbon::now(config('app.business_timezone', 'Asia/Jakarta'));
-                        $status = $ag->effectiveStatusFor($now);
-                        $startDate = \Illuminate\Support\Carbon::parse($ag->tanggal_mulai)->locale('id');
-                    @endphp
-                    <li class="notice-row" id="agenda-{{ $ag->id }}">
-                        <time class="notice-date" datetime="{{ $startDate->toDateString() }}">
-                            <span class="notice-date-day">{{ $startDate->format('d') }}</span>
-                            <span class="notice-date-month">{{ $startDate->isoFormat('MMM YYYY') }}</span>
-                        </time>
+        <div class="terkini-grid">
 
-                        <div class="notice-main">
-                            <div class="notice-meta">
-                                <x-partials.status-badge :status="$status" />
-                                @if($ag->lokasi_text)
-                                    <span class="notice-expiry">
-                                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                                        {{ $ag->lokasi_text }}
-                                    </span>
-                                @endif
-                            </div>
-                            <h3 class="notice-title">
-                                <a href="{{ route('agenda.show', $ag->id) }}" class="notice-title-link">
-                                    {{ $ag->judul }}
+            {{-- Kolom Agenda & Kegiatan --}}
+            <div class="terkini-col" id="agenda" aria-labelledby="agenda-dusun-heading">
+                <div class="terkini-col-head">
+                    <h3 class="terkini-col-title" id="agenda-dusun-heading">Agenda &amp; Kegiatan</h3>
+                </div>
+
+                @if($agendas->isEmpty())
+                    <x-partials.empty-state label="Belum ada agenda atau kegiatan." />
+                @else
+                    <ul class="terkini-ledger" data-reveal>
+                        @foreach($agendas as $ag)
+                            @php
+                                $now = \Illuminate\Support\Carbon::now(config('app.business_timezone', 'Asia/Jakarta'));
+                                $status = $ag->effectiveStatusFor($now);
+                                $startDate = \Illuminate\Support\Carbon::parse($ag->tanggal_mulai)->locale('id');
+                            @endphp
+                            <li class="terkini-row" id="agenda-{{ $ag->id }}">
+                                <time class="terkini-date" datetime="{{ $startDate->toDateString() }}">
+                                    <span class="terkini-date-day">{{ $startDate->format('d') }}</span>
+                                    <span class="terkini-date-month">{{ $startDate->isoFormat('MMM') }}</span>
+                                    <span class="terkini-date-year">{{ $startDate->format('Y') }}</span>
+                                </time>
+
+                                <div class="terkini-main">
+                                    <div class="terkini-meta">
+                                        <x-partials.status-badge :status="$status" />
+                                        @if($ag->lokasi_text)
+                                            <span class="terkini-loc">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                                {{ $ag->lokasi_text }}
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <h4 class="terkini-title">
+                                        <a href="{{ route('agenda.show', $ag->id) }}" class="terkini-title-link">
+                                            {{ $ag->judul }}
+                                        </a>
+                                    </h4>
+                                </div>
+
+                                <a href="{{ route('agenda.show', $ag->id) }}" class="terkini-arrow" aria-label="Detail agenda: {{ $ag->judul }}">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
                                 </a>
-                            </h3>
-                        </div>
-
-                        <a href="{{ route('agenda.show', $ag->id) }}" class="notice-arrow" aria-label="Detail agenda: {{ $ag->judul }}">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-    </div>
-</section>
-
-{{-- ============================================================
-     UX-SCR-002 | SECTION 9: Pengumuman (dusun scope, active)
-     ============================================================ --}}
-<section class="section-public" id="pengumuman" aria-labelledby="pengumuman-dusun-heading">
-    <div class="container">
-        <div class="section-heading">
-            <div>
-                <div class="section-badge" aria-hidden="true">Warta & Pemberitahuan</div>
-                <h2 class="section-title" id="pengumuman-dusun-heading">Pengumuman</h2>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
-            <a href="{{ route('pengumuman.arsip', ['dusun' => $dusun->id]) }}" class="btn-outline-pill" aria-label="Lihat arsip pengumuman {{ $dusun->nama_dusun }}">
-                <span>Lihat Arsip</span>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </a>
-        </div>
 
-        @if($pengumumans->isEmpty())
-            <x-partials.empty-state label="Belum ada pengumuman aktif." />
-        @else
-            <ul class="notice-list" data-reveal>
-                @foreach($pengumumans as $p)
-                    @php $pDate = \Illuminate\Support\Carbon::parse($p->created_at)->locale('id'); @endphp
-                    <li class="notice-row" id="pengumuman-{{ $p->id }}">
-                        <time class="notice-date" datetime="{{ $p->created_at->toDateString() }}">
-                            <span class="notice-date-day">{{ $pDate->format('d') }}</span>
-                            <span class="notice-date-month">{{ $pDate->isoFormat('MMM YYYY') }}</span>
-                        </time>
+            {{-- Kolom Pengumuman --}}
+            <div class="terkini-col" id="pengumuman" aria-labelledby="pengumuman-dusun-heading">
+                <div class="terkini-col-head">
+                    <h3 class="terkini-col-title" id="pengumuman-dusun-heading">Pengumuman</h3>
+                    <a href="{{ route('pengumuman.arsip', ['dusun' => $dusun->id]) }}" class="arsip-link" aria-label="Lihat arsip pengumuman {{ $dusun->nama_dusun }}">
+                        <span>Lihat Arsip</span>
+                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
 
-                        <div class="notice-main">
-                            <div class="notice-meta">
-                                <span class="notice-chip">Warta Resmi</span>
-                                <span class="notice-expiry">Berlaku s.d {{ \Illuminate\Support\Carbon::parse($p->tanggal_kedaluwarsa)->locale('id')->isoFormat('D MMM YYYY') }}</span>
-                            </div>
-                            <h3 class="notice-title">
-                                <a href="{{ route('pengumuman.show', $p->id) }}" class="notice-title-link">
-                                    {{ $p->judul }}
+                @if($pengumumans->isEmpty())
+                    <x-partials.empty-state label="Belum ada pengumuman aktif." />
+                @else
+                    <ul class="terkini-ledger" data-reveal>
+                        @foreach($pengumumans as $p)
+                            @php $pDate = \Illuminate\Support\Carbon::parse($p->created_at)->locale('id'); @endphp
+                            <li class="terkini-row" id="pengumuman-{{ $p->id }}">
+                                <time class="terkini-date" datetime="{{ $p->created_at->toDateString() }}">
+                                    <span class="terkini-date-day">{{ $pDate->format('d') }}</span>
+                                    <span class="terkini-date-month">{{ $pDate->isoFormat('MMM') }}</span>
+                                    <span class="terkini-date-year">{{ $pDate->format('Y') }}</span>
+                                </time>
+
+                                <div class="terkini-main">
+                                    <div class="terkini-meta">
+                                        <span class="terkini-chip">Warta Resmi</span>
+                                        <span class="terkini-expiry">Berlaku s.d {{ \Illuminate\Support\Carbon::parse($p->tanggal_kedaluwarsa)->locale('id')->isoFormat('D MMM YYYY') }}</span>
+                                    </div>
+                                    <h4 class="terkini-title">
+                                        <a href="{{ route('pengumuman.show', $p->id) }}" class="terkini-title-link">
+                                            {{ $p->judul }}
+                                        </a>
+                                    </h4>
+                                </div>
+
+                                <a href="{{ route('pengumuman.show', $p->id) }}" class="terkini-arrow" aria-label="Baca pengumuman: {{ $p->judul }}">
+                                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
                                 </a>
-                            </h3>
-                        </div>
-
-                        <a href="{{ route('pengumuman.show', $p->id) }}" class="notice-arrow" aria-label="Baca pengumuman: {{ $p->judul }}">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17l9.2-9.2M17 17V7H7"/></svg>
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
-        @endif
-    </div>
-</section>
-
-{{-- ============================================================
-     UX-SCR-002 + UX-SCR-009 | SECTION 10: Peta Dusun
-     ============================================================ --}}
-<section class="section-alt peta-dusun-section" id="peta-dusun" aria-labelledby="peta-dusun-heading">
-    <div class="container">
-        <div class="section-badge" aria-hidden="true">Peta Interaktif</div>
-        <h2 class="section-title" id="peta-dusun-heading">Peta Dusun</h2>
-        <p class="section-desc">Sebaran lokasi fasilitas, UMKM, dan titik pelayanan di wilayah {{ $dusun->nama_dusun }}.</p>
-
-        {{-- Category filter (no dusun selector — dusun is implicit) --}}
-        <div class="map-toolbar">
-            <div class="map-filter-group">
-                <label for="map-dusun-filter-cat" class="map-filter-label">
-                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9h16M4 15h16M10 3L8 21M16 3l-2 18"/></svg>
-                    <span>Filter Kategori</span>
-                </label>
-                <select id="map-dusun-filter-cat" class="map-filter-select" aria-label="Filter berdasarkan kategori">
-                    <option value="semua">Semua Kategori</option>
-                    @foreach($categoryOptions as $cat)
-                        <option value="{{ e($cat) }}">{{ $cat }}</option>
-                    @endforeach
-                </select>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </div>
-        </div>
 
-        <div class="map-frame">
-            <div
-                id="map-dusun"
-                data-map
-                style="height:100%;width:100%;"
-                aria-label="Peta {{ $dusun->nama_dusun }}"
-                role="img"
-            ></div>
         </div>
     </div>
 </section>
 
+</div>
 @endsection
 
 @push('scripts')

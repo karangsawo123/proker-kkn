@@ -9,11 +9,12 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body>
+<body class="@yield('body-class', '')">
     <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
 
-    <main id="main-content" class="app-shell">
+    <main id="main-content" class="app-shell @yield('shell-class', '')">
         @yield('content')
     </main>
 </body>
 </html>
+

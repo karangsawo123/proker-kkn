@@ -1,8 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Source+Sans+3:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 /* ==========================================================================
    Portal Informasi Desa Bendung — Design System
-   Visual Direction: Warm Natural
+   Visual Direction: Warm Natural & Forest Heritage
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
@@ -10,35 +10,38 @@
    -------------------------------------------------------------------------- */
 
 :root {
-    /* Canonical palette — Warm Natural */
+    /* Canonical palette — Warm Natural & Forest */
     --color-moss: #2e5e3e;
     --color-sage: #7a8f6b;
-    --color-terracotta: #c46a3a;
-    --color-warm-beige: #f1e7d3;
+    --color-terracotta: #c65d28;
+    --color-warm-beige: #f4eee2;
     --color-cream: #faf7f2;
-    --color-dark-olive: #2b2f23;
+    --color-dark-olive: #1f241d;
 
     /* Semantic role aliases */
     --color-primary: var(--color-moss);
-    --color-primary-hover: #244b32;
+    --color-primary-hover: #21472e;
     --color-background: var(--color-cream);
     --color-surface: var(--color-cream);
     --color-surface-alt: var(--color-warm-beige);
     --color-text: var(--color-dark-olive);
-    --color-text-secondary: var(--color-moss);
-    --color-border: var(--color-sage);
+    --color-text-secondary: #556353;
+    --color-border: rgba(45, 90, 60, 0.14);
 
     /* Typography */
-    --font-heading: "Lora", Georgia, serif;
-    --font-body: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-heading: "Playfair Display", Georgia, serif;
+    --font-body: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 
     /* Homepage redesign tokens */
-    --color-forest: #1e3d2a;
-    --color-accent: #c46a3a;
-    --color-hero-overlay-start: rgba(12, 24, 16, 0.72);
-    --color-hero-overlay-end: rgba(12, 24, 16, 0.12);
-    --font-display: "Playfair Display", "Lora", Georgia, serif;
-    --font-ui: "Source Sans 3", "Inter", system-ui, sans-serif;
+    --color-forest: #183522;
+    --color-forest-dark: #122819;
+    --color-accent: #c65d28;
+    --color-accent-hover: #a84c1e;
+    --color-accent-soft: rgba(198, 93, 40, 0.12);
+    --color-hero-overlay-start: rgba(14, 28, 18, 0.88);
+    --color-hero-overlay-end: rgba(14, 28, 18, 0.35);
+    --font-display: "Playfair Display", Georgia, serif;
+    --font-ui: "Plus Jakarta Sans", system-ui, sans-serif;
 
     /* Spacing — 8px base */
     --space-1: 8px;
@@ -46,6 +49,7 @@
     --space-3: 24px;
     --space-4: 32px;
     --space-5: 64px;
+    --space-6: 80px;
 
     /* Borders */
     --border-1: 1px;
@@ -54,14 +58,16 @@
 
     /* Radii */
     --radius-1: 8px;
-    --radius-2: 12px;
-    --radius-3: 16px;
-    --radius-4: 24px;
+    --radius-2: 14px;
+    --radius-3: 20px;
+    --radius-4: 28px;
+    --radius-full: 9999px;
 
-    /* Shadows */
-    --shadow-low: 0 2px 8px rgba(43, 47, 35, 0.08);
-    --shadow-medium: 0 8px 24px rgba(43, 47, 35, 0.12);
-    --shadow-high: 0 16px 40px rgba(43, 47, 35, 0.16);
+    /* Shadows — tinted with natural warm dark */
+    --shadow-low: 0 2px 8px rgba(30, 45, 30, 0.06);
+    --shadow-medium: 0 8px 24px rgba(30, 45, 30, 0.08);
+    --shadow-high: 0 16px 40px rgba(30, 45, 30, 0.12);
+    --shadow-card-hover: 0 14px 32px rgba(30, 45, 30, 0.11);
 }
 
 /* --------------------------------------------------------------------------
@@ -2625,16 +2631,15 @@ ol {
 }
 
 /* ==========================================================================
-   28. Homepage Redesign — Public Scoped
-   All selectors prefixed with .public-layout to avoid collision with admin
+   28. Homepage & Public Layout Redesign — Scoped to .public-layout
+   Visual Direction: Warm Natural, Forest Heritage, Editorial Typography
    ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   28.1 Base overrides — fonts for public pages
-   -------------------------------------------------------------------------- */
 
 .public-layout {
     font-family: var(--font-ui);
+    color: var(--color-dark-olive);
+    background-color: var(--color-cream);
+    -webkit-font-smoothing: antialiased;
 }
 
 .public-layout h1,
@@ -2642,113 +2647,274 @@ ol {
 .public-layout h3,
 .public-layout h4 {
     font-family: var(--font-display);
+    color: var(--color-dark-olive);
+    letter-spacing: -0.02em;
+}
+
+.public-layout .container {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: var(--space-3);
+    width: 100%;
+}
+
+@media (max-width: 48rem) {
+    .public-layout .container {
+        padding-inline: var(--space-2);
+    }
 }
 
 /* --------------------------------------------------------------------------
-   28.2 Header — compact, editorial, no heavy shadow
+   28.1 General Section Headings & Badges
+   -------------------------------------------------------------------------- */
+
+.public-layout .section-intro {
+    text-align: center;
+    max-width: 640px;
+    margin-inline: auto;
+    margin-bottom: var(--space-4);
+}
+
+.public-layout .section-intro.text-left {
+    text-align: left;
+    margin-inline: 0;
+}
+
+.public-layout .section-badge {
+    display: inline-block;
+    font-family: var(--font-ui);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-terracotta);
+    background: var(--color-accent-soft);
+    padding: 4px 10px;
+    border-radius: var(--radius-full);
+    margin-bottom: 8px;
+}
+
+.public-layout .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.625rem, 3.2vw, 2.25rem);
+    font-weight: 700;
+    color: var(--color-dark-olive);
+    line-height: 1.2;
+    margin: 0 0 8px;
+    text-wrap: balance;
+}
+
+.public-layout .section-desc {
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin: 0;
+    text-wrap: pretty;
+}
+
+.public-layout .section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+    flex-wrap: wrap;
+}
+
+.public-layout .section-public {
+    padding-block: var(--space-5);
+    background: var(--color-cream);
+}
+
+.public-layout .section-alt {
+    padding-block: var(--space-5);
+    background: var(--color-surface-alt);
+}
+
+@media (min-width: 60rem) {
+    .public-layout .section-public,
+    .public-layout .section-alt {
+        padding-block: var(--space-6);
+    }
+}
+
+.public-layout .btn-outline-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-moss);
+    background: transparent;
+    border: 1.5px solid rgba(46, 94, 62, 0.3);
+    padding: 8px 16px;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.public-layout .btn-outline-pill:hover {
+    background: var(--color-moss);
+    color: var(--color-cream);
+    border-color: var(--color-moss);
+    transform: translateY(-1px);
+}
+
+.public-layout .btn-outline-pill svg {
+    transition: transform 0.2s ease;
+}
+
+.public-layout .btn-outline-pill:hover svg {
+    transform: translateX(3px);
+}
+
+/* --------------------------------------------------------------------------
+   28.2 Header — Sticky with Soft Blur & Forest Accents
    -------------------------------------------------------------------------- */
 
 .public-layout .public-header {
-    background: var(--color-cream);
-    border-bottom: 1px solid rgba(43, 47, 35, 0.10);
-    box-shadow: none;
     position: sticky;
     top: 0;
-    z-index: 50;
+    z-index: 100;
+    background: rgba(250, 247, 242, 0.75);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border-bottom: 1px solid rgba(45, 90, 60, 0.12);
+    box-shadow: 0 4px 20px rgba(24, 45, 28, 0.04);
+    transition: background-color 0.25s ease, backdrop-filter 0.25s ease;
 }
 
 .public-layout .public-header-inner {
-    padding-block: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block: 12px;
     gap: var(--space-2);
+}
+
+.public-layout .public-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    color: inherit;
+    flex-shrink: 0;
+}
+
+.public-layout .public-brand-logo {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    object-fit: cover;
+    border: 1px solid rgba(45, 90, 60, 0.15);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.public-layout .brand-logo-placeholder {
+    background: linear-gradient(135deg, var(--color-forest), var(--color-moss));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-cream);
+}
+
+.public-layout .public-brand-text {
+    display: flex;
+    flex-direction: column;
 }
 
 .public-layout .public-brand-name {
     font-family: var(--font-display);
-    font-size: 0.9375rem;
+    font-size: 1.05rem;
     font-weight: 700;
+    color: var(--color-forest);
+    line-height: 1.2;
     letter-spacing: -0.015em;
 }
 
 .public-layout .public-brand-sub {
     font-family: var(--font-ui);
-    font-size: 0.6875rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
     color: var(--color-sage);
-    font-weight: 400;
-    letter-spacing: 0.02em;
+    margin-top: 1px;
 }
 
-/* Active nav underline — terracotta accent */
+.public-layout .public-nav-list {
+    display: none;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+@media (min-width: 60rem) {
+    .public-layout .public-nav-list {
+        display: flex;
+    }
+}
+
 .public-layout .public-nav-link {
     font-family: var(--font-ui);
-    font-size: 0.9rem;
+    font-size: 0.8875rem;
     font-weight: 500;
     color: var(--color-dark-olive);
-    padding: 8px 10px;
-    border-radius: 0;
+    padding: 8px 12px;
+    border-radius: var(--radius-1);
+    text-decoration: none;
+    transition: all 0.2s ease;
     position: relative;
-    transition: color 0.2s;
-}
-
-.public-layout .public-nav-link::after {
-    content: '';
-    position: absolute;
-    bottom: 4px;
-    left: 10px;
-    right: 10px;
-    height: 2px;
-    background: var(--color-accent);
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 0.2s ease;
-    border-radius: 1px;
 }
 
 .public-layout .public-nav-link:hover {
-    background: transparent;
     color: var(--color-moss);
-}
-
-.public-layout .public-nav-link:hover::after {
-    transform: scaleX(1);
+    background: rgba(244, 238, 226, 0.8);
 }
 
 .public-layout .public-nav-link.active {
-    color: var(--color-moss);
-    font-weight: 600;
+    color: var(--color-forest);
+    font-weight: 700;
 }
 
 .public-layout .public-nav-link.active::after {
-    transform: scaleX(1);
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 12px;
+    right: 12px;
+    height: 2.5px;
+    background: var(--color-accent);
+    border-radius: 2px;
 }
 
-/* Header CTA button */
 .public-layout .header-cta {
     display: none;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
     background: var(--color-forest);
     color: var(--color-cream);
-    border: none;
-    border-radius: var(--radius-1);
     font-family: var(--font-ui);
-    font-size: 0.8375rem;
+    font-size: 0.85rem;
     font-weight: 600;
-    padding: 8px 14px;
+    padding: 9px 16px;
+    border-radius: var(--radius-full);
     text-decoration: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
-    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(24, 53, 34, 0.2);
+    transition: all 0.2s ease;
     flex-shrink: 0;
 }
 
 .public-layout .header-cta:hover {
     background: var(--color-primary-hover);
     color: var(--color-cream);
-}
-
-.public-layout .header-cta svg {
-    display: inline-block;
-    flex-shrink: 0;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(24, 53, 34, 0.3);
 }
 
 @media (min-width: 60rem) {
@@ -2757,471 +2923,744 @@ ol {
     }
 }
 
+/* Mobile Hamburger Button */
+.public-layout .mobile-menu-btn {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: transparent;
+    border: 1px solid rgba(45, 90, 60, 0.2);
+    border-radius: var(--radius-1);
+    padding: 8px;
+    cursor: pointer;
+}
+
+@media (min-width: 60rem) {
+    .public-layout .mobile-menu-btn {
+        display: none;
+    }
+}
+
+.public-layout .hamburger-bar {
+    width: 20px;
+    height: 2px;
+    background: var(--color-forest);
+    border-radius: 2px;
+    transition: transform 0.2s, opacity 0.2s;
+}
+
+.public-layout .mobile-nav {
+    display: none;
+    border-top: 1px solid rgba(45, 90, 60, 0.1);
+    padding: var(--space-2) 0;
+}
+
+.public-layout .mobile-nav.open {
+    display: block;
+}
+
+.public-layout .mobile-nav-list-mobile {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.public-layout .mobile-nav-list-mobile .mobile-nav-link {
+    display: block;
+    padding: 10px 14px;
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-dark-olive);
+    text-decoration: none;
+    border-radius: var(--radius-1);
+    transition: background-color 0.15s;
+}
+
+.public-layout .mobile-nav-list-mobile .mobile-nav-link:hover {
+    background: var(--color-warm-beige);
+    color: var(--color-moss);
+}
+
 /* --------------------------------------------------------------------------
-   28.3 Hero — full-width cinematic with photo background
+   28.3 Hero Section — Full Depth, Layered & Cinematic
    -------------------------------------------------------------------------- */
 
 .public-layout .hero {
-    background: var(--color-forest);
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
     position: relative;
-    overflow: hidden;
-    min-height: 480px;
+    background-color: var(--color-forest);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: calc(100dvh - 66px);
     display: flex;
     align-items: flex-end;
-    padding-block: 0;
+    overflow: hidden;
 }
 
 @media (min-width: 60rem) {
     .public-layout .hero {
-        min-height: 580px;
+        min-height: calc(100dvh - 70px);
     }
 }
 
 .public-layout .hero-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to right,
-        rgba(12, 24, 16, 0.78) 0%,
-        rgba(12, 24, 16, 0.48) 55%,
-        rgba(12, 24, 16, 0.10) 100%
-    );
-    /* Additional bottom gradient for legibility on all photos */
-    background: linear-gradient(
-        to top,
-        rgba(12, 24, 16, 0.72) 0%,
-        rgba(12, 24, 16, 0.40) 40%,
-        rgba(12, 24, 16, 0.10) 100%
-    ),
-    linear-gradient(
-        to right,
-        rgba(12, 24, 16, 0.68) 0%,
-        rgba(12, 24, 16, 0.28) 50%,
-        rgba(12, 24, 16, 0.0) 100%
-    );
+    background:
+        linear-gradient(to right, rgba(14, 28, 18, 0.90) 0%, rgba(14, 28, 18, 0.60) 45%, rgba(14, 28, 18, 0.15) 100%),
+        linear-gradient(to top, rgba(14, 28, 18, 0.96) 0%, rgba(14, 28, 18, 0.55) 45%, transparent 80%),
+        radial-gradient(circle at 85% 20%, rgba(198, 93, 40, 0.12), transparent 45%);
     pointer-events: none;
+}
+
+.public-layout .hero-fallback {
+    background:
+        radial-gradient(circle at 20% 30%, rgba(46, 94, 62, 0.4), transparent 50%),
+        radial-gradient(circle at 85% 70%, rgba(198, 93, 40, 0.18), transparent 45%),
+        linear-gradient(135deg, #122819 0%, #1c3d28 100%);
 }
 
 .public-layout .hero-body {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     width: 100%;
-    padding: var(--space-5) var(--space-2) var(--space-4);
+    padding-top: var(--space-5);
+    padding-bottom: var(--space-4);
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 60rem) {
     .public-layout .hero-body {
-        padding: var(--space-5) var(--space-3) var(--space-5);
+        padding-top: var(--space-6);
+        padding-bottom: 28px;
     }
 }
 
-.public-layout .hero-eyebrow {
-    font-family: var(--font-ui);
-    font-size: 0.8125rem;
-    font-weight: 600;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: rgba(241, 231, 211, 0.75);
-    margin-bottom: 12px;
+.public-layout .hero-content-wrap {
+    max-width: 680px;
 }
 
 .public-layout .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(2.25rem, 5.5vw, 3.75rem);
+    font-size: clamp(2.35rem, 5.8vw, 3.85rem);
     font-weight: 700;
     line-height: 1.12;
     color: var(--color-cream);
-    margin-bottom: 12px;
+    margin: 0 0 12px;
+    letter-spacing: -0.025em;
     text-wrap: balance;
-    letter-spacing: -0.02em;
-    max-width: 18ch;
 }
 
 .public-layout .hero-accent-line {
-    width: 48px;
+    width: 50px;
     height: 3px;
-    background: var(--color-accent);
+    background: linear-gradient(90deg, var(--color-accent), #e0834e);
     border-radius: 2px;
-    margin-bottom: var(--space-2);
+    margin-bottom: 14px;
 }
 
 .public-layout .hero-desc {
     font-family: var(--font-ui);
-    font-size: 1.0625rem;
-    line-height: 1.65;
-    color: rgba(250, 247, 242, 0.88);
-    max-width: 42ch;
-    margin-bottom: 0;
-}
-
-/* Hero fallback: no banner image */
-.public-layout .hero-fallback {
-    background: var(--color-forest);
-    background-image:
-        repeating-linear-gradient(
-            45deg,
-            rgba(255,255,255,0.025) 0px,
-            rgba(255,255,255,0.025) 1px,
-            transparent 1px,
-            transparent 40px
-        ),
-        repeating-linear-gradient(
-            -45deg,
-            rgba(255,255,255,0.015) 0px,
-            rgba(255,255,255,0.015) 1px,
-            transparent 1px,
-            transparent 40px
-        );
+    font-size: clamp(1rem, 1.8vw, 1.125rem);
+    line-height: 1.6;
+    color: rgba(250, 247, 242, 0.9);
+    max-width: 48ch;
+    margin: 0 0 var(--space-3);
+    text-wrap: pretty;
 }
 
 /* --------------------------------------------------------------------------
-   28.4 Section Styles — public sections
+   28.3.1 Hero Quick Access Bar (Ribbon below Hero)
    -------------------------------------------------------------------------- */
 
-.public-layout .section-public {
-    padding-block: var(--space-5);
+.public-layout .hero-quickbar {
+    background: #ffffff;
+    border-bottom: 1px solid rgba(45, 90, 60, 0.12);
+    box-shadow: 0 4px 16px rgba(30, 45, 30, 0.04);
+    padding-block: 14px;
+    position: relative;
+    z-index: 10;
 }
 
-.public-layout .section-alt {
-    background: var(--color-surface-alt);
-    padding-block: var(--space-5);
-}
-
-.public-layout .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.375rem, 2.5vw, 1.875rem);
-    color: var(--color-dark-olive);
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    margin-bottom: 0;
-}
-
-.public-layout .section-heading {
-    align-items: center;
+.public-layout .hero-quickbar-inner {
     display: flex;
-    gap: var(--space-2);
-    justify-content: space-between;
-    margin-bottom: var(--space-3);
+    flex-direction: column;
+    gap: 10px;
 }
 
-.public-layout .section-heading .btn-link {
+@media (min-width: 52rem) {
+    .public-layout .hero-quickbar-inner {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+    }
+}
+
+.public-layout .hero-quickbar-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     font-family: var(--font-ui);
-    font-size: 0.875rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-forest);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.public-layout .hero-quickbar-label svg {
+    color: var(--color-accent);
+}
+
+.public-layout .hero-quickbar-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+}
+
+.public-layout .quickbar-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-ui);
+    font-size: 0.825rem;
+    font-weight: 600;
+    color: var(--color-dark-olive);
+    background: rgba(46, 94, 62, 0.06);
+    border: 1px solid rgba(45, 90, 60, 0.14);
+    padding: 6px 14px;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: all 0.2s ease;
     white-space: nowrap;
 }
 
+.public-layout .quickbar-link svg {
+    color: var(--color-sage);
+    transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.public-layout .quickbar-link:hover {
+    background: var(--color-moss);
+    color: var(--color-cream);
+    border-color: var(--color-moss);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(46, 94, 62, 0.2);
+}
+
+.public-layout .quickbar-link:hover svg {
+    color: var(--color-cream);
+    transform: translate(1px, -1px);
+}
+
 /* --------------------------------------------------------------------------
-   28.5 Dusun Grid — compact
+   28.4 Dusun Grid — Polished Explorer Cards
    -------------------------------------------------------------------------- */
 
 .public-layout .dusun-compact-grid {
     display: grid;
-    gap: 10px;
-    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+    grid-template-columns: repeat(2, 1fr);
 }
 
-@media (min-width: 40rem) {
+@media (min-width: 42rem) {
     .public-layout .dusun-compact-grid {
-        grid-template-columns: repeat(6, 1fr);
+        grid-template-columns: repeat(3, 1fr);
         gap: var(--space-2);
     }
 }
 
+@media (min-width: 64rem) {
+    .public-layout .dusun-compact-grid {
+        grid-template-columns: repeat(6, 1fr);
+    }
+}
+
 .public-layout .dusun-ccard {
-    align-items: center;
-    background: var(--color-cream);
-    border: 1px solid rgba(43, 47, 35, 0.10);
+    background: #ffffff;
+    border: 1px solid rgba(45, 90, 60, 0.12);
     border-radius: var(--radius-2);
-    cursor: pointer;
+    padding: 20px 14px 18px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
-    padding: 14px 8px;
+    align-items: center;
     text-align: center;
     text-decoration: none;
-    transition: border-color 0.2s, background-color 0.2s, transform 0.2s;
+    color: inherit;
+    box-shadow: var(--shadow-low);
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s, border-color 0.22s;
     position: relative;
+    overflow: hidden;
 }
 
 .public-layout .dusun-ccard:hover {
-    border-color: var(--color-sage);
-    background: var(--color-warm-beige);
-    color: var(--color-moss);
-    transform: translateY(-2px);
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: rgba(198, 93, 40, 0.4);
+    background: #ffffff;
+}
+
+.public-layout .dusun-ccard-tag {
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-terracotta);
+    margin-bottom: 8px;
 }
 
 .public-layout .dusun-ccard-icon {
-    color: var(--color-moss);
+    width: 52px;
+    height: 52px;
+    background: rgba(46, 94, 62, 0.07);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 44px;
-    height: 44px;
+    color: var(--color-moss);
+    margin-bottom: 12px;
+    transition: transform 0.2s, background-color 0.2s, color 0.2s;
+}
+
+.public-layout .dusun-ccard:hover .dusun-ccard-icon {
+    background: var(--color-moss);
+    color: var(--color-cream);
+    transform: scale(1.05);
+}
+
+.public-layout .dusun-ccard-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    width: 100%;
 }
 
 .public-layout .dusun-ccard-name {
     font-family: var(--font-ui);
-    font-size: 0.8125rem;
-    font-weight: 600;
+    font-size: 0.95rem;
+    font-weight: 700;
     color: var(--color-dark-olive);
     line-height: 1.3;
 }
 
-.public-layout .dusun-ccard-arrow {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    color: var(--color-sage);
-    opacity: 0;
+.public-layout .dusun-ccard-sub {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--color-moss);
+    opacity: 0.85;
     transition: opacity 0.2s;
 }
 
-.public-layout .dusun-ccard:hover .dusun-ccard-arrow {
+.public-layout .dusun-ccard:hover .dusun-ccard-sub {
     opacity: 1;
+    color: var(--color-accent);
 }
 
 /* --------------------------------------------------------------------------
-   28.6 Informasi Desa — Summary Card Panels
+   28.5 Informasi Desa — Asymmetric Editorial Layout
    -------------------------------------------------------------------------- */
 
-.public-layout .info-summary-grid {
+.public-layout .info-editorial-layout {
     display: grid;
-    gap: var(--space-2);
     grid-template-columns: 1fr;
+    gap: var(--space-3);
+    align-items: stretch;
 }
 
-@media (min-width: 48rem) {
-    .public-layout .info-summary-grid {
-        grid-template-columns: repeat(3, 1fr);
+@media (min-width: 54rem) {
+    .public-layout .info-editorial-layout {
+        grid-template-columns: 1.25fr 1fr;
+        gap: var(--space-4);
     }
 }
 
-.public-layout .info-panel-card {
-    background: var(--color-cream);
-    border: 1px solid rgba(43, 47, 35, 0.10);
-    border-radius: var(--radius-2);
-    padding: var(--space-3);
+.public-layout .info-feature-card {
+    background: #ffffff;
+    border: 1px solid rgba(45, 90, 60, 0.12);
+    border-radius: var(--radius-3);
+    padding: var(--space-4);
+    box-shadow: var(--shadow-low);
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    justify-content: space-between;
 }
 
-.public-layout .info-panel-header {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-2);
-}
-
-.public-layout .info-panel-icon {
+.public-layout .info-feature-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
     color: var(--color-moss);
     background: rgba(46, 94, 62, 0.08);
-    border-radius: var(--radius-1);
-    width: 40px;
-    height: 40px;
+    padding: 5px 12px;
+    border-radius: var(--radius-full);
+    align-self: flex-start;
+    margin-bottom: var(--space-2);
+}
+
+.public-layout .info-feature-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+    font-weight: 700;
+    color: var(--color-forest);
+    line-height: 1.25;
+    margin: 0 0 16px;
+}
+
+.public-layout .info-feature-text {
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--color-dark-olive);
+    margin: 0 0 var(--space-4);
+}
+
+.public-layout .info-kades-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: var(--color-surface-alt);
+    border: 1px solid rgba(45, 90, 60, 0.12);
+    border-radius: var(--radius-2);
+    padding: 14px 18px;
+    margin-top: auto;
+}
+
+.public-layout .info-kades-avatar {
+    width: 44px;
+    height: 44px;
+    background: var(--color-forest);
+    color: var(--color-cream);
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
 }
 
-.public-layout .info-panel-label {
+.public-layout .info-kades-meta {
+    display: flex;
+    flex-direction: column;
+}
+
+.public-layout .info-kades-label {
     font-family: var(--font-ui);
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
     color: var(--color-sage);
-    margin-bottom: 2px;
 }
 
-.public-layout .info-panel-title {
-    font-family: var(--font-display);
-    font-size: 1.0625rem;
+.public-layout .info-kades-name {
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
     font-weight: 700;
     color: var(--color-dark-olive);
-    margin: 0;
-    line-height: 1.3;
 }
 
-.public-layout .info-panel-body {
-    flex: 1;
+.public-layout .info-stack-cards {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: var(--space-3);
 }
 
-.public-layout .info-panel-row {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-}
-
-.public-layout .info-panel-key {
-    font-family: var(--font-ui);
-    font-size: 0.75rem;
-    color: var(--color-sage);
-    font-weight: 500;
-}
-
-.public-layout .info-panel-val {
-    font-family: var(--font-ui);
-    font-size: 0.9rem;
-    color: var(--color-dark-olive);
-    line-height: 1.5;
-}
-
-/* --------------------------------------------------------------------------
-   28.7 Pengumuman Card Grid
-   -------------------------------------------------------------------------- */
-
-.public-layout .pengumuman-grid {
-    display: grid;
-    gap: var(--space-2);
-    grid-template-columns: 1fr;
-}
-
-@media (min-width: 48rem) {
-    .public-layout .pengumuman-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-.public-layout .pengumuman-card {
-    background: var(--color-cream);
-    border: 1px solid rgba(43, 47, 35, 0.09);
+.public-layout .info-subcard {
+    background: #ffffff;
+    border: 1px solid rgba(45, 90, 60, 0.12);
     border-radius: var(--radius-2);
-    overflow: hidden;
+    padding: var(--space-3);
+    box-shadow: var(--shadow-low);
     display: flex;
     flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.2s, border-color 0.2s;
+    gap: 14px;
 }
 
-.public-layout .pengumuman-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(43, 47, 35, 0.2);
+.public-layout .info-subcard-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(45, 90, 60, 0.08);
 }
 
-.public-layout .pengumuman-card-visual {
-    aspect-ratio: 16/9;
-    position: relative;
-    background: var(--color-forest);
+.public-layout .info-subcard-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(46, 94, 62, 0.08);
+    color: var(--color-moss);
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    overflow: hidden;
 }
 
-.public-layout .pengumuman-card-visual img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.public-layout .pengumuman-card-visual-icon {
-    color: rgba(250, 247, 242, 0.35);
-}
-
-.public-layout .pengumuman-card-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+.public-layout .info-subcard-category {
     font-family: var(--font-ui);
     font-size: 0.6875rem;
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    padding: 3px 9px;
-    border-radius: 3px;
-    background: var(--color-accent);
-    color: #fff;
+    color: var(--color-terracotta);
+    display: block;
 }
 
-.public-layout .pengumuman-card-body {
-    padding: var(--space-2);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    flex: 1;
-}
-
-.public-layout .pengumuman-card-title {
+.public-layout .info-subcard-title {
     font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.05rem;
+    font-weight: 700;
     color: var(--color-dark-olive);
     margin: 0;
-    line-height: 1.35;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
 }
 
-.public-layout .pengumuman-card-meta {
-    font-family: var(--font-ui);
-    font-size: 0.8rem;
+.public-layout .info-subcard-items {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.public-layout .info-item-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.public-layout .info-item-icon {
     color: var(--color-sage);
+    flex-shrink: 0;
+    margin-top: 3px;
+}
+
+.public-layout .info-item-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.public-layout .info-item-label {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--color-text-secondary);
+}
+
+.public-layout .info-item-value {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-dark-olive);
+    line-height: 1.4;
+}
+
+/* --------------------------------------------------------------------------
+   28.6 Pengumuman Slider — Horizontal Snap Scroll & Actions
+   -------------------------------------------------------------------------- */
+
+.public-layout .section-heading-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.public-layout .slider-arrows {
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
+.public-layout .slider-arrow-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: var(--radius-full);
+    background: #ffffff;
+    border: 1.5px solid rgba(45, 90, 60, 0.2);
+    color: var(--color-moss);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    transition: all 0.2s ease;
+}
+
+.public-layout .slider-arrow-btn:hover {
+    background: var(--color-moss);
+    color: var(--color-cream);
+    border-color: var(--color-moss);
+    transform: scale(1.05);
+}
+
+.public-layout .slider-arrow-btn:active {
+    transform: scale(0.95);
+}
+
+.public-layout .pengumuman-slider-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.public-layout .pengumuman-slider {
+    display: flex;
+    gap: var(--space-3);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 6px 2px 20px;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(46, 94, 62, 0.35) transparent;
+}
+
+.public-layout .pengumuman-slider::-webkit-scrollbar {
+    height: 6px;
+}
+
+.public-layout .pengumuman-slider::-webkit-scrollbar-track {
+    background: rgba(45, 90, 60, 0.06);
+    border-radius: var(--radius-full);
+}
+
+.public-layout .pengumuman-slider::-webkit-scrollbar-thumb {
+    background: rgba(46, 94, 62, 0.35);
+    border-radius: var(--radius-full);
+}
+
+.public-layout .pengumuman-slider::-webkit-scrollbar-thumb:hover {
+    background: var(--color-moss);
+}
+
+.public-layout .pengumuman-slider .pengumuman-card {
+    flex: 0 0 calc(33.333% - 16px);
+    min-width: 320px;
+    max-width: 400px;
+    scroll-snap-align: start;
+    background: #ffffff;
+    border: 1px solid rgba(45, 90, 60, 0.12);
+    border-radius: var(--radius-2);
+    padding: var(--space-3);
+    box-shadow: var(--shadow-low);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.22s ease, box-shadow 0.22s, border-color 0.22s;
+}
+
+@media (max-width: 52rem) {
+    .public-layout .pengumuman-slider .pengumuman-card {
+        flex: 0 0 80vw;
+        min-width: 270px;
+        max-width: 340px;
+    }
+}
+
+.public-layout .pengumuman-slider .pengumuman-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: rgba(45, 90, 60, 0.28);
+}
+
+.public-layout .pengumuman-card-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+}
+
+.public-layout .pengumuman-chip {
+    font-family: var(--font-ui);
+    font-size: 0.6875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-terracotta);
+    background: var(--color-accent-soft);
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+}
+
+.public-layout .pengumuman-card-date {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    color: var(--color-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.public-layout .pengumuman-card-body {
+    flex: 1;
+    margin-bottom: var(--space-3);
+}
+
+.public-layout .pengumuman-card-title {
+    margin: 0;
+    font-size: 1.125rem;
+    line-height: 1.35;
+}
+
+.public-layout .pengumuman-title-link {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--color-dark-olive);
+    text-decoration: none;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    transition: color 0.2s;
+}
+
+.public-layout .pengumuman-title-link:hover {
+    color: var(--color-moss);
+}
+
+.public-layout .pengumuman-card-footer {
+    padding-top: 12px;
+    border-top: 1px solid rgba(45, 90, 60, 0.08);
+}
+
 .public-layout .pengumuman-card-link {
     font-family: var(--font-ui);
-    font-size: 0.8125rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--color-moss);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    margin-top: auto;
-    padding-top: 6px;
-    border-top: 1px solid rgba(43, 47, 35, 0.07);
-    transition: color 0.15s;
+    gap: 6px;
+    transition: all 0.2s ease;
 }
 
 .public-layout .pengumuman-card-link:hover {
-    color: var(--color-primary-hover);
-}
-
-/* Mobile compact variant — pengumuman as row */
-@media (max-width: 47.9375rem) {
-    .public-layout .pengumuman-card {
-        flex-direction: row;
-        border-radius: var(--radius-1);
-    }
-
-    .public-layout .pengumuman-card-visual {
-        width: 90px;
-        aspect-ratio: auto;
-        flex-shrink: 0;
-        border-radius: 0;
-    }
-
-    .public-layout .pengumuman-card-body {
-        padding: 12px;
-        gap: 6px;
-    }
-
-    .public-layout .pengumuman-card-title {
-        font-size: 0.9rem;
-    }
+    color: var(--color-accent);
+    gap: 9px;
 }
 
 /* --------------------------------------------------------------------------
-   28.8 Agenda Card Grid
+   28.7 Agenda Grid — Event Date Chip & Status Card
    -------------------------------------------------------------------------- */
 
 .public-layout .agenda-grid {
     display: grid;
-    gap: var(--space-2);
+    gap: var(--space-3);
     grid-template-columns: 1fr;
 }
 
@@ -3232,146 +3671,146 @@ ol {
 }
 
 .public-layout .agenda-card {
-    background: var(--color-cream);
-    border: 1px solid rgba(43, 47, 35, 0.09);
+    background: #ffffff;
+    border: 1px solid rgba(45, 90, 60, 0.12);
     border-radius: var(--radius-2);
-    overflow: hidden;
+    padding: var(--space-3);
+    box-shadow: var(--shadow-low);
     display: flex;
     flex-direction: column;
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.2s, border-color 0.2s;
+    justify-content: space-between;
+    transition: transform 0.22s ease, box-shadow 0.22s, border-color 0.22s;
 }
 
 .public-layout .agenda-card:hover {
-    transform: translateY(-2px);
-    border-color: rgba(43, 47, 35, 0.2);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+    border-color: rgba(45, 90, 60, 0.28);
 }
 
-.public-layout .agenda-card-visual {
-    aspect-ratio: 16/9;
-    background: #2a4535;
+.public-layout .agenda-card-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    flex-shrink: 0;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
 }
 
-.public-layout .agenda-card-visual-icon {
-    color: rgba(250, 247, 242, 0.30);
+.public-layout .agenda-date-badge {
+    background: var(--color-surface-alt);
+    border: 1px solid rgba(45, 90, 60, 0.12);
+    border-radius: 10px;
+    padding: 6px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+    min-width: 60px;
 }
 
-.public-layout .agenda-card-badge {
-    position: absolute;
-    top: 10px;
-    left: 10px;
+.public-layout .agenda-date-day {
+    font-family: var(--font-ui);
+    font-size: 1.25rem;
+    font-weight: 800;
+    color: var(--color-forest);
 }
 
-/* Override badge colors for agenda visual context */
-.public-layout .agenda-card-badge .badge-akan-datang {
-    background: rgba(46, 94, 62, 0.90);
-    color: #fff;
+.public-layout .agenda-date-month {
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-sage);
 }
 
-.public-layout .agenda-card-badge .badge-berlangsung {
-    background: var(--color-accent);
-    color: #fff;
-}
-
-.public-layout .agenda-card-badge .badge-selesai {
-    background: rgba(43, 47, 35, 0.55);
-    color: rgba(250,247,242,0.85);
+.public-layout .agenda-status-wrap {
+    font-family: var(--font-ui);
 }
 
 .public-layout .agenda-card-body {
-    padding: var(--space-2);
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
     flex: 1;
+    margin-bottom: var(--space-3);
 }
 
 .public-layout .agenda-card-title {
-    font-family: var(--font-display);
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--color-dark-olive);
-    margin: 0;
+    margin: 0 0 12px;
+    font-size: 1.075rem;
     line-height: 1.35;
+}
+
+.public-layout .agenda-title-link {
+    font-family: var(--font-display);
+    font-size: 1.075rem;
+    font-weight: 700;
+    color: var(--color-dark-olive);
+    text-decoration: none;
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    transition: color 0.2s;
+}
+
+.public-layout .agenda-title-link:hover {
+    color: var(--color-moss);
 }
 
 .public-layout .agenda-card-meta {
-    font-family: var(--font-ui);
-    font-size: 0.8rem;
-    color: var(--color-sage);
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-top: auto;
-    padding-top: 8px;
-    border-top: 1px solid rgba(43, 47, 35, 0.07);
+    gap: 6px;
 }
 
-.public-layout .agenda-card-meta-row {
+.public-layout .agenda-meta-row {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 8px;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--color-text-secondary);
+}
+
+.public-layout .agenda-meta-row svg {
+    color: var(--color-sage);
+    flex-shrink: 0;
+}
+
+.public-layout .truncate-line {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.public-layout .agenda-card-footer {
+    padding-top: 12px;
+    border-top: 1px solid rgba(45, 90, 60, 0.08);
 }
 
 .public-layout .agenda-card-detail {
     font-family: var(--font-ui);
-    font-size: 0.8125rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--color-moss);
     text-decoration: none;
     display: inline-flex;
     align-items: center;
-    gap: 4px;
-    transition: color 0.15s;
-    align-self: flex-start;
+    gap: 6px;
+    transition: all 0.2s ease;
 }
 
 .public-layout .agenda-card-detail:hover {
-    color: var(--color-primary-hover);
-}
-
-/* Mobile compact variant — agenda as row */
-@media (max-width: 47.9375rem) {
-    .public-layout .agenda-card {
-        flex-direction: row;
-        border-radius: var(--radius-1);
-    }
-
-    .public-layout .agenda-card-visual {
-        width: 90px;
-        aspect-ratio: auto;
-        flex-shrink: 0;
-        border-radius: 0;
-    }
-
-    .public-layout .agenda-card-body {
-        padding: 12px;
-        gap: 6px;
-    }
-
-    .public-layout .agenda-card-title {
-        font-size: 0.9rem;
-    }
+    color: var(--color-accent);
+    gap: 9px;
 }
 
 /* --------------------------------------------------------------------------
-   28.9 Peta + Kontak side-by-side grid
+   28.8 Peta & Kontak Desa — Side-by-Side Dual Module
    -------------------------------------------------------------------------- */
 
 .public-layout .peta-kontak-section {
-    padding-block: var(--space-5);
     background: var(--color-cream);
+    border-top: 1px solid rgba(45, 90, 60, 0.08);
 }
 
 .public-layout .peta-kontak-wrapper {
@@ -3383,8 +3822,8 @@ ol {
 
 @media (min-width: 60rem) {
     .public-layout .peta-kontak-wrapper {
-        grid-template-columns: 1fr 320px;
-        gap: var(--space-3);
+        grid-template-columns: 1fr 340px;
+        gap: var(--space-4);
     }
 }
 
@@ -3394,13 +3833,74 @@ ol {
     gap: var(--space-2);
 }
 
-.public-layout .peta-col .map-wrap {
-    height: 360px;
+.public-layout .map-filters-card {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    background: #ffffff;
+    border: 1px solid rgba(45, 90, 60, 0.12);
+    border-radius: var(--radius-2);
+    padding: 14px 18px;
+    box-shadow: var(--shadow-low);
+    margin-bottom: 8px;
+}
+
+@media (min-width: 40rem) {
+    .public-layout .map-filters-card {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.public-layout .map-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.public-layout .map-filter-label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-forest);
+}
+
+.public-layout .map-filter-label svg {
+    color: var(--color-accent);
+}
+
+.public-layout .map-filter-select {
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-dark-olive);
+    background-color: var(--color-cream);
+    border: 1px solid rgba(45, 90, 60, 0.18);
+    border-radius: var(--radius-1);
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.public-layout .map-filter-select:focus {
+    outline: none;
+    border-color: var(--color-moss);
+    box-shadow: 0 0 0 3px rgba(46, 94, 62, 0.15);
+}
+
+.public-layout .map-frame {
+    height: 400px;
+    border-radius: var(--radius-2);
+    overflow: hidden;
+    border: 1px solid rgba(45, 90, 60, 0.15);
+    box-shadow: var(--shadow-medium);
 }
 
 @media (min-width: 60rem) {
-    .public-layout .peta-col .map-wrap {
-        height: 400px;
+    .public-layout .map-frame {
+        height: 440px;
     }
 }
 
@@ -3410,114 +3910,177 @@ ol {
     gap: var(--space-2);
 }
 
+.public-layout .kontak-col-header {
+    margin-bottom: 6px;
+}
+
 .public-layout .kontak-col-heading {
     font-family: var(--font-display);
-    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
-    color: var(--color-dark-olive);
+    font-size: 1.5rem;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    color: var(--color-dark-olive);
+    margin: 4px 0;
+}
+
+.public-layout .kontak-col-desc {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
     margin: 0;
 }
 
+.public-layout .kontak-cards-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .public-layout .kontak-ccard {
-    background: var(--color-cream);
-    border: 1px solid rgba(43, 47, 35, 0.10);
-    border-radius: var(--radius-1);
-    padding: 14px var(--space-2);
+    background: #ffffff;
+    border: 1px solid rgba(45, 90, 60, 0.12);
+    border-radius: var(--radius-2);
+    padding: 14px 16px;
     display: flex;
     align-items: flex-start;
     gap: 12px;
+    box-shadow: var(--shadow-low);
 }
 
 .public-layout .kontak-ccard-icon {
-    color: var(--color-moss);
-    flex-shrink: 0;
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     background: rgba(46, 94, 62, 0.08);
-    border-radius: var(--radius-1);
+    color: var(--color-moss);
+    border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 2px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.public-layout .kontak-ccard-text {
+    display: flex;
+    flex-direction: column;
 }
 
 .public-layout .kontak-ccard-label {
     font-family: var(--font-ui);
     font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.05em;
+    font-weight: 700;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
     color: var(--color-sage);
-    margin-bottom: 3px;
+    margin: 0 0 2px;
 }
 
 .public-layout .kontak-ccard-value {
     font-family: var(--font-ui);
-    font-size: 0.9375rem;
+    font-size: 0.9rem;
+    font-weight: 600;
     color: var(--color-dark-olive);
     line-height: 1.4;
     margin: 0;
 }
 
 .public-layout .kontak-wa-wrap {
-    margin-top: var(--space-1);
+    margin-top: 6px;
 }
 
 /* --------------------------------------------------------------------------
-   28.10 Footer — dark forest green
+   28.9 Footer — Forest Heritage Dark
    -------------------------------------------------------------------------- */
 
 .public-layout .public-footer {
-    background: var(--color-forest);
+    background: var(--color-forest-dark);
     color: var(--color-cream);
-    padding-block: var(--space-4);
+    padding-block: var(--space-5) var(--space-3);
     margin-top: auto;
+    border-top: 3px solid var(--color-accent);
 }
 
 .public-layout .public-footer-inner {
-    align-items: flex-start;
     display: flex;
     flex-direction: column;
     gap: var(--space-4);
+    justify-content: space-between;
 }
 
-@media (min-width: 48rem) {
+@media (min-width: 52rem) {
     .public-layout .public-footer-inner {
         flex-direction: row;
-        justify-content: space-between;
         gap: var(--space-5);
     }
 }
 
+.public-layout .footer-brand {
+    max-width: 480px;
+}
+
+.public-layout .footer-brand-badge {
+    font-family: var(--font-ui);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-accent);
+    display: block;
+    margin-bottom: 4px;
+}
+
 .public-layout .footer-brand-name {
     font-family: var(--font-display);
-    font-size: 1.0625rem;
+    font-size: 1.35rem;
     font-weight: 700;
     color: var(--color-cream);
-    margin-block: 0;
+    margin: 0 0 8px;
     letter-spacing: -0.01em;
 }
 
 .public-layout .footer-brand-tagline {
     font-family: var(--font-ui);
-    font-size: 0.8125rem;
-    color: rgba(163, 196, 171, 0.85);
-    margin-top: 3px;
+    font-size: 0.8875rem;
+    color: rgba(241, 231, 211, 0.8);
+    line-height: 1.5;
+    margin: 0 0 14px;
 }
 
 .public-layout .footer-address {
     font-family: var(--font-ui);
-    font-size: 0.8rem;
-    color: rgba(163, 196, 171, 0.75);
+    font-size: 0.825rem;
+    color: rgba(241, 231, 211, 0.7);
     line-height: 1.5;
-    margin-top: 6px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 4px 0;
+}
+
+.public-layout .footer-address svg {
+    color: var(--color-sage);
+    flex-shrink: 0;
+}
+
+.public-layout .footer-nav-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.public-layout .footer-nav-title {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(241, 231, 211, 0.6);
+    margin: 0;
 }
 
 .public-layout .footer-nav {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px 20px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px 24px;
     list-style: none;
     margin: 0;
     padding: 0;
@@ -3526,22 +4089,30 @@ ol {
 .public-layout .footer-nav-link {
     font-family: var(--font-ui);
     font-size: 0.875rem;
-    color: rgba(241, 231, 211, 0.8);
+    color: rgba(241, 231, 211, 0.85);
     text-decoration: none;
-    transition: color 0.15s;
+    transition: color 0.15s, transform 0.15s;
+    display: inline-block;
 }
 
 .public-layout .footer-nav-link:hover {
     color: var(--color-cream);
+    transform: translateX(2px);
+}
+
+.public-layout .footer-login-link {
+    color: var(--color-accent);
+    font-weight: 600;
 }
 
 .public-layout .footer-bottom {
-    border-top: 1px solid rgba(250, 247, 242, 0.12);
-    color: rgba(163, 196, 171, 0.65);
+    border-top: 1px solid rgba(250, 247, 242, 0.1);
+    color: rgba(241, 231, 211, 0.55);
     font-family: var(--font-ui);
-    font-size: 0.75rem;
-    margin-top: var(--space-3);
-    padding-top: var(--space-2);
+    font-size: 0.775rem;
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
     text-align: center;
 }
+
 

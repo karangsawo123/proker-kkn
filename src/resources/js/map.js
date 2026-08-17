@@ -28,25 +28,42 @@ L.Icon.Default.mergeOptions({
 
 // ─── Marker icon factory ──────────────────────────────────────────────────────
 
+// ─── Marker icon factory (High-contrast thematic badges) ──────────────────────
+
 const ICON_CONFIGS = {
-    UMKM: { color: '#2E5E3E', label: '🏪' },
-    PELAYANAN: { color: '#7A8F6B', label: '📋' },
-    DEFAULT: { color: '#C46A3A', label: '📍' },
+    UMKM: {
+        color: '#156635',
+        title: 'UMKM',
+        svg: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>`,
+    },
+    PELAYANAN: {
+        color: '#c46a3a',
+        title: 'Pelayanan Publik',
+        svg: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="21" x2="21" y2="21"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="5 6 12 3 19 6"/><line x1="4" y1="10" x2="4" y2="21"/><line x1="20" y1="10" x2="20" y2="21"/><line x1="8" y1="14" x2="8" y2="17"/><line x1="12" y1="14" x2="12" y2="17"/><line x1="16" y1="14" x2="16" y2="17"/></svg>`,
+    },
+    DEFAULT: {
+        color: '#1d4ed8',
+        title: 'Fasilitas & Titik',
+        svg: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    },
 };
 
 function makeIcon(markerType) {
     const cfg = ICON_CONFIGS[markerType] ?? ICON_CONFIGS.DEFAULT;
-    const svgIcon = `
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 36" width="24" height="36">
-          <path fill="${cfg.color}" d="M12 0C5.373 0 0 5.373 0 12c0 8.284 12 24 12 24S24 20.284 24 12C24 5.373 18.627 0 12 0z"/>
-          <circle cx="12" cy="12" r="5" fill="white" opacity="0.9"/>
-        </svg>`;
+    const svgHtml = `
+        <div style="position:relative;width:38px;height:48px;display:flex;flex-direction:column;align-items:center;cursor:pointer;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.38));transition:transform 0.2s cubic-bezier(0.175,0.885,0.32,1.275);">
+            <div style="width:36px;height:36px;border-radius:50%;background:${cfg.color};border:2.5px solid #ffffff;display:flex;align-items:center;justify-content:center;box-shadow:inset 0 1px 2px rgba(255,255,255,0.35);">
+                ${cfg.svg}
+            </div>
+            <div style="width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:10px solid ${cfg.color};margin-top:-2px;"></div>
+        </div>`;
     return L.divIcon({
-        html: svgIcon,
-        className: '',
-        iconSize: [24, 36],
-        iconAnchor: [12, 36],
-        popupAnchor: [0, -36],
+        html: svgHtml,
+        className: 'portal-custom-badge-icon',
+        iconSize: [38, 48],
+        iconAnchor: [19, 46],
+        popupAnchor: [0, -46],
+        tooltipAnchor: [0, -48],
     });
 }
 
@@ -179,6 +196,15 @@ export function initMap(elementId) {
                 title: marker.name,
             });
 
+            // Permanent label displaying location name above the pin without requiring a click
+            lMarker.bindTooltip(marker.name, {
+                permanent: true,
+                direction: 'top',
+                offset: [0, -38],
+                className: 'portal-map-label',
+            });
+
+            // Rich interactive popup on click
             lMarker.bindPopup(() => buildPopup(marker), {
                 maxWidth: 260,
                 className: 'portal-popup',

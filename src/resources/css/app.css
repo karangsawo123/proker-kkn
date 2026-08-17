@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
 
 /* ==========================================================================
-   Portal Informasi Desa Bendung — Design System
+   Portal Informasi Desa Bendung â€” Design System
    Visual Direction: Warm Natural & Forest Heritage
    ========================================================================== */
 
@@ -10,7 +10,7 @@
    -------------------------------------------------------------------------- */
 
 :root {
-    /* Canonical palette — Warm Natural & Forest */
+    /* Canonical palette â€” Warm Natural & Forest */
     --color-moss: #2e5e3e;
     --color-sage: #7a8f6b;
     --color-terracotta: #c65d28;
@@ -43,7 +43,7 @@
     --font-display: "Playfair Display", Georgia, serif;
     --font-ui: "Plus Jakarta Sans", system-ui, sans-serif;
 
-    /* Spacing — 8px base */
+    /* Spacing â€” 8px base */
     --space-1: 8px;
     --space-2: 16px;
     --space-3: 24px;
@@ -63,7 +63,7 @@
     --radius-4: 28px;
     --radius-full: 9999px;
 
-    /* Shadows — tinted with natural warm dark */
+    /* Shadows â€” tinted with natural warm dark */
     --shadow-low: 0 2px 8px rgba(30, 45, 30, 0.06);
     --shadow-medium: 0 8px 24px rgba(30, 45, 30, 0.08);
     --shadow-high: 0 16px 40px rgba(30, 45, 30, 0.12);
@@ -175,7 +175,7 @@ ol {
 }
 
 /* --------------------------------------------------------------------------
-   4. Layout — Auth (DEV-04 preserved)
+   4. Layout â€” Auth (DEV-04 preserved)
    -------------------------------------------------------------------------- */
 
 .app-shell {
@@ -195,7 +195,7 @@ ol {
 }
 
 /* --------------------------------------------------------------------------
-   5. Layout — Public Site
+   5. Layout â€” Public Site
    -------------------------------------------------------------------------- */
 
 /* Public page shell */
@@ -1301,7 +1301,7 @@ ol {
 }
 
 /* --------------------------------------------------------------------------
-   24. Auth Forms (DEV-04 — preserved)
+   24. Auth Forms (DEV-04 â€” preserved)
    -------------------------------------------------------------------------- */
 
 .stack > * {
@@ -2631,14 +2631,41 @@ ol {
 }
 
 /* ==========================================================================
-   28. Homepage & Public Layout Redesign — Scoped to .public-layout
+   28. Homepage & Public Layout Redesign â€” Scoped to .public-layout
    Visual Direction: Warm Natural, Forest Heritage, Editorial Typography
    ========================================================================== */
 
+html {
+    scroll-padding-top: 88px;
+}
+
+/* --------------------------------------------------------------------------
+   28.0 Public Tokens & Base
+   -------------------------------------------------------------------------- */
+
 .public-layout {
+    --font-display: "Lora", Georgia, serif;
+    --font-ui: "Plus Jakarta Sans", system-ui, sans-serif;
+
+    --p-forest: #1D3E28;
+    --p-forest-deep: #102718;
+    --p-forest-ink: #0B1D11;
+    --p-moss: #2E5E3E;
+    --p-moss-hover: #25503A;
+    --p-sage: #7A8F6B;
+    --p-clay: #C46A3A;
+    --p-clay-deep: #A8522B;
+    --p-clay-soft: rgba(196, 106, 58, 0.12);
+    --p-cream: #FAF7F2;
+    --p-beige: #F1E7D3;
+    --p-beige-deep: #E9DCC2;
+    --p-text: #262B20;
+    --p-text-soft: #5C6553;
+    --p-line: rgba(46, 94, 62, 0.14);
+
     font-family: var(--font-ui);
-    color: var(--color-dark-olive);
-    background-color: var(--color-cream);
+    color: var(--p-text);
+    background-color: var(--p-cream);
     -webkit-font-smoothing: antialiased;
 }
 
@@ -2647,8 +2674,8 @@ ol {
 .public-layout h3,
 .public-layout h4 {
     font-family: var(--font-display);
-    color: var(--color-dark-olive);
-    letter-spacing: -0.02em;
+    color: var(--p-text);
+    letter-spacing: -0.015em;
 }
 
 .public-layout .container {
@@ -2664,6 +2691,10 @@ ol {
     }
 }
 
+.public-layout .text-muted {
+    color: var(--p-text-soft);
+}
+
 /* --------------------------------------------------------------------------
    28.1 General Section Headings & Badges
    -------------------------------------------------------------------------- */
@@ -2675,40 +2706,36 @@ ol {
     margin-bottom: var(--space-4);
 }
 
-.public-layout .section-intro.text-left {
-    text-align: left;
-    margin-inline: 0;
-}
-
 .public-layout .section-badge {
     display: inline-block;
     font-family: var(--font-ui);
-    font-size: 0.6875rem;
+    font-size: 0.66rem;
     font-weight: 700;
-    letter-spacing: 0.08em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    color: var(--color-terracotta);
-    background: var(--color-accent-soft);
+    color: var(--p-clay-deep);
+    background: var(--p-clay-soft);
     padding: 4px 10px;
     border-radius: var(--radius-full);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 
 .public-layout .section-title {
     font-family: var(--font-display);
-    font-size: clamp(1.625rem, 3.2vw, 2.25rem);
-    font-weight: 700;
-    color: var(--color-dark-olive);
-    line-height: 1.2;
+    font-size: clamp(1.75rem, 3.2vw, 2.5rem);
+    font-weight: 600;
+    color: var(--p-text);
+    line-height: 1.15;
     margin: 0 0 8px;
+    letter-spacing: -0.015em;
     text-wrap: balance;
 }
 
 .public-layout .section-desc {
     font-family: var(--font-ui);
     font-size: 0.95rem;
-    color: var(--color-text-secondary);
-    line-height: 1.55;
+    color: var(--p-text-soft);
+    line-height: 1.6;
     margin: 0;
     text-wrap: pretty;
 }
@@ -2717,19 +2744,37 @@ ol {
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
-    gap: var(--space-2);
-    margin-bottom: var(--space-4);
+    gap: 16px 24px;
     flex-wrap: wrap;
+    margin-bottom: var(--space-4);
+}
+
+.public-layout .section-headbar {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px 32px;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-4);
+}
+
+.public-layout .section-note {
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    color: var(--p-text-soft);
+    line-height: 1.55;
+    max-width: 420px;
+    margin: 0 0 6px;
 }
 
 .public-layout .section-public {
     padding-block: var(--space-5);
-    background: var(--color-cream);
+    background: var(--p-cream);
 }
 
 .public-layout .section-alt {
     padding-block: var(--space-5);
-    background: var(--color-surface-alt);
+    background: var(--p-beige);
 }
 
 @media (min-width: 60rem) {
@@ -2746,7 +2791,7 @@ ol {
     font-family: var(--font-ui);
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--color-moss);
+    color: var(--p-moss);
     background: transparent;
     border: 1.5px solid rgba(46, 94, 62, 0.3);
     padding: 8px 16px;
@@ -2757,9 +2802,9 @@ ol {
 }
 
 .public-layout .btn-outline-pill:hover {
-    background: var(--color-moss);
-    color: var(--color-cream);
-    border-color: var(--color-moss);
+    background: var(--p-moss);
+    color: var(--p-cream);
+    border-color: var(--p-moss);
     transform: translateY(-1px);
 }
 
@@ -2772,18 +2817,20 @@ ol {
 }
 
 /* --------------------------------------------------------------------------
-   28.2 Header — Sticky with Soft Blur & Forest Accents
+   28.2 Header — Sticky with Soft Blur & Forest Deep Theme (Matching Footer)
    -------------------------------------------------------------------------- */
 
 .public-layout .public-header {
     position: sticky;
     top: 0;
-    z-index: 100;
-    background: rgba(250, 247, 242, 0.75);
+    z-index: 99999;
+    transform: translateZ(0);
+    will-change: transform;
+    background: rgba(16, 39, 24, 0.85);
     backdrop-filter: blur(16px) saturate(180%);
     -webkit-backdrop-filter: blur(16px) saturate(180%);
-    border-bottom: 1px solid rgba(45, 90, 60, 0.12);
-    box-shadow: 0 4px 20px rgba(24, 45, 28, 0.04);
+    border-bottom: 1px solid rgba(250, 247, 242, 0.12);
+    box-shadow: 0 4px 24px rgba(11, 29, 17, 0.35);
     transition: background-color 0.25s ease, backdrop-filter 0.25s ease;
 }
 
@@ -2791,34 +2838,54 @@ ol {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-block: 12px;
+    padding-block: 8px;
     gap: var(--space-2);
+}
+
+@media (min-width: 60rem) {
+    .public-layout .public-header-inner {
+        padding-block: 12px;
+    }
 }
 
 .public-layout .public-brand {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 9px;
     text-decoration: none;
     color: inherit;
     flex-shrink: 0;
 }
 
+@media (min-width: 60rem) {
+    .public-layout .public-brand {
+        gap: 12px;
+    }
+}
+
 .public-layout .public-brand-logo {
-    width: 42px;
-    height: 42px;
-    border-radius: 10px;
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
     object-fit: cover;
-    border: 1px solid rgba(45, 90, 60, 0.15);
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    border: 1px solid rgba(250, 247, 242, 0.2);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+@media (min-width: 60rem) {
+    .public-layout .public-brand-logo {
+        width: 42px;
+        height: 42px;
+        border-radius: 12px;
+    }
 }
 
 .public-layout .brand-logo-placeholder {
-    background: linear-gradient(135deg, var(--color-forest), var(--color-moss));
+    background: linear-gradient(135deg, var(--p-forest), var(--p-moss));
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-cream);
+    color: var(--p-cream);
 }
 
 .public-layout .public-brand-text {
@@ -2828,20 +2895,27 @@ ol {
 
 .public-layout .public-brand-name {
     font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--color-forest);
-    line-height: 1.2;
-    letter-spacing: -0.015em;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--p-cream);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+}
+
+@media (min-width: 60rem) {
+    .public-layout .public-brand-name {
+        font-size: 1.06rem;
+        line-height: 1.2;
+    }
 }
 
 .public-layout .public-brand-sub {
     font-family: var(--font-ui);
-    font-size: 0.7rem;
+    font-size: 0.62rem;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--color-sage);
+    color: rgba(241, 231, 211, 0.75);
     margin-top: 1px;
 }
 
@@ -2864,7 +2938,7 @@ ol {
     font-family: var(--font-ui);
     font-size: 0.8875rem;
     font-weight: 500;
-    color: var(--color-dark-olive);
+    color: rgba(241, 231, 211, 0.85);
     padding: 8px 12px;
     border-radius: var(--radius-1);
     text-decoration: none;
@@ -2873,12 +2947,12 @@ ol {
 }
 
 .public-layout .public-nav-link:hover {
-    color: var(--color-moss);
-    background: rgba(244, 238, 226, 0.8);
+    color: var(--p-cream);
+    background: rgba(255, 255, 255, 0.08);
 }
 
 .public-layout .public-nav-link.active {
-    color: var(--color-forest);
+    color: var(--p-cream);
     font-weight: 700;
 }
 
@@ -2889,7 +2963,7 @@ ol {
     left: 12px;
     right: 12px;
     height: 2.5px;
-    background: var(--color-accent);
+    background: var(--p-clay);
     border-radius: 2px;
 }
 
@@ -2897,24 +2971,24 @@ ol {
     display: none;
     align-items: center;
     gap: 7px;
-    background: var(--color-forest);
-    color: var(--color-cream);
+    background: var(--p-clay);
+    color: var(--p-cream);
     font-family: var(--font-ui);
     font-size: 0.85rem;
     font-weight: 600;
     padding: 9px 16px;
     border-radius: var(--radius-full);
     text-decoration: none;
-    box-shadow: 0 2px 8px rgba(24, 53, 34, 0.2);
+    box-shadow: 0 2px 8px rgba(196, 106, 58, 0.35);
     transition: all 0.2s ease;
     flex-shrink: 0;
 }
 
 .public-layout .header-cta:hover {
-    background: var(--color-primary-hover);
-    color: var(--color-cream);
+    background: var(--p-clay-deep);
+    color: var(--p-cream);
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(24, 53, 34, 0.3);
+    box-shadow: 0 4px 12px rgba(196, 106, 58, 0.45);
 }
 
 @media (min-width: 60rem) {
@@ -2923,16 +2997,15 @@ ol {
     }
 }
 
-/* Mobile Hamburger Button */
 .public-layout .mobile-menu-btn {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 5px;
-    background: transparent;
-    border: 1px solid rgba(45, 90, 60, 0.2);
-    border-radius: var(--radius-1);
-    padding: 8px;
+    gap: 4px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(250, 247, 242, 0.2);
+    border-radius: 7px;
+    padding: 6px 8px;
     cursor: pointer;
 }
 
@@ -2943,17 +3016,19 @@ ol {
 }
 
 .public-layout .hamburger-bar {
-    width: 20px;
+    width: 18px;
     height: 2px;
-    background: var(--color-forest);
+    background: var(--p-cream);
     border-radius: 2px;
     transition: transform 0.2s, opacity 0.2s;
 }
 
 .public-layout .mobile-nav {
     display: none;
-    border-top: 1px solid rgba(45, 90, 60, 0.1);
+    border-top: 1px solid rgba(250, 247, 242, 0.12);
     padding: var(--space-2) 0;
+    background: rgba(16, 39, 24, 0.96);
+    border-radius: 0 0 var(--radius-2) var(--radius-2);
 }
 
 .public-layout .mobile-nav.open {
@@ -2975,28 +3050,28 @@ ol {
     font-family: var(--font-ui);
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--color-dark-olive);
+    color: rgba(241, 231, 211, 0.9);
     text-decoration: none;
     border-radius: var(--radius-1);
     transition: background-color 0.15s;
 }
 
 .public-layout .mobile-nav-list-mobile .mobile-nav-link:hover {
-    background: var(--color-warm-beige);
-    color: var(--color-moss);
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--p-cream);
 }
 
 /* --------------------------------------------------------------------------
-   28.3 Hero Section — Full Depth, Layered & Cinematic
+   28.3 Hero — Full Depth, Layered & Cinematic
    -------------------------------------------------------------------------- */
 
 .public-layout .hero {
     position: relative;
-    background-color: var(--color-forest);
+    background-color: var(--p-forest);
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
-    min-height: calc(100dvh - 66px);
+    min-height: calc(100dvh - 52px);
     display: flex;
     align-items: flex-end;
     overflow: hidden;
@@ -3004,7 +3079,7 @@ ol {
 
 @media (min-width: 60rem) {
     .public-layout .hero {
-        min-height: calc(100dvh - 70px);
+        min-height: calc(100dvh - 68px);
     }
 }
 
@@ -3012,17 +3087,17 @@ ol {
     position: absolute;
     inset: 0;
     background:
-        linear-gradient(to right, rgba(14, 28, 18, 0.90) 0%, rgba(14, 28, 18, 0.60) 45%, rgba(14, 28, 18, 0.15) 100%),
-        linear-gradient(to top, rgba(14, 28, 18, 0.96) 0%, rgba(14, 28, 18, 0.55) 45%, transparent 80%),
-        radial-gradient(circle at 85% 20%, rgba(198, 93, 40, 0.12), transparent 45%);
+        linear-gradient(to top, rgba(9, 21, 12, 0.94) 0%, rgba(9, 21, 12, 0.55) 42%, rgba(9, 21, 12, 0.18) 74%, rgba(9, 21, 12, 0.28) 100%),
+        linear-gradient(to right, rgba(10, 24, 14, 0.82) 0%, rgba(10, 24, 14, 0.35) 55%, rgba(10, 24, 14, 0.05) 100%),
+        radial-gradient(circle at 88% 22%, rgba(196, 106, 58, 0.16), transparent 46%);
     pointer-events: none;
 }
 
 .public-layout .hero-fallback {
     background:
-        radial-gradient(circle at 20% 30%, rgba(46, 94, 62, 0.4), transparent 50%),
-        radial-gradient(circle at 85% 70%, rgba(198, 93, 40, 0.18), transparent 45%),
-        linear-gradient(135deg, #122819 0%, #1c3d28 100%);
+        radial-gradient(circle at 18% 24%, rgba(46, 94, 62, 0.45), transparent 52%),
+        radial-gradient(circle at 86% 78%, rgba(196, 106, 58, 0.2), transparent 44%),
+        linear-gradient(140deg, #0E2114 0%, #1C3E2A 58%, #244B31 100%);
 }
 
 .public-layout .hero-body {
@@ -3030,638 +3105,536 @@ ol {
     z-index: 2;
     width: 100%;
     padding-top: var(--space-5);
-    padding-bottom: var(--space-4);
+    padding-bottom: 40px;
 }
 
-@media (min-width: 60rem) {
-    .public-layout .hero-body {
-        padding-top: var(--space-6);
-        padding-bottom: 28px;
-    }
+.public-layout .hero-lockup {
+    max-width: 720px;
 }
 
-.public-layout .hero-content-wrap {
-    max-width: 680px;
+.public-layout .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #E9C9A8;
+    margin: 0 0 18px;
+}
+
+.public-layout .hero-eyebrow-rule {
+    width: 34px;
+    height: 1px;
+    background: rgba(233, 201, 168, 0.6);
+    flex-shrink: 0;
 }
 
 .public-layout .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(2.35rem, 5.8vw, 3.85rem);
-    font-weight: 700;
-    line-height: 1.12;
-    color: var(--color-cream);
-    margin: 0 0 12px;
-    letter-spacing: -0.025em;
+    font-size: clamp(2.6rem, 6.5vw, 4.6rem);
+    font-weight: 600;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--p-cream);
+    margin: 0 0 18px;
     text-wrap: balance;
 }
 
 .public-layout .hero-accent-line {
-    width: 50px;
+    width: 56px;
     height: 3px;
-    background: linear-gradient(90deg, var(--color-accent), #e0834e);
-    border-radius: 2px;
-    margin-bottom: 14px;
+    background: linear-gradient(90deg, var(--p-clay), #E08A54);
+    border-radius: 3px;
+    margin: 0 0 20px;
 }
 
 .public-layout .hero-desc {
     font-family: var(--font-ui);
-    font-size: clamp(1rem, 1.8vw, 1.125rem);
-    line-height: 1.6;
-    color: rgba(250, 247, 242, 0.9);
-    max-width: 48ch;
-    margin: 0 0 var(--space-3);
+    font-size: clamp(1rem, 1.7vw, 1.125rem);
+    line-height: 1.65;
+    color: rgba(250, 247, 242, 0.88);
+    max-width: 50ch;
+    margin: 0 0 28px;
     text-wrap: pretty;
 }
 
+.public-layout .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.public-layout .hero-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-ui);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 12px 20px;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.public-layout .hero-btn svg {
+    transition: transform 0.2s ease;
+}
+
+.public-layout .hero-btn:hover svg {
+    transform: translate(2px, -2px);
+}
+
+.public-layout .hero-btn-primary {
+    background: var(--p-cream);
+    color: var(--p-forest);
+    box-shadow: 0 6px 20px rgba(9, 21, 12, 0.25);
+}
+
+.public-layout .hero-btn-primary:hover {
+    background: #ffffff;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 26px rgba(9, 21, 12, 0.32);
+}
+
+.public-layout .hero-btn-ghost {
+    background: rgba(250, 247, 242, 0.06);
+    color: var(--p-cream);
+    border: 1px solid rgba(250, 247, 242, 0.35);
+}
+
+.public-layout .hero-btn-ghost:hover {
+    background: rgba(250, 247, 242, 0.14);
+    border-color: rgba(250, 247, 242, 0.7);
+    transform: translateY(-2px);
+}
+
 /* --------------------------------------------------------------------------
-   28.3.1 Hero Quick Access Bar (Ribbon below Hero)
+   28.3.1 Indeks Cepat â€” Editorial table of contents
    -------------------------------------------------------------------------- */
 
-.public-layout .hero-quickbar {
-    background: #ffffff;
-    border-bottom: 1px solid rgba(45, 90, 60, 0.12);
-    box-shadow: 0 4px 16px rgba(30, 45, 30, 0.04);
-    padding-block: 14px;
+.public-layout .index-bar {
+    background: var(--p-forest-deep);
     position: relative;
     z-index: 10;
+    border-top: 1px solid rgba(250, 247, 242, 0.05);
 }
 
-.public-layout .hero-quickbar-inner {
+.public-layout .index-bar-inner {
     display: flex;
-    flex-direction: column;
-    gap: 10px;
+    align-items: center;
+    gap: 20px;
 }
 
-@media (min-width: 52rem) {
-    .public-layout .hero-quickbar-inner {
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
+.public-layout .index-bar-label {
+    font-family: var(--font-ui);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--p-clay);
+    flex-shrink: 0;
+    padding-block: 16px;
+}
+
+.public-layout .index-bar-list {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.public-layout .index-bar-list::-webkit-scrollbar {
+    display: none;
+}
+
+.public-layout .index-bar-list a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(241, 231, 211, 0.82);
+    text-decoration: none;
+    padding: 16px 14px;
+    white-space: nowrap;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s, background-color 0.2s;
+}
+
+.public-layout .index-bar-list a:hover {
+    color: var(--p-cream);
+    background: rgba(250, 247, 242, 0.05);
+    border-bottom-color: var(--p-clay);
+}
+
+.public-layout .index-num {
+    font-family: var(--font-display);
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--p-clay);
+}
+
+/* --------------------------------------------------------------------------
+   28.4 Pilihan Dusun â€” Editorial Index List
+   -------------------------------------------------------------------------- */
+
+.public-layout .dusun-index {
+    display: grid;
+    grid-template-columns: 1fr;
+    border-bottom: 1px solid var(--p-line);
+}
+
+@media (min-width: 56rem) {
+    .public-layout .dusun-index {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 44px;
     }
 }
 
-.public-layout .hero-quickbar-label {
-    display: inline-flex;
+.public-layout .dusun-index-row {
+    display: flex;
     align-items: center;
-    gap: 7px;
-    font-family: var(--font-ui);
-    font-size: 0.8rem;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--color-forest);
-    white-space: nowrap;
+    gap: 18px;
+    padding: 18px 8px;
+    border-top: 1px solid var(--p-line);
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.2s ease, padding-left 0.2s ease;
+}
+
+.public-layout .dusun-index-row:hover {
+    background: rgba(250, 247, 242, 0.65);
+    padding-left: 14px;
+}
+
+.public-layout .dusun-index-num {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--p-clay);
+    min-width: 2ch;
     flex-shrink: 0;
 }
 
-.public-layout .hero-quickbar-label svg {
-    color: var(--color-accent);
-}
-
-.public-layout .hero-quickbar-links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    align-items: center;
-}
-
-.public-layout .quickbar-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-family: var(--font-ui);
-    font-size: 0.825rem;
-    font-weight: 600;
-    color: var(--color-dark-olive);
-    background: rgba(46, 94, 62, 0.06);
-    border: 1px solid rgba(45, 90, 60, 0.14);
-    padding: 6px 14px;
-    border-radius: var(--radius-full);
-    text-decoration: none;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
-
-.public-layout .quickbar-link svg {
-    color: var(--color-sage);
-    transition: transform 0.2s ease, color 0.2s ease;
-}
-
-.public-layout .quickbar-link:hover {
-    background: var(--color-moss);
-    color: var(--color-cream);
-    border-color: var(--color-moss);
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(46, 94, 62, 0.2);
-}
-
-.public-layout .quickbar-link:hover svg {
-    color: var(--color-cream);
-    transform: translate(1px, -1px);
-}
-
-/* --------------------------------------------------------------------------
-   28.4 Dusun Grid — Polished Explorer Cards
-   -------------------------------------------------------------------------- */
-
-.public-layout .dusun-compact-grid {
-    display: grid;
-    gap: 14px;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-@media (min-width: 42rem) {
-    .public-layout .dusun-compact-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-2);
-    }
-}
-
-@media (min-width: 64rem) {
-    .public-layout .dusun-compact-grid {
-        grid-template-columns: repeat(6, 1fr);
-    }
-}
-
-.public-layout .dusun-ccard {
-    background: #ffffff;
-    border: 1px solid rgba(45, 90, 60, 0.12);
-    border-radius: var(--radius-2);
-    padding: 20px 14px 18px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    text-decoration: none;
-    color: inherit;
-    box-shadow: var(--shadow-low);
-    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s, border-color 0.22s;
-    position: relative;
-    overflow: hidden;
-}
-
-.public-layout .dusun-ccard:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-card-hover);
-    border-color: rgba(198, 93, 40, 0.4);
-    background: #ffffff;
-}
-
-.public-layout .dusun-ccard-tag {
-    font-family: var(--font-ui);
-    font-size: 0.65rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--color-terracotta);
-    margin-bottom: 8px;
-}
-
-.public-layout .dusun-ccard-icon {
-    width: 52px;
-    height: 52px;
-    background: rgba(46, 94, 62, 0.07);
+.public-layout .dusun-index-icon {
+    width: 46px;
+    height: 46px;
     border-radius: 12px;
+    background: rgba(46, 94, 62, 0.08);
+    color: var(--p-moss);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--color-moss);
-    margin-bottom: 12px;
-    transition: transform 0.2s, background-color 0.2s, color 0.2s;
+    flex-shrink: 0;
+    transition: background-color 0.2s, color 0.2s, transform 0.2s;
 }
 
-.public-layout .dusun-ccard:hover .dusun-ccard-icon {
-    background: var(--color-moss);
-    color: var(--color-cream);
-    transform: scale(1.05);
+.public-layout .dusun-index-row:hover .dusun-index-icon {
+    background: var(--p-moss);
+    color: var(--p-cream);
+    transform: translateY(-2px);
 }
 
-.public-layout .dusun-ccard-text {
-    display: flex;
-    flex-direction: column;
-    gap: 4px;
-    width: 100%;
-}
-
-.public-layout .dusun-ccard-name {
-    font-family: var(--font-ui);
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--color-dark-olive);
-    line-height: 1.3;
-}
-
-.public-layout .dusun-ccard-sub {
-    font-family: var(--font-ui);
-    font-size: 0.75rem;
+.public-layout .dusun-index-name {
+    font-family: var(--font-display);
+    font-size: 1.2rem;
     font-weight: 600;
-    color: var(--color-moss);
-    opacity: 0.85;
-    transition: opacity 0.2s;
+    color: var(--p-text);
+    letter-spacing: -0.01em;
+    flex: 1;
+    min-width: 0;
 }
 
-.public-layout .dusun-ccard:hover .dusun-ccard-sub {
-    opacity: 1;
-    color: var(--color-accent);
-}
-
-/* --------------------------------------------------------------------------
-   28.5 Informasi Desa — Asymmetric Editorial Layout
-   -------------------------------------------------------------------------- */
-
-.public-layout .info-editorial-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-3);
-    align-items: stretch;
-}
-
-@media (min-width: 54rem) {
-    .public-layout .info-editorial-layout {
-        grid-template-columns: 1.25fr 1fr;
-        gap: var(--space-4);
-    }
-}
-
-.public-layout .info-feature-card {
-    background: #ffffff;
-    border: 1px solid rgba(45, 90, 60, 0.12);
-    border-radius: var(--radius-3);
-    padding: var(--space-4);
-    box-shadow: var(--shadow-low);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
-
-.public-layout .info-feature-badge {
+.public-layout .dusun-index-cta {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     font-family: var(--font-ui);
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: var(--color-moss);
-    background: rgba(46, 94, 62, 0.08);
-    padding: 5px 12px;
-    border-radius: var(--radius-full);
-    align-self: flex-start;
-    margin-bottom: var(--space-2);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--p-moss);
+    opacity: 0.75;
+    white-space: nowrap;
+    transition: opacity 0.2s, gap 0.2s, color 0.2s;
 }
 
-.public-layout .info-feature-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.4rem, 2.5vw, 1.85rem);
-    font-weight: 700;
-    color: var(--color-forest);
-    line-height: 1.25;
-    margin: 0 0 16px;
+.public-layout .dusun-index-cta svg {
+    transition: transform 0.2s;
 }
 
-.public-layout .info-feature-text {
+.public-layout .dusun-index-row:hover .dusun-index-cta {
+    opacity: 1;
+    gap: 9px;
+    color: var(--p-clay);
+}
+
+/* --------------------------------------------------------------------------
+   28.5 Informasi Desa â€” Editorial Spread
+   -------------------------------------------------------------------------- */
+
+.public-layout .info-spread {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+@media (min-width: 60rem) {
+    .public-layout .info-spread {
+        grid-template-columns: 1.1fr 1fr;
+        gap: 64px;
+    }
+}
+
+.public-layout .info-lead {
+    max-width: 46ch;
+}
+
+.public-layout .info-lead-body {
+    margin: 28px 0;
+}
+
+.public-layout .info-lead-body p {
     font-family: var(--font-ui);
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--color-dark-olive);
-    margin: 0 0 var(--space-4);
+    font-size: 1.0625rem;
+    line-height: 1.75;
+    color: var(--p-text);
 }
 
-.public-layout .info-kades-card {
+.public-layout .info-kades {
     display: flex;
     align-items: center;
     gap: 14px;
-    background: var(--color-surface-alt);
-    border: 1px solid rgba(45, 90, 60, 0.12);
-    border-radius: var(--radius-2);
-    padding: 14px 18px;
-    margin-top: auto;
+    padding-top: 22px;
+    border-top: 1px solid var(--p-line);
 }
 
 .public-layout .info-kades-avatar {
-    width: 44px;
-    height: 44px;
-    background: var(--color-forest);
-    color: var(--color-cream);
-    border-radius: 12px;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: var(--p-forest);
+    color: var(--p-cream);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-}
-
-.public-layout .info-kades-meta {
-    display: flex;
-    flex-direction: column;
 }
 
 .public-layout .info-kades-label {
     font-family: var(--font-ui);
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     font-weight: 600;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-sage);
+    color: var(--p-text-soft);
+    display: block;
+    margin-bottom: 2px;
 }
 
 .public-layout .info-kades-name {
     font-family: var(--font-ui);
-    font-size: 0.95rem;
+    font-size: 0.98rem;
     font-weight: 700;
-    color: var(--color-dark-olive);
+    color: var(--p-text);
 }
 
-.public-layout .info-stack-cards {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-}
-
-.public-layout .info-subcard {
+.public-layout .info-facts {
     background: #ffffff;
-    border: 1px solid rgba(45, 90, 60, 0.12);
-    border-radius: var(--radius-2);
-    padding: var(--space-3);
+    border: 1px solid var(--p-line);
+    border-radius: 18px;
+    padding: 28px 28px 12px;
     box-shadow: var(--shadow-low);
-    display: flex;
-    flex-direction: column;
-    gap: 14px;
 }
 
-.public-layout .info-subcard-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid rgba(45, 90, 60, 0.08);
-}
-
-.public-layout .info-subcard-icon {
-    width: 38px;
-    height: 38px;
-    background: rgba(46, 94, 62, 0.08);
-    color: var(--color-moss);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
-}
-
-.public-layout .info-subcard-category {
-    font-family: var(--font-ui);
-    font-size: 0.6875rem;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--color-terracotta);
-    display: block;
-}
-
-.public-layout .info-subcard-title {
+.public-layout .info-facts-title {
     font-family: var(--font-display);
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--color-dark-olive);
+    font-size: 1.15rem;
+    font-weight: 600;
+    color: var(--p-text);
+    margin: 0 0 10px;
+}
+
+.public-layout .info-facts-list {
     margin: 0;
 }
 
-.public-layout .info-subcard-items {
+.public-layout .info-fact {
+    padding: 16px 0;
+    border-top: 1px solid var(--p-line);
+}
+
+.public-layout .info-fact:first-of-type {
+    border-top: none;
+}
+
+.public-layout .info-fact dt {
     display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.public-layout .info-item-row {
-    display: flex;
-    align-items: flex-start;
-    gap: 10px;
-}
-
-.public-layout .info-item-icon {
-    color: var(--color-sage);
-    flex-shrink: 0;
-    margin-top: 3px;
-}
-
-.public-layout .info-item-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.public-layout .info-item-label {
+    align-items: center;
+    gap: 8px;
     font-family: var(--font-ui);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
     font-weight: 600;
-    color: var(--color-text-secondary);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--p-sage);
+    margin-bottom: 6px;
 }
 
-.public-layout .info-item-value {
+.public-layout .info-fact dt svg {
+    color: var(--p-clay);
+    flex-shrink: 0;
+}
+
+.public-layout .info-fact dd {
+    margin: 0;
     font-family: var(--font-ui);
-    font-size: 0.9rem;
+    font-size: 0.98rem;
     font-weight: 500;
-    color: var(--color-dark-olive);
-    line-height: 1.4;
+    color: var(--p-text);
+    line-height: 1.45;
 }
 
 /* --------------------------------------------------------------------------
-   28.6 Pengumuman Slider — Horizontal Snap Scroll & Actions
+   28.6 Pengumuman â€” Editorial Notice List
    -------------------------------------------------------------------------- */
 
-.public-layout .section-heading-actions {
+.public-layout .notice-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-bottom: 1px solid var(--p-line);
+}
+
+.public-layout .notice-row {
+    display: grid;
+    grid-template-columns: 84px 1fr 44px;
+    gap: 18px;
+    align-items: center;
+    padding: 20px 6px;
+    border-top: 1px solid var(--p-line);
+}
+
+.public-layout .notice-date {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    line-height: 1.05;
+}
+
+.public-layout .notice-date-day {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--p-forest);
+}
+
+.public-layout .notice-date-month {
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--p-text-soft);
+    margin-top: 4px;
+}
+
+.public-layout .notice-meta {
     display: flex;
     align-items: center;
     gap: 12px;
     flex-wrap: wrap;
+    margin-bottom: 6px;
 }
 
-.public-layout .slider-arrows {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.public-layout .slider-arrow-btn {
-    width: 36px;
-    height: 36px;
-    border-radius: var(--radius-full);
-    background: #ffffff;
-    border: 1.5px solid rgba(45, 90, 60, 0.2);
-    color: var(--color-moss);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
-    transition: all 0.2s ease;
-}
-
-.public-layout .slider-arrow-btn:hover {
-    background: var(--color-moss);
-    color: var(--color-cream);
-    border-color: var(--color-moss);
-    transform: scale(1.05);
-}
-
-.public-layout .slider-arrow-btn:active {
-    transform: scale(0.95);
-}
-
-.public-layout .pengumuman-slider-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.public-layout .pengumuman-slider {
-    display: flex;
-    gap: var(--space-3);
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    padding: 6px 2px 20px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(46, 94, 62, 0.35) transparent;
-}
-
-.public-layout .pengumuman-slider::-webkit-scrollbar {
-    height: 6px;
-}
-
-.public-layout .pengumuman-slider::-webkit-scrollbar-track {
-    background: rgba(45, 90, 60, 0.06);
-    border-radius: var(--radius-full);
-}
-
-.public-layout .pengumuman-slider::-webkit-scrollbar-thumb {
-    background: rgba(46, 94, 62, 0.35);
-    border-radius: var(--radius-full);
-}
-
-.public-layout .pengumuman-slider::-webkit-scrollbar-thumb:hover {
-    background: var(--color-moss);
-}
-
-.public-layout .pengumuman-slider .pengumuman-card {
-    flex: 0 0 calc(33.333% - 16px);
-    min-width: 320px;
-    max-width: 400px;
-    scroll-snap-align: start;
-    background: #ffffff;
-    border: 1px solid rgba(45, 90, 60, 0.12);
-    border-radius: var(--radius-2);
-    padding: var(--space-3);
-    box-shadow: var(--shadow-low);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.22s ease, box-shadow 0.22s, border-color 0.22s;
-}
-
-@media (max-width: 52rem) {
-    .public-layout .pengumuman-slider .pengumuman-card {
-        flex: 0 0 80vw;
-        min-width: 270px;
-        max-width: 340px;
-    }
-}
-
-.public-layout .pengumuman-slider .pengumuman-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-card-hover);
-    border-color: rgba(45, 90, 60, 0.28);
-}
-
-.public-layout .pengumuman-card-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-    margin-bottom: 14px;
-    flex-wrap: wrap;
-}
-
-.public-layout .pengumuman-chip {
+.public-layout .notice-chip {
     font-family: var(--font-ui);
-    font-size: 0.6875rem;
+    font-size: 0.66rem;
     font-weight: 700;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--color-terracotta);
-    background: var(--color-accent-soft);
+    color: var(--p-clay-deep);
+    background: var(--p-clay-soft);
     padding: 3px 9px;
     border-radius: var(--radius-full);
 }
 
-.public-layout .pengumuman-card-date {
+.public-layout .notice-expiry {
     font-family: var(--font-ui);
-    font-size: 0.75rem;
-    color: var(--color-text-secondary);
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    font-size: 0.78rem;
+    color: var(--p-text-soft);
 }
 
-.public-layout .pengumuman-card-body {
-    flex: 1;
-    margin-bottom: var(--space-3);
-}
-
-.public-layout .pengumuman-card-title {
+.public-layout .notice-title {
     margin: 0;
-    font-size: 1.125rem;
-    line-height: 1.35;
+    font-size: 1.1rem;
+    line-height: 1.4;
 }
 
-.public-layout .pengumuman-title-link {
+.public-layout .notice-title-link {
     font-family: var(--font-display);
-    font-size: 1.125rem;
-    font-weight: 700;
-    color: var(--color-dark-olive);
+    font-weight: 600;
+    color: var(--p-text);
     text-decoration: none;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
     transition: color 0.2s;
 }
 
-.public-layout .pengumuman-title-link:hover {
-    color: var(--color-moss);
+.public-layout .notice-title-link:hover {
+    color: var(--p-moss);
 }
 
-.public-layout .pengumuman-card-footer {
-    padding-top: 12px;
-    border-top: 1px solid rgba(45, 90, 60, 0.08);
-}
-
-.public-layout .pengumuman-card-link {
-    font-family: var(--font-ui);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--color-moss);
-    text-decoration: none;
-    display: inline-flex;
+.public-layout .notice-arrow {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    border: 1px solid var(--p-line);
+    background: #ffffff;
+    color: var(--p-moss);
+    display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: center;
+    text-decoration: none;
     transition: all 0.2s ease;
+    justify-self: end;
 }
 
-.public-layout .pengumuman-card-link:hover {
-    color: var(--color-accent);
-    gap: 9px;
+.public-layout .notice-arrow:hover {
+    background: var(--p-moss);
+    color: var(--p-cream);
+    border-color: var(--p-moss);
+    transform: translateX(2px);
+}
+
+@media (max-width: 40rem) {
+    .public-layout .notice-row {
+        grid-template-columns: 66px 1fr 36px;
+        gap: 12px;
+        padding: 18px 4px;
+    }
+
+    .public-layout .notice-date-day {
+        font-size: 1.5rem;
+    }
 }
 
 /* --------------------------------------------------------------------------
-   28.7 Agenda Grid — Event Date Chip & Status Card
+   28.7 Agenda â€” Event Cards
    -------------------------------------------------------------------------- */
 
 .public-layout .agenda-grid {
     display: grid;
-    gap: var(--space-3);
     grid-template-columns: 1fr;
+    gap: 20px;
 }
 
 @media (min-width: 48rem) {
@@ -3672,78 +3645,78 @@ ol {
 
 .public-layout .agenda-card {
     background: #ffffff;
-    border: 1px solid rgba(45, 90, 60, 0.12);
-    border-radius: var(--radius-2);
-    padding: var(--space-3);
+    border: 1px solid var(--p-line);
+    border-radius: 18px;
+    padding: 22px 22px 20px;
     box-shadow: var(--shadow-low);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    transition: transform 0.22s ease, box-shadow 0.22s, border-color 0.22s;
+    gap: 14px;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s ease;
 }
 
 .public-layout .agenda-card:hover {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
     box-shadow: var(--shadow-card-hover);
-    border-color: rgba(45, 90, 60, 0.28);
 }
 
-.public-layout .agenda-card-header {
+.public-layout .agenda-date {
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 12px;
-    margin-bottom: 14px;
-}
-
-.public-layout .agenda-date-badge {
-    background: var(--color-surface-alt);
-    border: 1px solid rgba(45, 90, 60, 0.12);
-    border-radius: 10px;
-    padding: 6px 12px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    line-height: 1.1;
-    min-width: 60px;
+    align-items: baseline;
+    gap: 8px;
 }
 
 .public-layout .agenda-date-day {
-    font-family: var(--font-ui);
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--color-forest);
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    line-height: 1;
+    color: var(--p-forest);
 }
 
 .public-layout .agenda-date-month {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--p-text-soft);
+}
+
+.public-layout .agenda-date-year {
     font-family: var(--font-ui);
-    font-size: 0.65rem;
-    font-weight: 700;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-sage);
+    color: var(--p-text-soft);
+    margin-left: auto;
 }
 
-.public-layout .agenda-status-wrap {
+.public-layout .agenda-card-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.public-layout .agenda-scope {
     font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--p-sage);
 }
 
-.public-layout .agenda-card-body {
-    flex: 1;
-    margin-bottom: var(--space-3);
-}
-
-.public-layout .agenda-card-title {
-    margin: 0 0 12px;
-    font-size: 1.075rem;
-    line-height: 1.35;
+.public-layout .agenda-title {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.4;
 }
 
 .public-layout .agenda-title-link {
     font-family: var(--font-display);
-    font-size: 1.075rem;
-    font-weight: 700;
-    color: var(--color-dark-olive);
+    font-weight: 600;
+    color: var(--p-text);
     text-decoration: none;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -3753,27 +3726,30 @@ ol {
 }
 
 .public-layout .agenda-title-link:hover {
-    color: var(--color-moss);
+    color: var(--p-moss);
 }
 
-.public-layout .agenda-card-meta {
+.public-layout .agenda-meta {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 7px;
+    margin-top: auto;
 }
 
 .public-layout .agenda-meta-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     gap: 8px;
     font-family: var(--font-ui);
-    font-size: 0.8rem;
-    color: var(--color-text-secondary);
+    font-size: 0.82rem;
+    color: var(--p-text-soft);
+    line-height: 1.4;
 }
 
 .public-layout .agenda-meta-row svg {
-    color: var(--color-sage);
+    color: var(--p-sage);
     flex-shrink: 0;
+    margin-top: 2px;
 }
 
 .public-layout .truncate-line {
@@ -3782,176 +3758,316 @@ ol {
     text-overflow: ellipsis;
 }
 
-.public-layout .agenda-card-footer {
-    padding-top: 12px;
-    border-top: 1px solid rgba(45, 90, 60, 0.08);
-}
-
-.public-layout .agenda-card-detail {
+.public-layout .agenda-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
     font-family: var(--font-ui);
     font-size: 0.85rem;
     font-weight: 600;
-    color: var(--color-moss);
+    color: var(--p-moss);
     text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    transition: all 0.2s ease;
+    margin-top: 4px;
+    transition: color 0.2s, gap 0.2s;
 }
 
-.public-layout .agenda-card-detail:hover {
-    color: var(--color-accent);
-    gap: 9px;
+.public-layout .agenda-link svg {
+    transition: transform 0.2s;
+}
+
+.public-layout .agenda-link:hover {
+    color: var(--p-clay);
+    gap: 10px;
 }
 
 /* --------------------------------------------------------------------------
-   28.8 Peta & Kontak Desa — Side-by-Side Dual Module
+   28.8 Peta & Kontak Desa â€” Side-by-Side Module
    -------------------------------------------------------------------------- */
 
 .public-layout .peta-kontak-section {
-    background: var(--color-cream);
-    border-top: 1px solid rgba(45, 90, 60, 0.08);
+    background: var(--p-cream);
+    border-top: 1px solid var(--p-line);
 }
 
-.public-layout .peta-kontak-wrapper {
+.public-layout .peta-kontak-layout {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-4);
+    gap: 32px;
     align-items: start;
 }
 
 @media (min-width: 60rem) {
-    .public-layout .peta-kontak-wrapper {
-        grid-template-columns: 1fr 340px;
-        gap: var(--space-4);
+    .public-layout .peta-kontak-layout {
+        grid-template-columns: minmax(0, 1fr) 380px;
+        gap: 40px;
     }
 }
 
 .public-layout .peta-col {
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
 }
 
-.public-layout .map-filters-card {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
+.public-layout .peta-desc {
+    max-width: 56ch;
+    margin-bottom: 16px;
+}
+
+.public-layout .map-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 24px;
     background: #ffffff;
-    border: 1px solid rgba(45, 90, 60, 0.12);
-    border-radius: var(--radius-2);
-    padding: 14px 18px;
+    border: 1px solid var(--p-line);
+    border-radius: 14px;
+    padding: 14px 16px;
     box-shadow: var(--shadow-low);
-    margin-bottom: 8px;
-}
-
-@media (min-width: 40rem) {
-    .public-layout .map-filters-card {
-        grid-template-columns: 1fr 1fr;
-    }
+    margin-bottom: 16px;
 }
 
 .public-layout .map-filter-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    flex: 1;
+    min-width: 210px;
 }
 
 .public-layout .map-filter-label {
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 6px;
     font-family: var(--font-ui);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    color: var(--color-forest);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--p-moss);
 }
 
 .public-layout .map-filter-label svg {
-    color: var(--color-accent);
+    color: var(--p-clay);
 }
 
 .public-layout .map-filter-select {
     font-family: var(--font-ui);
     font-size: 0.875rem;
     font-weight: 500;
-    color: var(--color-dark-olive);
-    background-color: var(--color-cream);
+    color: var(--p-text);
+    background-color: var(--p-cream);
     border: 1px solid rgba(45, 90, 60, 0.18);
     border-radius: var(--radius-1);
-    padding: 8px 12px;
+    padding: 9px 12px;
     cursor: pointer;
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .public-layout .map-filter-select:focus {
     outline: none;
-    border-color: var(--color-moss);
+    border-color: var(--p-moss);
     box-shadow: 0 0 0 3px rgba(46, 94, 62, 0.15);
 }
 
 .public-layout .map-frame {
     height: 400px;
-    border-radius: var(--radius-2);
+    border-radius: 18px;
     overflow: hidden;
-    border: 1px solid rgba(45, 90, 60, 0.15);
+    border: 1px solid var(--p-line);
     box-shadow: var(--shadow-medium);
+    position: relative;
+    z-index: 1;
+    isolation: isolate;
 }
 
 @media (min-width: 60rem) {
     .public-layout .map-frame {
-        height: 440px;
+        height: 470px;
     }
 }
 
-.public-layout .kontak-col {
+.public-layout .peta-kontak-section,
+.public-layout .peta-col,
+.public-layout #map-desa,
+.public-layout #map-dusun,
+.public-layout .leaflet-container {
+    position: relative;
+    z-index: 1;
+}
+
+.public-layout .leaflet-pane {
+    z-index: 2 !important;
+}
+
+.public-layout .leaflet-top,
+.public-layout .leaflet-bottom {
+    z-index: 10 !important;
+}
+
+/* --------------------------------------------------------------------------
+   28.8.1 Leaflet Custom Thematic Pins & Permanent Labels
+   -------------------------------------------------------------------------- */
+
+.public-layout .portal-custom-badge-icon,
+.public-layout .portal-custom-div-icon,
+.public-layout .leaflet-div-icon {
+    background: transparent !important;
+    border: none !important;
+}
+
+.public-layout .portal-map-pin {
+    position: relative;
+    width: 32px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.32));
+    transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer;
+}
+
+.public-layout .portal-map-pin:hover {
+    transform: translateY(-4px) scale(1.12);
+}
+
+.public-layout .portal-pin-shape {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 32px;
+    height: 44px;
+}
+
+.public-layout .portal-pin-icon {
+    position: relative;
+    z-index: 2;
+    margin-top: -12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+}
+
+.public-layout .portal-map-label {
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(45, 90, 60, 0.22) !important;
+    border-radius: var(--radius-full) !important;
+    padding: 3px 10px !important;
+    font-family: var(--font-ui) !important;
+    font-size: 0.75rem !important;
+    font-weight: 700 !important;
+    color: var(--p-forest-deep) !important;
+    box-shadow: 0 3px 10px rgba(16, 39, 24, 0.2) !important;
+    white-space: nowrap !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background-color 0.18s ease !important;
+}
+
+.public-layout .portal-map-label::before {
+    border-top-color: rgba(255, 255, 255, 0.96) !important;
+}
+
+.public-layout .portal-map-label:hover {
+    transform: translateY(-2px) scale(1.04);
+    box-shadow: 0 5px 14px rgba(16, 39, 24, 0.28) !important;
+    background: #ffffff !important;
+    color: var(--p-moss) !important;
+    border-color: var(--p-moss) !important;
+}
+
+.public-layout .portal-popup .leaflet-popup-content-wrapper {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid rgba(45, 90, 60, 0.14);
+    box-shadow: 0 8px 24px rgba(16, 39, 24, 0.18);
+    padding: 2px;
+}
+
+.public-layout .portal-popup .leaflet-popup-content {
+    margin: 12px 14px;
+    font-family: var(--font-ui);
+}
+
+.public-layout .portal-popup .leaflet-popup-tip {
+    background: #ffffff;
+}
+
+/* Kontak Desa â€” Forest Panel */
+.public-layout .kontak-panel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+    background: linear-gradient(155deg, var(--p-forest) 0%, var(--p-forest-deep) 100%);
+    color: var(--p-cream);
+    padding: 30px 28px;
+    box-shadow: var(--shadow-high);
     display: flex;
     flex-direction: column;
-    gap: var(--space-2);
+    gap: 22px;
 }
 
-.public-layout .kontak-col-header {
-    margin-bottom: 6px;
+.public-layout .kontak-panel-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 88% 8%, rgba(196, 106, 58, 0.22), transparent 46%);
+    pointer-events: none;
 }
 
-.public-layout .kontak-col-heading {
+.public-layout .kontak-panel-head,
+.public-layout .kontak-list,
+.public-layout .kontak-wa-wrap {
+    position: relative;
+    z-index: 1;
+}
+
+.public-layout .kontak-badge {
+    color: #E9A479;
+    background: rgba(196, 106, 58, 0.18);
+}
+
+.public-layout .kontak-heading {
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: var(--color-dark-olive);
-    margin: 4px 0;
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--p-cream);
+    margin: 0 0 6px;
 }
 
-.public-layout .kontak-col-desc {
+.public-layout .kontak-desc {
     font-family: var(--font-ui);
-    font-size: 0.85rem;
-    color: var(--color-text-secondary);
+    font-size: 0.875rem;
+    color: rgba(241, 231, 211, 0.78);
+    line-height: 1.55;
     margin: 0;
 }
 
-.public-layout .kontak-cards-stack {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+.public-layout .kontak-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.public-layout .kontak-ccard {
-    background: #ffffff;
-    border: 1px solid rgba(45, 90, 60, 0.12);
-    border-radius: var(--radius-2);
-    padding: 14px 16px;
+.public-layout .kontak-item {
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    box-shadow: var(--shadow-low);
+    padding: 14px 0;
+    border-top: 1px solid rgba(250, 247, 242, 0.14);
 }
 
-.public-layout .kontak-ccard-icon {
+.public-layout .kontak-item:first-child {
+    border-top: none;
+}
+
+.public-layout .kontak-item-icon {
     width: 38px;
     height: 38px;
-    background: rgba(46, 94, 62, 0.08);
-    color: var(--color-moss);
-    border-radius: 10px;
+    border-radius: 12px;
+    background: rgba(250, 247, 242, 0.08);
+    color: #E9A479;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3959,44 +4075,58 @@ ol {
     margin-top: 1px;
 }
 
-.public-layout .kontak-ccard-text {
+.public-layout .kontak-item-body {
     display: flex;
     flex-direction: column;
+    min-width: 0;
 }
 
-.public-layout .kontak-ccard-label {
+.public-layout .kontak-item-label {
     font-family: var(--font-ui);
-    font-size: 0.7rem;
-    font-weight: 700;
-    letter-spacing: 0.04em;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
     text-transform: uppercase;
-    color: var(--color-sage);
-    margin: 0 0 2px;
+    color: rgba(241, 231, 211, 0.6);
+    margin-bottom: 3px;
 }
 
-.public-layout .kontak-ccard-value {
+.public-layout .kontak-item-value {
     font-family: var(--font-ui);
     font-size: 0.9rem;
     font-weight: 600;
-    color: var(--color-dark-olive);
+    color: var(--p-cream);
     line-height: 1.4;
-    margin: 0;
+    word-break: break-word;
 }
 
 .public-layout .kontak-wa-wrap {
-    margin-top: 6px;
+    margin-top: auto;
+}
+
+.public-layout .kontak-wa-wrap .btn-whatsapp {
+    width: 100%;
+    justify-content: center;
+    border-radius: 12px;
+    padding: 13px 20px;
+    box-shadow: 0 6px 18px rgba(18, 39, 24, 0.35);
+}
+
+.public-layout .kontak-panel .empty-state {
+    position: relative;
+    z-index: 1;
 }
 
 /* --------------------------------------------------------------------------
-   28.9 Footer — Forest Heritage Dark
+   28.9 Footer â€” Forest Heritage Dark
    -------------------------------------------------------------------------- */
 
 .public-layout .public-footer {
-    background: var(--color-forest-dark);
-    color: var(--color-cream);
+    background: var(--p-forest-deep);
+    color: var(--p-cream);
     padding-block: var(--space-5) var(--space-3);
     margin-top: auto;
-    border-top: 3px solid var(--color-accent);
+    border-top: 3px solid var(--p-clay);
 }
 
 .public-layout .public-footer-inner {
@@ -4023,7 +4153,7 @@ ol {
     font-weight: 800;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-accent);
+    color: var(--p-clay);
     display: block;
     margin-bottom: 4px;
 }
@@ -4031,8 +4161,8 @@ ol {
 .public-layout .footer-brand-name {
     font-family: var(--font-display);
     font-size: 1.35rem;
-    font-weight: 700;
-    color: var(--color-cream);
+    font-weight: 600;
+    color: var(--p-cream);
     margin: 0 0 8px;
     letter-spacing: -0.01em;
 }
@@ -4057,7 +4187,7 @@ ol {
 }
 
 .public-layout .footer-address svg {
-    color: var(--color-sage);
+    color: var(--p-sage);
     flex-shrink: 0;
 }
 
@@ -4096,12 +4226,12 @@ ol {
 }
 
 .public-layout .footer-nav-link:hover {
-    color: var(--color-cream);
+    color: var(--p-cream);
     transform: translateX(2px);
 }
 
 .public-layout .footer-login-link {
-    color: var(--color-accent);
+    color: var(--p-clay);
     font-weight: 600;
 }
 
@@ -4115,4 +4245,714 @@ ol {
     text-align: center;
 }
 
+/* --------------------------------------------------------------------------
+   28.10 Scroll Reveal
+   -------------------------------------------------------------------------- */
 
+html.js .public-layout [data-reveal]:not(.is-revealed) {
+    opacity: 0;
+    transform: translateY(18px);
+}
+
+.public-layout [data-reveal] {
+    transition: opacity 0.6s ease, transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.public-layout [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html.js .public-layout [data-reveal]:not(.is-revealed) {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .public-layout [data-reveal] {
+        transition: none;
+    }
+}
+/* ==========================================================================
+   29. Dusun Detail Page â€” Scoped to .public-layout
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   29.1 Dusun Hero â€” Shallower than homepage, same editorial language
+   -------------------------------------------------------------------------- */
+
+.public-layout .dusun-hero {
+    position: relative;
+    background-color: var(--p-forest);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: clamp(320px, 40vh, 460px);
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+}
+
+.public-layout .dusun-hero-body {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding-top: var(--space-5);
+    padding-bottom: 36px;
+}
+
+.public-layout .dusun-hero-lockup {
+    max-width: 640px;
+}
+
+/* --------------------------------------------------------------------------
+   29.2 Profil Dusun â€” Editorial Spread
+   -------------------------------------------------------------------------- */
+
+.public-layout .dusun-profile-spread {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+@media (min-width: 56rem) {
+    .public-layout .dusun-profile-spread {
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+    }
+}
+
+.public-layout .dusun-profile-body {
+    font-family: var(--font-ui);
+    font-size: 1.0625rem;
+    line-height: 1.78;
+    color: var(--p-text);
+    margin: 22px 0;
+}
+
+.public-layout .dusun-profile-media {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.public-layout .dusun-profile-media .media-img,
+.public-layout .dusun-profile-media .dusun-profile-img {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    display: block;
+    border-radius: 20px;
+}
+
+.public-layout .dusun-profile-media .media-placeholder {
+    aspect-ratio: 4 / 3;
+    background: linear-gradient(140deg, var(--p-beige) 0%, var(--p-beige-deep) 100%);
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--p-sage);
+}
+
+/* Fakta ringkas dusun */
+.public-layout .dusun-facts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    margin: 0;
+    border: 1px solid var(--p-line);
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: var(--shadow-low);
+}
+
+.public-layout .dusun-fact {
+    padding: 16px 18px;
+    border-bottom: 1px solid var(--p-line);
+    border-right: 1px solid var(--p-line);
+}
+
+.public-layout .dusun-fact:nth-child(2n) {
+    border-right: none;
+}
+
+.public-layout .dusun-fact:nth-last-child(-n+2) {
+    border-bottom: none;
+}
+
+.public-layout .dusun-fact dt {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--p-sage);
+    margin-bottom: 6px;
+}
+
+.public-layout .dusun-fact dt svg {
+    color: var(--p-clay);
+    flex-shrink: 0;
+}
+
+.public-layout .dusun-fact dd {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--p-text);
+}
+
+/* --------------------------------------------------------------------------
+   29.3 Kepala Dusun â€” Leader Card
+   -------------------------------------------------------------------------- */
+
+.public-layout .leader-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    background: #fff;
+    border: 1px solid var(--p-line);
+    border-radius: 20px;
+    padding: 28px 28px 24px;
+    box-shadow: var(--shadow-low);
+    max-width: 560px;
+    margin-top: var(--space-3);
+    position: relative;
+    overflow: hidden;
+}
+
+.public-layout .leader-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--p-clay), var(--p-moss));
+    border-radius: 4px 0 0 4px;
+}
+
+.public-layout .leader-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, var(--p-forest), var(--p-moss));
+    color: var(--p-cream);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.public-layout .leader-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.public-layout .leader-role {
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--p-clay-deep);
+    display: block;
+    margin-bottom: 4px;
+}
+
+.public-layout .leader-name {
+    font-family: var(--font-display);
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--p-text);
+    display: block;
+    margin-bottom: 8px;
+}
+
+.public-layout .leader-desc {
+    font-family: var(--font-ui);
+    font-size: 0.875rem;
+    color: var(--p-text-soft);
+    line-height: 1.55;
+    margin: 0;
+}
+
+.public-layout .leader-badge-wrap {
+    color: var(--p-beige-deep);
+    flex-shrink: 0;
+    opacity: 0.35;
+    align-self: center;
+}
+
+/* --------------------------------------------------------------------------
+   29.4 Kontak Pelayanan â€” Petugas Cards
+   -------------------------------------------------------------------------- */
+
+.public-layout .kontak-card-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+@media (min-width: 36rem) {
+    .public-layout .kontak-card-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 56rem) {
+    .public-layout .kontak-card-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.public-layout .kontak-card {
+    background: #fff;
+    border: 1px solid var(--p-line);
+    border-radius: 18px;
+    padding: 22px 20px 18px;
+    box-shadow: var(--shadow-low);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s;
+}
+
+.public-layout .kontak-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.public-layout .kontak-card-top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.public-layout .kontak-card-photo {
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.public-layout .kontak-card-photo-fallback {
+    background: linear-gradient(135deg, var(--p-forest), var(--p-moss));
+    color: rgba(250, 247, 242, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.public-layout .kontak-card-id {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.public-layout .kontak-card-name {
+    font-family: var(--font-ui);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--p-text);
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.public-layout .kontak-card-jabatan {
+    font-family: var(--font-ui);
+    font-size: 0.78rem;
+    color: var(--p-text-soft);
+    margin-top: 2px;
+}
+
+.public-layout .kontak-card-actions {
+    margin-top: auto;
+}
+
+.public-layout .kontak-card-actions .btn-whatsapp {
+    width: 100%;
+    justify-content: center;
+    font-size: 0.85rem;
+    padding: 10px 14px;
+    border-radius: 10px;
+}
+
+/* --------------------------------------------------------------------------
+   29.5 UMKM Grid
+   -------------------------------------------------------------------------- */
+
+.public-layout .umkm-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+@media (min-width: 36rem) {
+    .public-layout .umkm-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (min-width: 56rem) {
+    .public-layout .umkm-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.public-layout .umkm-card {
+    background: #fff;
+    border: 1px solid var(--p-line);
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: var(--shadow-low);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.22s;
+}
+
+.public-layout .umkm-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-card-hover);
+}
+
+.public-layout .umkm-card-media {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+    background: var(--p-beige);
+}
+
+.public-layout .umkm-card-media .media-img,
+.public-layout .umkm-card-media .umkm-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.public-layout .umkm-card:hover .umkm-card-media .media-img,
+.public-layout .umkm-card:hover .umkm-card-media .umkm-card-img {
+    transform: scale(1.04);
+}
+
+.public-layout .umkm-card-media .media-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--p-sage);
+}
+
+.public-layout .umkm-card-body {
+    padding: 18px 18px 12px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.public-layout .umkm-card-type {
+    font-family: var(--font-ui);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--p-clay-deep);
+    background: var(--p-clay-soft);
+    padding: 3px 9px;
+    border-radius: var(--radius-full);
+    display: inline-block;
+    align-self: flex-start;
+}
+
+.public-layout .umkm-card-name {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--p-text);
+    margin: 0;
+    line-height: 1.35;
+}
+
+.public-layout .umkm-tag-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.public-layout .umkm-tag {
+    font-family: var(--font-ui);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--p-moss);
+    background: rgba(46, 94, 62, 0.08);
+    padding: 3px 8px;
+    border-radius: var(--radius-full);
+    border: 1px solid rgba(46, 94, 62, 0.15);
+}
+
+.public-layout .umkm-tag-more {
+    color: var(--p-text-soft);
+    background: transparent;
+    border-color: var(--p-line);
+}
+
+.public-layout .umkm-card-footer {
+    padding: 0 18px 18px;
+}
+
+/* --------------------------------------------------------------------------
+   29.6 Fasilitas List
+   -------------------------------------------------------------------------- */
+
+.public-layout .facility-list {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid var(--p-line);
+}
+
+.public-layout .facility-item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 18px 6px;
+    border-top: 1px solid var(--p-line);
+    transition: background-color 0.15s;
+}
+
+.public-layout .facility-item:hover {
+    background: rgba(250, 247, 242, 0.65);
+}
+
+.public-layout .facility-item-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: rgba(46, 94, 62, 0.08);
+    color: var(--p-moss);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.public-layout .facility-item:hover .facility-item-icon {
+    background: var(--p-moss);
+    color: var(--p-cream);
+}
+
+.public-layout .facility-item-body {
+    flex: 1;
+    min-width: 0;
+}
+
+.public-layout .facility-item-name {
+    font-family: var(--font-display);
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--p-text);
+    margin: 0 0 4px;
+}
+
+.public-layout .facility-item-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    color: var(--p-text-soft);
+    margin: 0;
+}
+
+.public-layout .facility-cat-tag {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--p-clay-deep);
+    background: var(--p-clay-soft);
+    padding: 2px 7px;
+    border-radius: var(--radius-full);
+}
+
+.public-layout .facility-addr {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 260px;
+}
+
+.public-layout .facility-item-action {
+    flex-shrink: 0;
+}
+
+.public-layout .facility-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-ui);
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--p-moss);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: color 0.2s, gap 0.2s;
+}
+
+.public-layout .facility-link:hover {
+    color: var(--p-clay);
+    gap: 9px;
+}
+
+.public-layout .facility-link svg {
+    transition: transform 0.2s;
+}
+
+/* --------------------------------------------------------------------------
+   29.7 Peta Dusun Section
+   -------------------------------------------------------------------------- */
+
+.public-layout .peta-dusun-section .section-title {
+    margin-bottom: var(--space-2);
+}
+
+/* media-img and media-placeholder used as standalone in umkm-card-media */
+.public-layout .umkm-card-media .media-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+/* ==========================================================================
+   30. Public Layout Overrides â€” Token & Component Fixes
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   30.1 Quick Navigation â€” Override legacy section-19 with --p-* tokens
+   Applied when inside .public-layout; overrides specificity of section 19
+   -------------------------------------------------------------------------- */
+
+.public-layout .quick-nav {
+    background: var(--p-forest-deep);
+    border-bottom: 1px solid rgba(250, 247, 242, 0.07);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding-block: 0;
+    position: sticky;
+    top: 64px; /* height of the sticky header */
+    z-index: 90;
+    box-shadow: 0 4px 16px rgba(9, 21, 12, 0.18);
+}
+
+.public-layout .quick-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.public-layout .quick-nav-list {
+    display: flex;
+    align-items: stretch;
+    gap: 2px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.public-layout .quick-nav-link {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-ui);
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: rgba(241, 231, 211, 0.75);
+    background: transparent;
+    border-radius: 0;
+    padding: 14px 14px;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: color 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+    white-space: nowrap;
+}
+
+.public-layout .quick-nav-link:hover {
+    color: var(--p-cream);
+    background: rgba(250, 247, 242, 0.05);
+    border-bottom-color: rgba(196, 106, 58, 0.5);
+}
+
+.public-layout .quick-nav-link[aria-current="true"],
+.public-layout .quick-nav-link.is-active {
+    color: var(--p-cream);
+    border-bottom-color: var(--p-clay);
+}
+
+/* --------------------------------------------------------------------------
+   30.2 Status Badge â€” Fix legacy --font-body token inside public layout
+   -------------------------------------------------------------------------- */
+
+.public-layout .badge {
+    font-family: var(--font-ui);
+    font-size: 0.72rem;
+    border-radius: var(--radius-full);
+}
+
+.public-layout .badge-akan-datang {
+    background: rgba(46, 94, 62, 0.12);
+    color: var(--p-moss);
+}
+
+.public-layout .badge-berlangsung {
+    background: rgba(196, 106, 58, 0.14);
+    color: var(--p-clay-deep);
+}
+
+.public-layout .badge-selesai {
+    background: rgba(90, 100, 80, 0.1);
+    color: var(--p-text-soft);
+}
+
+/* --------------------------------------------------------------------------
+   30.3 Dusun Hero â€” Lighter overlay for shallower frame
+   -------------------------------------------------------------------------- */
+
+.public-layout .dusun-hero .hero-overlay {
+    background:
+        linear-gradient(to top, rgba(9, 21, 12, 0.88) 0%, rgba(9, 21, 12, 0.48) 52%, rgba(9, 21, 12, 0.14) 100%),
+        linear-gradient(to right, rgba(10, 24, 14, 0.72) 0%, rgba(10, 24, 14, 0.25) 60%, rgba(10, 24, 14, 0.04) 100%);
+}
+
+/* --------------------------------------------------------------------------
+   30.4 Peta Dusun â€” Section desc spacing (removes inline style)
+   -------------------------------------------------------------------------- */
+
+.public-layout .peta-dusun-section .section-desc {
+    margin-bottom: var(--space-3);
+}
+
+/* --------------------------------------------------------------------------
+   30.5 Scroll-spy: quick-nav top offset (match header height at various widths)
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 60rem) {
+    .public-layout .quick-nav {
+        top: 58px;
+    }
+}

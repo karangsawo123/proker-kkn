@@ -7,7 +7,7 @@
 <div class="admin-page-header">
     <div>
         <p class="admin-page-kicker">Admin Dusun</p>
-        <h1 class="admin-page-title">Dashboard</h1>
+        <h1 class="admin-page-title">Dashboard Admin Dusun</h1>
         <p class="admin-page-desc">Ringkasan pengelolaan {{ $dusun->nama_dusun }}.</p>
     </div>
 </div>
@@ -55,7 +55,7 @@
         </div>
         <div>
             <div class="alert-title">Status Wilayah Nonaktif Publik</div>
-            <p class="alert-desc">Dusun Anda saat ini tidak ditampilkan di website publik. Anda tetap dapat mengelola data profil, kontak, UMKM, fasilitas, agenda, dan pengumuman dengan normal.</p>
+            <p class="alert-desc">Status: Nonaktif Publik. Dusun Anda saat ini tidak ditampilkan di website publik. Anda tetap dapat mengelola data profil, kontak, UMKM, fasilitas, agenda, dan pengumuman dengan normal.</p>
         </div>
     </div>
 @endif

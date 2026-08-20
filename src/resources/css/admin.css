@@ -1,24 +1,24 @@
 .admin-body {
     --admin-primary: #2E5E3E;
-    --admin-primary-strong: #183522;
-    --admin-sidebar: #16301F;
+    --admin-primary-strong: #173E2A;
+    --admin-sidebar: #173E2A;
     --admin-sidebar-2: #1B3B28;
     --admin-sage: #7A8F6B;
-    --admin-accent: #C46A3A;
+    --admin-accent: #D6A928;
     --admin-bg: #F5F7F3;
     --admin-bg-soft: #F8FAF6;
     --admin-surface: #FFFFFF;
-    --admin-surface-warm: #FAF7F2;
-    --admin-text: #20261F;
-    --admin-muted: #667064;
-    --admin-border: rgba(76, 91, 72, 0.16);
+    --admin-surface-warm: #FFFDF8;
+    --admin-text: #263129;
+    --admin-muted: #817C70;
+    --admin-border: #E4DDD0;
     --admin-border-strong: rgba(46, 94, 62, 0.24);
-    --admin-danger: #B42318;
-    --admin-danger-soft: #FEF3F2;
-    --admin-warning: #B86E18;
-    --admin-warning-soft: #FFF7E6;
-    --admin-success: #247A46;
-    --admin-success-soft: #ECF8F0;
+    --admin-danger: #C94A36;
+    --admin-danger-soft: #FDF2F0;
+    --admin-warning: #B28212;
+    --admin-warning-soft: #FDF9ED;
+    --admin-success: #2E5E3E;
+    --admin-success-soft: #E7EFE8;
     --admin-shadow: 0 14px 34px rgba(24, 53, 34, 0.08);
     --admin-shadow-soft: 0 8px 22px rgba(24, 53, 34, 0.06);
     --admin-radius: 8px;
@@ -40,7 +40,7 @@
 }
 
 .admin-body :focus-visible {
-    outline: 3px solid rgba(196, 106, 58, 0.35);
+    outline: 3px solid rgba(46, 94, 62, 0.35);
     outline-offset: 2px;
 }
 
@@ -173,8 +173,8 @@
 }
 
 .admin-body .admin-context-badge.badge-inactive {
-    background: rgba(196, 106, 58, 0.2);
-    color: #FFE0CF;
+    background: rgba(201, 74, 54, 0.14);
+    color: #C94A36;
 }
 
 .admin-body .admin-nav {
@@ -210,13 +210,13 @@
 }
 
 .admin-body .admin-nav-item.active {
-    background: #F1E7D3;
+    background: #E7EFE8;
     color: var(--admin-primary-strong);
     box-shadow: inset 3px 0 0 var(--admin-accent);
 }
 
 .admin-body .admin-nav-item.active svg {
-    color: var(--admin-accent);
+    color: var(--admin-primary);
 }
 
 .admin-body .nav-text {
@@ -358,7 +358,7 @@
     border-radius: 8px;
     background: #FFFFFF;
     color: var(--admin-danger);
-    border: 1px solid rgba(180, 35, 24, 0.18);
+    border: 1px solid rgba(201, 74, 54, 0.22);
     font-size: 0.82rem;
     font-weight: 800;
     cursor: pointer;
@@ -479,7 +479,7 @@
 
 .admin-body .dashboard-context-card {
     padding: 16px;
-    background: linear-gradient(135deg, rgba(46, 94, 62, 0.1), rgba(196, 106, 58, 0.07)), var(--admin-surface);
+    background: linear-gradient(135deg, rgba(46, 94, 62, 0.1), rgba(214, 169, 40, 0.08)), var(--admin-surface);
     border: 1px solid var(--admin-border-strong);
     border-radius: var(--admin-radius);
 }
@@ -703,8 +703,8 @@
 .admin-body .alert-warning,
 .admin-body .banner-warning {
     background: var(--admin-warning-soft);
-    border-color: rgba(184, 110, 24, 0.24);
-    color: #6E420B;
+    border-color: rgba(214, 169, 40, 0.28);
+    color: #7A5B05;
 }
 
 .admin-body .alert-title {
@@ -725,7 +725,7 @@
 
 .admin-body .flash-error {
     background: var(--admin-danger-soft);
-    border-color: rgba(180, 35, 24, 0.2);
+    border-color: rgba(201, 74, 54, 0.22);
     color: var(--admin-danger);
 }
 
@@ -941,7 +941,7 @@
 }
 
 .admin-body .btn-danger:hover {
-    background: #8F1D14;
+    background: #A73827;
 }
 
 .admin-body .btn-outline-primary {
@@ -957,7 +957,7 @@
 .admin-body .btn-outline-danger {
     background: #FFFFFF;
     color: var(--admin-danger);
-    border-color: rgba(180, 35, 24, 0.24);
+    border-color: rgba(201, 74, 54, 0.24);
 }
 
 .admin-body .btn-outline-danger:hover {
@@ -1269,7 +1269,7 @@
     border-radius: var(--admin-radius);
     border: 1px solid var(--admin-border-strong);
     overflow: hidden;
-    background: #E8EEE5;
+    background: #E7EFE8;
 }
 
 .admin-body .admin-modal {

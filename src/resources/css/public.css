@@ -9,16 +9,16 @@
 .public-layout {
     --public-moss: #2E5E3E;
     --public-sage: #7A8F6B;
-    --public-terracotta: #C46A3A;
-    --public-beige: #F1E7D3;
-    --public-cream: #FAF7F2;
-    --public-olive: #2B2F23;
-    --public-surface: #FFFCF7;
-    --public-line: rgba(46, 94, 62, .13);
-    --public-muted: rgba(43, 47, 35, .64);
-    --public-shadow-sm: 0 4px 14px rgba(43, 47, 35, .08);
-    --public-shadow-md: 0 10px 28px rgba(43, 47, 35, .12);
-    --public-shadow-lg: 0 18px 46px rgba(43, 47, 35, .16);
+    --public-terracotta: #D6A928;
+    --public-beige: #F6F1E7;
+    --public-cream: #F6F1E7;
+    --public-olive: #263129;
+    --public-surface: #FFFDF8;
+    --public-line: #E4DDD0;
+    --public-muted: #817C70;
+    --public-shadow-sm: 0 4px 14px rgba(38, 49, 41, .08);
+    --public-shadow-md: 0 10px 28px rgba(38, 49, 41, .12);
+    --public-shadow-lg: 0 18px 46px rgba(38, 49, 41, .16);
     --public-radius-sm: 10px;
     --public-radius-md: 15px;
     --public-radius-lg: 22px;
@@ -85,49 +85,61 @@
     position: sticky;
     top: 0;
     z-index: 1200;
-    height: 70px;
-    border-bottom: 1px solid rgba(46, 94, 62, .10);
-    background: rgba(250, 247, 242, .97);
-    box-shadow: 0 3px 16px rgba(43, 47, 35, .05);
-    backdrop-filter: blur(12px);
+    min-height: 84px;
+    height: 84px;
+    border-bottom: 1px solid rgba(214, 169, 40, 0.25);
+    background: rgba(250, 248, 241, 0.82);
+    box-shadow: 0 4px 20px rgba(38, 49, 41, 0.04);
+    -webkit-backdrop-filter: blur(14px) saturate(180%);
+    backdrop-filter: blur(14px) saturate(180%);
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .public-layout .public-header .container {
     height: 100%;
+    max-width: 1280px;
+    width: min(1280px, calc(100% - 48px));
+    margin-inline: auto;
 }
 
 .public-layout .public-header-inner {
     height: 100%;
-    display: grid;
-    grid-template-columns: 250px 1fr 170px;
+    display: flex;
     align-items: center;
-    gap: 20px;
+    justify-content: space-between;
+    gap: 32px;
 }
 
 .public-layout .public-brand {
     min-width: 0;
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 11px;
+    gap: 12px;
+    flex-shrink: 0;
 }
 
 .public-layout .public-brand-logo {
-    width: 38px;
-    height: 46px;
-    flex: 0 0 38px;
+    width: 54px;
+    height: 66px;
+    flex: 0 0 54px;
     border-radius: 0;
     object-fit: contain;
     border: none;
     background: transparent;
     box-shadow: none;
-    filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.15));
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.16));
+    transition: transform 0.2s ease;
+}
+
+.public-layout .public-brand:hover .public-brand-logo {
+    transform: scale(1.03);
 }
 
 .public-layout .brand-logo-placeholder {
     display: grid;
     place-items: center;
-    width: 40px;
-    height: 40px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     border: 2px solid var(--public-sage);
     background: var(--public-surface);
@@ -136,7 +148,9 @@
 
 .public-layout .public-brand-text {
     min-width: 0;
-    display: block;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
 }
 
 .public-layout .public-brand-name {
@@ -144,10 +158,10 @@
     overflow: hidden;
     color: var(--public-olive);
     font-family: 'Lora', serif;
-    font-size: 1.03rem;
+    font-size: 1.18rem;
     font-weight: 700;
-    line-height: 1.08;
-    letter-spacing: -.02em;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
     text-overflow: ellipsis;
     text-transform: uppercase;
     white-space: nowrap;
@@ -155,17 +169,28 @@
 
 .public-layout .public-brand-sub {
     display: block;
-    margin-top: 3px;
-    color: var(--public-muted);
-    font-size: .68rem;
+    color: var(--public-terracotta);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
     line-height: 1;
+    text-transform: uppercase;
+}
+
+.public-layout .public-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    max-width: 620px;
 }
 
 .public-layout .public-nav-list {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 27px;
+    gap: 28px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -175,42 +200,68 @@
 .public-layout .public-nav-link {
     position: relative;
     display: inline-flex;
-    padding: 26px 0 22px;
+    align-items: center;
+    padding: 30px 0 26px;
     color: var(--public-olive);
-    font-size: .76rem;
+    font-size: 0.84rem;
     font-weight: 600;
+    transition: color 0.15s ease;
 }
 
-.public-layout .public-nav-link:hover,
+.public-layout .public-nav-link:hover {
+    color: #1F5B3A;
+}
+
 .public-layout .public-nav-link.active {
-    color: var(--public-moss);
+    color: #1F5B3A;
+    font-weight: 700;
 }
 
 .public-layout .public-nav-link.active::after {
     content: '';
     position: absolute;
     right: 0;
-    bottom: 15px;
+    bottom: 20px;
     left: 0;
     height: 2px;
     border-radius: 999px;
-    background: var(--public-terracotta);
+    background: #D6A928;
 }
 
 .public-layout .header-cta {
-    justify-self: end;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 7px;
-    min-height: 36px;
-    padding: 0 13px;
-    border-radius: 8px;
-    background: var(--public-moss);
-    color: var(--public-cream);
-    box-shadow: 0 6px 16px rgba(46, 94, 62, .20);
-    font-size: .69rem;
+    gap: 8px;
+    height: 46px;
+    min-height: 46px;
+    padding: 0 22px;
+    border-radius: 11px;
+    background: #173E2A;
+    color: #FFFDF8;
+    box-shadow: 0 4px 16px rgba(23, 62, 42, 0.20);
+    font-size: 0.8rem;
     font-weight: 700;
+    letter-spacing: 0.01em;
+    flex-shrink: 0;
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    white-space: nowrap;
+    border: 1px solid transparent;
+}
+
+.public-layout .header-cta svg {
+    width: 15px;
+    height: 15px;
+    color: #D6A928;
+    flex-shrink: 0;
+}
+
+.public-layout .header-cta:hover {
+    background: #1F4D35;
+    border-color: rgba(214, 169, 40, 0.35);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(23, 62, 42, 0.28);
+    color: #ffffff;
 }
 
 .public-layout .mobile-menu-btn {
@@ -579,8 +630,8 @@
     padding: 30px 0 34px;
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     background:
-        radial-gradient(ellipse 90% 70% at 100% 0%, rgba(222, 146, 87, 0.08), transparent 55%),
-        linear-gradient(160deg, #1B3824 0%, #112417 100%);
+        radial-gradient(ellipse 90% 70% at 100% 0%, rgba(214, 169, 40, 0.08), transparent 55%),
+        linear-gradient(160deg, #173E2A 0%, #112417 100%);
     color: var(--public-cream);
 }
 
@@ -591,7 +642,7 @@
 }
 
 .public-layout .page-home .section-info-desa .section-title {
-    color: #FAF7F2;
+    color: #FFFDF8;
 }
 
 .public-layout .page-home .home-info-grid {
@@ -739,7 +790,7 @@
     gap: 12px;
     align-items: start;
     padding: 12px 0 14px;
-    border-bottom: 1px solid #e4ddd2;
+    border-bottom: 1px solid #E4DDD0;
 }
 
 .public-layout .timeline-item:last-child {
@@ -754,7 +805,7 @@
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background: #fffaf4;
+    background: #FFFDF8;
     border: 1.5px solid var(--public-terracotta);
     color: var(--public-terracotta);
     font-size: 16px;
@@ -763,8 +814,8 @@
 
 .public-layout .timeline-icon.green {
     border-color: #93ad85;
-    color: #5f814e;
-    background: #f2f6ef;
+    color: #2E5E3E;
+    background: #E7EFE8;
 }
 
 .public-layout .timeline-item .meta {
@@ -777,7 +828,7 @@
 }
 
 .public-layout .timeline-item .date {
-    color: #2c312d;
+    color: #263129;
     font-weight: 800;
     font-size: 0.72rem;
 }
@@ -785,8 +836,8 @@
 .public-layout .timeline-item .badge {
     padding: 3px 7px;
     border-radius: 999px;
-    background: rgba(196, 106, 58, .14);
-    color: #99502b;
+    background: rgba(214, 169, 40, .16);
+    color: #8A6605;
     font-size: 0.58rem;
     font-weight: 800;
     text-transform: uppercase;
@@ -794,22 +845,22 @@
 
 .public-layout .timeline-item .badge.green,
 .public-layout .badge-berlangsung {
-    background: #edf3ea;
-    color: #5a764d;
+    background: #E7EFE8;
+    color: #2E5E3E;
 }
 
 .public-layout .badge-akan-datang {
-    background: rgba(196, 106, 58, .14);
-    color: #99502b;
+    background: rgba(214, 169, 40, .16);
+    color: #8A6605;
 }
 
 .public-layout .badge-selesai {
-    background: #f0f0eb;
-    color: #767a73;
+    background: #E4DDD0;
+    color: #817C70;
 }
 
 .public-layout .timeline-item .subtle {
-    color: #8b8478;
+    color: #817C70;
     font-size: 0.68rem;
 }
 
@@ -883,20 +934,20 @@
 
 .public-layout .page-home .badge-akan-datang,
 .public-layout .page-dusun .badge-akan-datang {
-    background: rgba(196, 106, 58, .14);
-    color: #99502b;
+    background: rgba(214, 169, 40, .16);
+    color: #8A6605;
 }
 
 .public-layout .page-home .badge-berlangsung,
 .public-layout .page-dusun .badge-berlangsung {
-    background: rgba(46, 94, 62, .14);
+    background: #E7EFE8;
     color: var(--public-moss);
 }
 
 .public-layout .page-home .badge-selesai,
 .public-layout .page-dusun .badge-selesai {
-    background: rgba(122, 143, 107, .14);
-    color: #56694d;
+    background: #E4DDD0;
+    color: #817C70;
 }
 
 /* ========================= MAP + CONTACT (HOME & DUSUN) ========================= */
@@ -1033,7 +1084,7 @@
 
 .public-layout .dot-service,
 .public-layout .legend-item.service .legend-dot {
-    background-color: var(--public-terracotta, #C46A3A);
+    background-color: #C94A36;
 }
 
 .public-layout .dot-facility,
@@ -1323,19 +1374,19 @@
     right: 0;
     height: 3px;
     background: linear-gradient(90deg,
-            #c96d3b 0 28%,
-            #2f5f3c 28% 100%);
+            #D6A928 0 28%,
+            #2E5E3E 28% 100%);
 }
 
 .public-layout .page-dusun .about h2 {
     margin: 0 0 10px;
-    color: #2d5939;
+    color: #2E5E3E;
     font: 700 24px/1.15 'Lora', Georgia, serif;
 }
 
 .public-layout .page-dusun .about .lead {
     margin: 0 0 16px;
-    color: #252b25;
+    color: #263129;
     font: 400 16px/1.65 'Lora', Georgia, serif;
 }
 
@@ -1347,14 +1398,14 @@
 
 .public-layout .page-dusun .about .stat {
     padding: 11px 12px;
-    background: linear-gradient(145deg, #f8f5ec, #f1ede2);
-    border: 1px solid #e5ddcf;
+    background: linear-gradient(145deg, #FFFDF8, #F6F1E7);
+    border: 1px solid #E4DDD0;
     border-radius: 12px;
 }
 
 .public-layout .page-dusun .about .stat small {
     display: block;
-    color: #9a7866;
+    color: #817C70;
     font-size: 10px;
     letter-spacing: .05em;
     text-transform: uppercase;
@@ -1364,7 +1415,7 @@
 .public-layout .page-dusun .about .stat b {
     display: block;
     margin-top: 3px;
-    color: #2d5939;
+    color: #2E5E3E;
     font: 700 17px/1.1 'Lora', Georgia, serif;
 }
 
@@ -1397,15 +1448,15 @@
 .public-layout .page-dusun .section-kontak {
     padding: 26px 0 30px;
     background:
-        radial-gradient(ellipse 90% 70% at 100% 0%, rgba(222, 146, 87, 0.08), transparent 55%),
-        linear-gradient(160deg, #1B3824 0%, #112417 100%);
+        radial-gradient(ellipse 90% 70% at 100% 0%, rgba(214, 169, 40, 0.08), transparent 55%),
+        linear-gradient(160deg, #173E2A 0%, #112417 100%);
     color: var(--public-cream);
     border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .public-layout .page-dusun .section-kontak .section-title,
 .public-layout .page-dusun #kontak-pel-heading {
-    color: #FAF7F2;
+    color: #FFFDF8;
 }
 
 .public-layout .page-dusun .section-kontak .section-title::after {
@@ -2451,17 +2502,39 @@ html.js .public-layout [data-reveal].is-revealed {
 
 /* ========================= TABLET ========================= */
 @media (max-width: 1040px) {
+    .public-layout .public-header {
+        height: 76px;
+        min-height: 76px;
+    }
+
     .public-layout .public-header-inner {
-        grid-template-columns: 220px 1fr 145px;
-        gap: 12px;
+        gap: 18px;
+    }
+
+    .public-layout .public-brand-logo {
+        width: 44px;
+        height: 54px;
+        flex: 0 0 44px;
+    }
+
+    .public-layout .public-brand-name {
+        font-size: 1.05rem;
     }
 
     .public-layout .public-nav-list {
-        gap: 17px;
+        gap: 16px;
     }
 
     .public-layout .public-nav-link {
-        font-size: .69rem;
+        font-size: 0.76rem;
+        padding: 26px 0 22px;
+    }
+
+    .public-layout .header-cta {
+        padding: 0 16px;
+        font-size: 0.76rem;
+        height: 42px;
+        min-height: 42px;
     }
 
     .public-layout .page-home .dusun-wall {
@@ -2484,7 +2557,8 @@ html.js .public-layout [data-reveal].is-revealed {
     }
 
     .public-layout .public-header {
-        height: 60px;
+        height: 72px;
+        min-height: 72px;
     }
 
     .public-layout .public-header .container {
@@ -2493,19 +2567,21 @@ html.js .public-layout [data-reveal].is-revealed {
 
     .public-layout .public-header-inner {
         position: relative;
-        grid-template-columns: 1fr auto;
-        gap: 8px;
-        padding: 0 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 0 16px;
     }
 
     .public-layout .public-brand {
-        gap: 8px;
+        gap: 10px;
     }
 
     .public-layout .public-brand-logo {
-        width: 30px;
-        height: 38px;
-        flex-basis: 30px;
+        width: 42px;
+        height: 52px;
+        flex-basis: 42px;
         border-radius: 0;
         border: none;
         background: transparent;
@@ -2521,11 +2597,11 @@ html.js .public-layout [data-reveal].is-revealed {
 
     .public-layout .public-brand-name {
         max-width: 220px;
-        font-size: .86rem;
+        font-size: .98rem;
     }
 
     .public-layout .public-brand-sub {
-        font-size: .55rem;
+        font-size: .58rem;
     }
 
     .public-layout .public-nav,
@@ -2557,7 +2633,7 @@ html.js .public-layout [data-reveal].is-revealed {
 
     .public-layout .mobile-nav {
         position: absolute;
-        top: 60px;
+        top: 68px;
         right: 12px;
         left: 12px;
         display: none;

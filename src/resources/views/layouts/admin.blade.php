@@ -46,7 +46,7 @@
             @endphp
             @if($currentDusun)
                 <div class="admin-context-card">
-                    <div class="admin-context-label">Dusun Terdaftar</div>
+                    <div class="admin-context-label">DUSUN TERDAFTAR</div>
                     <div class="admin-context-name">{{ $currentDusun->nama_dusun }}</div>
                     <div class="admin-context-badge {{ $currentDusun->status_dusun === 'ACTIVE' ? 'badge-active' : 'badge-inactive' }}">
                         {{ $currentDusun->status_dusun === 'ACTIVE' ? 'Aktif Publik' : 'Nonaktif Publik' }}

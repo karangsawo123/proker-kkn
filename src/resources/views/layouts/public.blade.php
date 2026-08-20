@@ -32,8 +32,8 @@
                             src="{{ asset('storage/' . $desa->logo_path) }}"
                             alt="Logo {{ $desa->nama_desa }}"
                             class="public-brand-logo"
-                            width="42"
-                            height="42"
+                            width="54"
+                            height="66"
                         >
                     @else
                         <div class="public-brand-logo brand-logo-placeholder" aria-hidden="true">

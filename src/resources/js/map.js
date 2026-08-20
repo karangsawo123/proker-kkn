@@ -26,8 +26,6 @@ L.Icon.Default.mergeOptions({
     shadowUrl,
 });
 
-// ─── Marker icon factory ──────────────────────────────────────────────────────
-
 // ─── Marker icon factory (High-contrast thematic badges) ──────────────────────
 
 const ICON_CONFIGS = {
@@ -65,6 +63,27 @@ function makeIcon(markerType) {
         popupAnchor: [0, -46],
         tooltipAnchor: [0, -48],
     });
+}
+
+// ─── Coordinate validation helper ─────────────────────────────────────────────
+
+function parseCoordinate(lat, lng) {
+    if (lat === null || lat === undefined || lng === null || lng === undefined) {
+        return null;
+    }
+    const numLat = typeof lat === 'number' ? lat : parseFloat(lat);
+    const numLng = typeof lng === 'number' ? lng : parseFloat(lng);
+    if (
+        !Number.isFinite(numLat) ||
+        !Number.isFinite(numLng) ||
+        numLat < -90 ||
+        numLat > 90 ||
+        numLng < -180 ||
+        numLng > 180
+    ) {
+        return null;
+    }
+    return [numLat, numLng];
 }
 
 // ─── Popup builder (DOM-based, XSS-safe) ─────────────────────────────────────
@@ -116,8 +135,10 @@ function buildPopup(marker) {
     }
 
     // Directions (conditional on valid coordinates)
-    if (marker.lat != null && marker.lng != null) {
-        const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(marker.lat)},${encodeURIComponent(marker.lng)}`;
+    const coords = parseCoordinate(marker.lat, marker.lng);
+    if (coords) {
+        const [lat, lng] = coords;
+        const mapsUrl = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(lat)},${encodeURIComponent(lng)}`;
         const dirLink = document.createElement('a');
         dirLink.href = mapsUrl;
         dirLink.target = '_blank';
@@ -134,6 +155,77 @@ function buildPopup(marker) {
     return wrap;
 }
 
+// ─── Viewport focus helper ───────────────────────────────────────────────────
+
+const SINGLE_MARKER_ZOOM = 16;
+const DEFAULT_MAX_ZOOM = 16;
+const DEFAULT_PADDING = [35, 35];
+
+/**
+ * Adjusts the map viewport to fit the given list of markers.
+ *
+ * @param {L.Map} map - Leaflet map instance
+ * @param {Array<Object>} markers - Array of markers with valid coordinates
+ * @param {Object} [options]
+ * @param {boolean} [options.isInitial=false] - True if this is the initial load
+ * @param {boolean} [options.animate=true] - Whether to animate viewport changes
+ * @param {number} [options.singleZoom=16] - Zoom level for single marker
+ * @param {number} [options.maxZoom=16] - Max zoom level for fitBounds
+ * @param {[number, number]} [options.padding=[35, 35]] - Padding around bounds
+ */
+export function focusMapOnMarkers(map, markers, options = {}) {
+    if (!map || !Array.isArray(markers)) return;
+
+    const isInitial = options.isInitial ?? false;
+    const animate = options.animate ?? !isInitial;
+    const singleZoom = options.singleZoom ?? SINGLE_MARKER_ZOOM;
+    const maxZoom = options.maxZoom ?? DEFAULT_MAX_ZOOM;
+    const padding = options.padding ?? DEFAULT_PADDING;
+
+    const validCoords = [];
+    markers.forEach(m => {
+        if (!m) return;
+        const coords = parseCoordinate(m.lat, m.lng);
+        if (coords) {
+            validCoords.push(coords);
+        }
+    });
+
+    // 0 valid markers:
+    // - Initial load: Handled by initial map creation with MAP_CONFIG fallback
+    // - Filter change: Retain current viewport, no-op
+    if (validCoords.length === 0) {
+        return;
+    }
+
+    // 1 valid marker: focus with reasonable zoom level
+    if (validCoords.length === 1) {
+        const [lat, lng] = validCoords[0];
+        if (isInitial || !animate) {
+            map.setView([lat, lng], singleZoom);
+        } else {
+            map.flyTo([lat, lng], singleZoom, {
+                duration: 0.8,
+            });
+        }
+        return;
+    }
+
+    // 2+ valid markers: fitBounds enclosing all markers
+    const bounds = L.latLngBounds(validCoords);
+    if (bounds.isValid()) {
+        const fitOptions = {
+            padding,
+            maxZoom,
+            animate: !isInitial && animate,
+        };
+        if (!isInitial && animate) {
+            fitOptions.duration = 0.8;
+        }
+        map.fitBounds(bounds, fitOptions);
+    }
+}
+
 // ─── Core init ────────────────────────────────────────────────────────────────
 
 export function initMap(elementId) {
@@ -141,7 +233,10 @@ export function initMap(elementId) {
     const allMarkers = window.MAP_MARKERS ?? [];
 
     const el = document.getElementById(elementId);
-    if (!el) return;
+    if (!el) return null;
+
+    // Prevent re-initialization if container already initialized
+    if (el._leaflet_id) return null;
 
     // Center defaults to Jawa Tengah if not provided
     const center = config.center ?? [-7.6298, 110.8603];
@@ -178,7 +273,10 @@ export function initMap(elementId) {
 
     let activeMarkers = [];
 
-    function renderMarkers() {
+    function renderMarkers(renderOptions = {}) {
+        const isInitial = renderOptions.isInitial ?? false;
+        const animate = renderOptions.animate ?? !isInitial;
+
         // Remove existing markers
         activeMarkers.forEach(m => m.remove());
         activeMarkers = [];
@@ -186,12 +284,18 @@ export function initMap(elementId) {
         const selectedDusun = filterDusunEl ? filterDusunEl.value : 'semua';
         const selectedCat = filterCatEl ? filterCatEl.value : 'semua';
 
+        const visibleMarkerData = [];
+
         allMarkers.forEach(marker => {
             if (selectedDusun !== 'semua' && String(marker.dusun_id) !== String(selectedDusun)) return;
             if (selectedCat !== 'semua' && marker.category !== selectedCat) return;
-            if (marker.lat == null || marker.lng == null) return;
 
-            const lMarker = L.marker([marker.lat, marker.lng], {
+            const coords = parseCoordinate(marker.lat, marker.lng);
+            if (!coords) return;
+
+            const [lat, lng] = coords;
+
+            const lMarker = L.marker([lat, lng], {
                 icon: makeIcon(marker.marker_type),
                 title: marker.name,
             });
@@ -212,13 +316,28 @@ export function initMap(elementId) {
 
             lMarker.addTo(map);
             activeMarkers.push(lMarker);
+            visibleMarkerData.push(marker);
+        });
+
+        // Adjust viewport data-driven
+        focusMapOnMarkers(map, visibleMarkerData, { isInitial, animate });
+    }
+
+    if (filterDusunEl) {
+        filterDusunEl.addEventListener('change', () => {
+            renderMarkers({ isInitial: false, animate: true });
         });
     }
 
-    if (filterDusunEl) filterDusunEl.addEventListener('change', renderMarkers);
-    if (filterCatEl) filterCatEl.addEventListener('change', renderMarkers);
+    if (filterCatEl) {
+        filterCatEl.addEventListener('change', () => {
+            renderMarkers({ isInitial: false, animate: true });
+        });
+    }
 
-    renderMarkers();
+    renderMarkers({ isInitial: true, animate: false });
+
+    return map;
 }
 
 // Auto-init any element with data-map attribute
@@ -227,3 +346,4 @@ document.addEventListener('DOMContentLoaded', () => {
         initMap(el.id);
     });
 });
+

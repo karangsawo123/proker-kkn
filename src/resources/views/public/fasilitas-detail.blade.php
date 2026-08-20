@@ -1,88 +1,92 @@
 @extends('layouts.public')
 
-@section('title', $fasilitas->nama . ' — Fasilitas — Portal Informasi')
+@section('title', $fasilitas->nama . ' - Fasilitas - Portal Informasi')
 @push('meta')
     <meta name="description" content="{{ $fasilitas->nama }}: {{ $fasilitas->kategoriFasilitas?->nama_kategori ?? 'Fasilitas' }} di {{ $fasilitas->dusun?->nama_dusun ?? 'Desa Bendung' }}.">
 @endpush
 
 @section('content')
+<div class="page-public-detail page-fasilitas-detail">
+    <section class="detail-shell" aria-labelledby="fasilitas-title">
+        <div class="container">
+            <a href="{{ route('dusun.show', $fasilitas->dusun_id) }}#fasilitas" class="detail-back-link">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Kembali ke Fasilitas</span>
+            </a>
 
-<div class="section-public">
-    <div class="container-narrow">
+            <div class="detail-layout" data-reveal>
+                <figure class="detail-media-card">
+                    <x-partials.media-placeholder
+                        :src="$fasilitas->foto_path"
+                        :alt="'Foto ' . $fasilitas->nama"
+                        class="detail-media-img"
+                    />
+                    <figcaption class="detail-media-caption">
+                        Dokumentasi fasilitas {{ $fasilitas->nama }}
+                    </figcaption>
+                </figure>
 
-        {{-- Back link --}}
-        <a href="{{ route('dusun.show', $fasilitas->dusun_id) }}#fasilitas" class="back-link mb-3" style="display:inline-flex;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            Kembali ke Fasilitas
-        </a>
-
-        <div class="detail-grid" style="gap:var(--space-4);">
-
-            {{-- Left: Media --}}
-            <div>
-                <x-partials.media-placeholder
-                    :src="$fasilitas->foto_path"
-                    :alt="'Foto ' . $fasilitas->nama"
-                    class="media-img"
-                />
-            </div>
-
-            {{-- Right: Info --}}
-            <div style="display:flex;flex-direction:column;gap:var(--space-2);">
-                <h1 class="detail-title" style="margin-bottom:4px;">{{ $fasilitas->nama }}</h1>
-
-                @if($fasilitas->kategoriFasilitas)
-                    <span class="badge badge-kategori" style="align-self:flex-start;">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-                        {{ $fasilitas->kategoriFasilitas->nama_kategori }}
-                    </span>
-                @endif
-
-                @if($fasilitas->deskripsi)
-                    <div>
-                        <p class="info-label">Deskripsi</p>
-                        <p class="info-value" style="line-height:1.7;margin-top:4px;">{{ $fasilitas->deskripsi }}</p>
+                <article class="detail-main-card">
+                    <div class="detail-kicker">
+                        <span class="section-badge" aria-hidden="true">Fasilitas</span>
+                        @if($fasilitas->kategoriFasilitas)
+                            <span class="detail-chip">{{ $fasilitas->kategoriFasilitas->nama_kategori }}</span>
+                        @endif
                     </div>
-                @endif
 
-                <div>
-                    <p class="info-label">Alamat</p>
-                    <p class="info-value" style="margin-top:4px;">{{ $fasilitas->alamat ?? '—' }}</p>
-                </div>
+                    <header class="detail-header-compact">
+                        <h1 class="detail-page-title" id="fasilitas-title">{{ $fasilitas->nama }}</h1>
+                        <p class="detail-page-subtitle">
+                            @if($fasilitas->dusun)
+                                {{ $fasilitas->dusun->nama_dusun }}
+                            @else
+                                Fasilitas publik Desa Bendung
+                            @endif
+                        </p>
+                    </header>
 
-                <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);">
-                    @if($fasilitas->dusun)
-                        <div>
-                            <p class="info-label">Dusun</p>
-                            <p class="info-value">{{ $fasilitas->dusun->nama_dusun }}</p>
+                    <dl class="detail-fact-grid">
+                        <div class="detail-fact detail-fact-wide">
+                            <dt>Alamat</dt>
+                            <dd>{{ $fasilitas->alamat ?? '-' }}</dd>
                         </div>
+                        @if($fasilitas->dusun)
+                            <div class="detail-fact">
+                                <dt>Dusun</dt>
+                                <dd>{{ $fasilitas->dusun->nama_dusun }}</dd>
+                            </div>
+                        @endif
+                        @if($fasilitas->latitude !== null && $fasilitas->longitude !== null)
+                            <div class="detail-fact">
+                                <dt>Koordinat</dt>
+                                <dd>{{ $fasilitas->latitude }}, {{ $fasilitas->longitude }}</dd>
+                            </div>
+                        @endif
+                    </dl>
+
+                    @if($fasilitas->deskripsi)
+                        <section class="detail-block" aria-labelledby="fasilitas-desc-title">
+                            <h2 class="detail-block-title" id="fasilitas-desc-title">Informasi fasilitas</h2>
+                            <p class="detail-reading-text">{{ $fasilitas->deskripsi }}</p>
+                        </section>
                     @endif
-                    @if($fasilitas->latitude !== null && $fasilitas->longitude !== null)
-                        <div>
-                            <p class="info-label">Koordinat</p>
-                            <p class="info-value">{{ $fasilitas->latitude }}, {{ $fasilitas->longitude }}</p>
-                        </div>
+
+                    <div class="detail-action-row">
+                        @if($directionsUrl)
+                            <x-partials.directions-btn :lat="$fasilitas->latitude" :lng="$fasilitas->longitude" label="Buka Petunjuk Arah" />
+                        @endif
+
+                        @if($fasilitas->nomor_whatsapp ?? null)
+                            <x-partials.whatsapp-btn :nomor="$fasilitas->nomor_whatsapp" label="Hubungi via WhatsApp" />
+                        @endif
+                    </div>
+
+                    @if($directionsUrl)
+                        <p class="detail-action-note">Petunjuk arah dibuka melalui aplikasi peta pada perangkat Anda.</p>
                     @endif
-                </div>
+                </article>
             </div>
         </div>
-
-        {{-- Directions CTA --}}
-        @if($directionsUrl)
-            <div class="resource-row mt-3" style="flex-direction:column;align-items:flex-start;gap:var(--space-2);">
-                <x-partials.directions-btn :lat="$fasilitas->latitude" :lng="$fasilitas->longitude" label="Buka Petunjuk Arah" class="w-full" />
-                <p class="text-sage text-sm">Buka petunjuk arah menuju lokasi fasilitas menggunakan aplikasi peta pilihan Anda.</p>
-            </div>
-        @endif
-
-        {{-- Optional WhatsApp --}}
-        @if($fasilitas->nomor_whatsapp ?? null)
-            <div class="mt-2">
-                <x-partials.whatsapp-btn :nomor="$fasilitas->nomor_whatsapp" label="Hubungi via WhatsApp" />
-            </div>
-        @endif
-
-    </div>
+    </section>
 </div>
-
 @endsection

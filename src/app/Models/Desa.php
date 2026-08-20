@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Desa extends Model
 {
     protected $table = 'desas';
+    protected $guarded = [];
 
     public function dusuns(): HasMany
     {

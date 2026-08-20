@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex, nofollow">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Super Admin') — Portal Desa Bendung</title>
+    <title>@yield('title', 'Super Admin') â€” Portal Desa Bendung</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/admin.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 <body class="admin-body">
@@ -294,7 +294,7 @@
             </div>
             <div class="admin-modal-body">
                 <p>Apakah Anda yakin ingin menonaktifkan data <strong id="deactivateItemName"></strong>?</p>
-                <p class="text-muted text-sm" style="margin-top: 0.5rem;">
+                <p class="text-muted text-sm modal-note">
                     Data akan disembunyikan dari portal publik (Soft Delete) dan dapat dipulihkan kapan saja oleh Super Admin.
                 </p>
             </div>
@@ -324,7 +324,7 @@
             </div>
             <div class="admin-modal-body">
                 <p>Apakah Anda yakin ingin memulihkan data <strong id="restoreItemName"></strong>?</p>
-                <p class="text-muted text-sm" style="margin-top: 0.5rem;">
+                <p class="text-muted text-sm modal-note">
                     Data akan aktif kembali dan dapat ditampilkan di portal publik jika wilayah dusun berstatus aktif.
                 </p>
             </div>
@@ -360,7 +360,7 @@
             </div>
             <div class="admin-modal-body">
                 <p>PERINGATAN: Tindakan ini akan <strong>MENGHAPUS PERMANEN</strong> data <strong id="forceDeleteItemName"></strong> beserta berkas medianya dari penyimpanan.</p>
-                <p class="text-danger font-semibold text-sm" style="margin-top: 0.5rem;">
+                <p class="text-danger font-semibold text-sm modal-note">
                     Data yang sudah dihapus permanen TIDAK DAPAT dipulihkan kembali dengan cara apa pun!
                 </p>
             </div>
@@ -390,7 +390,7 @@
             </div>
             <div class="admin-modal-body">
                 <p>Apakah Anda yakin ingin menonaktifkan akun <strong id="removeAccountUsername"></strong>?</p>
-                <p class="text-muted text-sm" style="margin-top: 0.5rem;">
+                <p class="text-muted text-sm modal-note">
                     Akun ini tidak akan dapat login lagi secara permanen (Logical Removal). Riwayat identitas akun tetap disimpan untuk arsip audit, dan username tidak dapat didaftarkan ulang.
                 </p>
             </div>

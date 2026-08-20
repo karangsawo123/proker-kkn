@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
                 'email' => 'pemdes@bendung.desa.id',
                 'nama_kepala_desa' => 'Bapak Kepala Desa Bendung',
                 'jam_pelayanan' => 'Senin - Jumat: 08:00 - 15:00 WIB',
-                'logo_path' => null,
+                'logo_path' => 'desa/logo-desa-bendung.png',
                 'banner_path' => null,
                 'created_at' => $now,
                 'updated_at' => $now,

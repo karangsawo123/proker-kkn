@@ -8,25 +8,24 @@
 @section('content')
 <div class="admin-page-header flex-between">
     <div>
-        <h1 class="admin-page-title">Kontak Pelayanan Dusun</h1>
-        <p class="admin-page-desc">Kelola daftar nomor kontak perangkat dan layanan masyarakat di wilayah {{ $dusun->nama_dusun }}.</p>
+        <p class="admin-page-kicker">Data pelayanan</p>
+        <h1 class="admin-page-title">Kontak Pelayanan</h1>
+        <p class="admin-page-desc">Kelola nomor kontak perangkat dan layanan masyarakat di wilayah {{ $dusun->nama_dusun }}.</p>
     </div>
-    <div>
-        <a href="{{ route('admin-dusun.kontak.create') }}" class="btn btn-primary">
-            + Tambah Kontak
-        </a>
-    </div>
+    <a href="{{ route('admin-dusun.kontak.create') }}" class="btn btn-primary">
+        <span aria-hidden="true">+</span> Tambah Kontak
+    </a>
 </div>
 
 <div class="admin-card">
     <div class="admin-card-body p-0">
         @if($kontakList->isEmpty())
             <div class="admin-empty-state">
-                <div class="empty-icon">☎️</div>
+                <div class="empty-icon" aria-hidden="true">K</div>
                 <h3 class="empty-title">Belum ada kontak pelayanan</h3>
                 <p class="empty-desc">Tambahkan kontak perangkat atau petugas pelayanan masyarakat di dusun ini.</p>
-                <a href="{{ route('admin-dusun.kontak.create') }}" class="btn btn-primary" style="margin-top: 1rem;">
-                    + Tambah Kontak Pertama
+                <a href="{{ route('admin-dusun.kontak.create') }}" class="btn btn-primary empty-action">
+                    <span aria-hidden="true">+</span> Tambah Kontak Pertama
                 </a>
             </div>
         @else
@@ -45,29 +44,29 @@
                     <tbody>
                         @foreach($kontakList as $kontak)
                             <tr>
-                                <td class="table-thumb-col">
+                                <td class="table-thumb-col" data-label="Foto">
                                     @if($kontak->foto_path)
                                         <img src="{{ asset('storage/' . $kontak->foto_path) }}" alt="{{ $kontak->nama }}" class="table-thumb">
                                     @else
-                                        <div class="table-thumb-placeholder">👤</div>
+                                        <div class="table-thumb-placeholder" aria-hidden="true">{{ strtoupper(substr($kontak->nama, 0, 1)) }}</div>
                                     @endif
                                 </td>
-                                <td>
+                                <td data-label="Nama">
                                     <strong class="item-title">{{ $kontak->nama }}</strong>
                                 </td>
-                                <td>{{ $kontak->jabatan }}</td>
-                                <td>
+                                <td data-label="Jabatan">{{ $kontak->jabatan }}</td>
+                                <td data-label="WhatsApp">
                                     <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $kontak->nomor_whatsapp) }}" target="_blank" rel="noopener" class="wa-link">
-                                        💬 {{ $kontak->nomor_whatsapp }}
+                                        {{ $kontak->nomor_whatsapp }}
                                     </a>
                                 </td>
-                                <td>
-                                    {{ $kontak->alamat_pelayanan ?? '—' }}
+                                <td data-label="Lokasi">
+                                    {{ $kontak->alamat_pelayanan ?? '-' }}
                                     @if($kontak->latitude && $kontak->longitude)
-                                        <span class="coord-badge" title="Koordinat tersedia">📍 Ada Titik Peta</span>
+                                        <span class="coord-badge" title="Koordinat tersedia">Ada Titik Peta</span>
                                     @endif
                                 </td>
-                                <td class="text-right">
+                                <td class="text-right" data-label="Aksi">
                                     <div class="action-buttons">
                                         <a href="{{ route('admin-dusun.kontak.edit', $kontak->id) }}" class="btn btn-sm btn-outline-primary">
                                             Edit

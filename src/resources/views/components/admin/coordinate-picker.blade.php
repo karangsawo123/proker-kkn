@@ -8,28 +8,27 @@
 ])
 
 <div class="coordinate-picker-component">
-    {{-- Smart Input Box --}}
-    <div class="smart-coord-box" style="background: #f8fafc; border: 1px dashed #cbd5e1; border-radius: 8px; padding: 12px; margin-bottom: 12px;">
-        <label for="{{ $mapId }}SmartInput" class="form-label" style="font-weight: 600; font-size: 0.85rem; color: #1e293b; display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
-            <span>✨ Tempel Link Shareloc / Derajat Google Maps</span>
-            <span style="font-weight: normal; font-size: 0.75rem; color: #64748b;">(Smart Input)</span>
+    <div class="smart-coord-box">
+        <label for="{{ $mapId }}SmartInput" class="smart-coord-label">
+            <span class="smart-coord-title">Titik Lokasi</span>
+            <span class="smart-coord-helper">Smart Input</span>
         </label>
-        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+        <p class="form-hint">Tempel koordinat / link Google Maps, gunakan GPS, atau pilih titik pada peta.</p>
+        <div class="smart-coord-controls">
             <input
                 type="text"
                 id="{{ $mapId }}SmartInput"
                 class="form-input"
-                style="flex: 1; min-width: 220px; font-size: 0.85rem; background: #ffffff;"
-                placeholder='Contoh: 7°23&apos;56.0"S 112°26&apos;32.5"E atau -7.3988, 112.4423 atau link Maps...'
+                placeholder='Contoh: 7&deg;23&apos;56.0&quot;S 112&deg;26&apos;32.5&quot;E atau -7.3988, 112.4423 atau link Maps...'
             >
-            <button type="button" class="btn btn-sm btn-primary" id="{{ $mapId }}ApplySmartBtn" style="white-space: nowrap; padding: 6px 14px; font-size: 0.825rem; font-weight: 600;">
-                📍 Terapkan
+            <button type="button" class="btn btn-sm btn-primary" id="{{ $mapId }}ApplySmartBtn">
+                Terapkan
             </button>
-            <button type="button" class="btn btn-sm btn-outline-primary" id="{{ $mapId }}GpsBtn" style="white-space: nowrap; padding: 6px 14px; font-size: 0.825rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;">
-                🛰️ Lokasi GPS Saya
+            <button type="button" class="btn btn-sm btn-outline-primary" id="{{ $mapId }}GpsBtn">
+                Gunakan GPS
             </button>
         </div>
-        <div id="{{ $mapId }}SmartFeedback" style="font-size: 0.78rem; margin-top: 6px; min-height: 18px; color: #64748b; transition: all 0.2s ease;"></div>
+        <div id="{{ $mapId }}SmartFeedback" class="smart-feedback"></div>
     </div>
 
     <div class="form-row coordinate-inputs">
@@ -77,17 +76,16 @@
     </div>
 
     <div class="map-helper-bar">
-        <span class="map-instruction">💡 Klik pada peta atau seret pin untuk menentukan titik lokasi koordinat.</span>
+        <span class="map-instruction">Klik pada peta atau seret pin untuk menentukan titik lokasi koordinat.</span>
         @if(!$required)
-            <button type="button" class="btn btn-sm btn-outline-secondary" id="{{ $mapId }}ClearBtn">
-                Hapus Titik Koordinat
+            <button type="button" class="btn btn-sm btn-outline-danger" id="{{ $mapId }}ClearBtn">
+                Hapus Titik
             </button>
         @endif
     </div>
 
-    <div id="{{ $mapId }}" class="coord-picker-map" style="height: 320px; width: 100%; border-radius: 8px; border: 1px solid #dcd3c4; margin-top: 8px;"></div>
+    <div id="{{ $mapId }}" class="coord-picker-map"></div>
 </div>
-
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', () => {
@@ -113,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const pickerMap = L.map('{{ $mapId }}').setView(defaultCenter, defaultZoom);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>',
+            attribution: 'Â© <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>',
             maxZoom: 19,
         }).addTo(pickerMap);
 
@@ -133,7 +131,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     const pos = e.target.getLatLng();
                     latInput.value = pos.lat.toFixed(6);
                     lngInput.value = pos.lng.toFixed(6);
-                    if (feedback) feedback.innerHTML = `<span style="color: #059669;">📍 Pin digeser ke: ${pos.lat.toFixed(6)}, ${pos.lng.toFixed(6)}</span>`;
+                    if (feedback) feedback.innerHTML = `<span style="color: #059669;">ðŸ“ Pin digeser ke: ${pos.lat.toFixed(6)}, ${pos.lng.toFixed(6)}</span>`;
                 });
             }
             latInput.value = lat.toFixed(6);
@@ -147,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         pickerMap.on('click', function (e) {
             setMarker(e.latlng.lat, e.latlng.lng);
-            if (feedback) feedback.innerHTML = `<span style="color: #059669;">📍 Titik dipilih di peta: ${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}</span>`;
+            if (feedback) feedback.innerHTML = `<span style="color: #059669;">ðŸ“ Titik dipilih di peta: ${e.latlng.lat.toFixed(6)}, ${e.latlng.lng.toFixed(6)}</span>`;
         });
 
         function updateFromInputs() {
@@ -161,15 +159,15 @@ document.addEventListener('DOMContentLoaded', () => {
         latInput.addEventListener('input', updateFromInputs);
         lngInput.addEventListener('input', updateFromInputs);
 
-        // ═══════════════════════════════════════════════════════════════════
+        // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
         // SMART PARSER (DMS, Maps URL, Comma-Separated Decimal)
-        // ═══════════════════════════════════════════════════════════════════
+        // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
         function parseSmartLocation(raw) {
             if (!raw || typeof raw !== 'string') return null;
             let text = raw.trim();
 
-            // 1. DMS Format: e.g. 7°23'56.0"S 112°26'32.5"E or 7°23'56"S, 112°26'32"E
-            const dmsRegex = /(\d+(?:\.\d+)?)\s*°\s*(\d+(?:\.\d+)?)\s*['\u2032]?\s*(\d+(?:\.\d+)?)\s*["\u2033]?\s*([NSEWnsew])/g;
+            // 1. DMS Format: e.g. 7Â°23'56.0"S 112Â°26'32.5"E or 7Â°23'56"S, 112Â°26'32"E
+            const dmsRegex = /(\d+(?:\.\d+)?)\s*Â°\s*(\d+(?:\.\d+)?)\s*['\u2032]?\s*(\d+(?:\.\d+)?)\s*["\u2033]?\s*([NSEWnsew])/g;
             const dmsMatches = [...text.matchAll(dmsRegex)];
             if (dmsMatches.length >= 2) {
                 let lat = null, lng = null;
@@ -216,12 +214,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if (parsed) {
                 setMarker(parsed.lat, parsed.lng, 17);
                 if (feedback) {
-                    feedback.innerHTML = `<span style="color: #059669; font-weight: 600;">✅ Berhasil mengenali format ${parsed.type}: Lat ${parsed.lat.toFixed(6)}, Lng ${parsed.lng.toFixed(6)}</span>`;
+                    feedback.innerHTML = `<span style="color: #059669; font-weight: 600;">âœ… Berhasil mengenali format ${parsed.type}: Lat ${parsed.lat.toFixed(6)}, Lng ${parsed.lng.toFixed(6)}</span>`;
                 }
                 smartInput.style.borderColor = '#10b981';
             } else {
                 if (feedback) {
-                    feedback.innerHTML = `<span style="color: #dc2626; font-weight: 500;">⚠️ Format tidak dikenali. Contoh yang didukung: <code>7°23'56.0"S 112°26'32.5"E</code> atau <code>-7.3988, 112.4423</code> atau link Maps.</span>`;
+                    feedback.innerHTML = `<span style="color: #dc2626; font-weight: 500;">âš ï¸ Format tidak dikenali. Contoh yang didukung: <code>7Â°23'56.0"S 112Â°26'32.5"E</code> atau <code>-7.3988, 112.4423</code> atau link Maps.</span>`;
                 }
                 smartInput.style.borderColor = '#ef4444';
             }
@@ -245,9 +243,9 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         }
 
-        // ═══════════════════════════════════════════════════════════════════
+        // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
         // GPS GEOLOCATION BUTTON (FOR MOBILE/FIELD SURVEY)
-        // ═══════════════════════════════════════════════════════════════════
+        // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
         if (gpsBtn) {
             gpsBtn.addEventListener('click', () => {
                 if (!navigator.geolocation) {
@@ -256,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
 
                 gpsBtn.disabled = true;
-                gpsBtn.innerHTML = '⏳ Mendeteksi GPS...';
+                gpsBtn.innerHTML = 'â³ Mendeteksi GPS...';
                 if (feedback) feedback.innerHTML = '<span style="color: #2563eb;">Sedang mencari sinyal GPS akurat... Pastikan izin lokasi diizinkan di HP.</span>';
 
                 navigator.geolocation.getCurrentPosition(
@@ -267,21 +265,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         setMarker(lat, lng, 18);
                         gpsBtn.disabled = false;
-                        gpsBtn.innerHTML = '🛰️ Lokasi GPS Saya';
+                        gpsBtn.innerHTML = 'ðŸ›°ï¸ Lokasi GPS Saya';
                         if (feedback) {
-                            feedback.innerHTML = `<span style="color: #059669; font-weight: 600;">✅ Lokasi GPS HP berhasil didapatkan! (Akurasi: ±${acc} meter)</span>`;
+                            feedback.innerHTML = `<span style="color: #059669; font-weight: 600;">âœ… Lokasi GPS HP berhasil didapatkan! (Akurasi: Â±${acc} meter)</span>`;
                         }
                     },
                     (error) => {
                         gpsBtn.disabled = false;
-                        gpsBtn.innerHTML = '🛰️ Lokasi GPS Saya';
+                        gpsBtn.innerHTML = 'ðŸ›°ï¸ Lokasi GPS Saya';
                         let msg = 'Gagal mendeteksi lokasi GPS.';
                         if (error.code === error.PERMISSION_DENIED) {
                             msg = 'Akses lokasi GPS ditolak oleh browser/HP. Silakan izinkan lokasi di pengaturan browser.';
                         } else if (error.code === error.POSITION_UNAVAILABLE) {
                             msg = 'Sinyal GPS tidak tersedia.';
                         }
-                        if (feedback) feedback.innerHTML = `<span style="color: #dc2626;">⚠️ ${msg}</span>`;
+                        if (feedback) feedback.innerHTML = `<span style="color: #dc2626;">âš ï¸ ${msg}</span>`;
                     },
                     {
                         enableHighAccuracy: true,

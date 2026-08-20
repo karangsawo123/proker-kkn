@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/admin.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 <body class="admin-body">
@@ -230,11 +230,11 @@
     </div>
 
     <!-- Confirmation Modal Dialog for Nonaktifkan / Soft Delete -->
-    <div class="admin-modal" id="deactivateModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="admin-modal" id="deactivateModal" role="dialog" aria-modal="true" aria-labelledby="deactivateModalTitle" aria-hidden="true">
         <div class="admin-modal-backdrop" id="modalBackdrop"></div>
         <div class="admin-modal-dialog">
             <div class="admin-modal-header">
-                <h3 class="admin-modal-title" id="modalTitle">Konfirmasi Nonaktifkan</h3>
+                <h3 class="admin-modal-title" id="deactivateModalTitle">Konfirmasi Nonaktifkan</h3>
                 <button type="button" class="admin-modal-close" id="modalCloseBtn" aria-label="Tutup modal">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"/>
@@ -243,11 +243,11 @@
                 </button>
             </div>
             <div class="admin-modal-body">
-                <p id="modalDescription">Data akan dinonaktifkan dan tidak lagi tampil di halaman publik.</p>
+                <p>Data <strong id="deactivateItemName"></strong> akan dinonaktifkan dan tidak lagi tampil di halaman publik.</p>
             </div>
             <div class="admin-modal-footer">
                 <button type="button" class="btn btn-secondary" id="modalCancelBtn">Batal</button>
-                <form id="modalForm" method="POST" action="" style="display:inline;">
+                <form id="deactivateForm" method="POST" action="" class="inline-form">
                     @csrf
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger" id="modalConfirmBtn">Nonaktifkan</button>
@@ -255,6 +255,8 @@
             </div>
         </div>
     </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 
     <!-- Admin Drawer & Modal Scripts -->
     <script>
@@ -279,17 +281,12 @@
             const modalBackdrop = document.getElementById('modalBackdrop');
             const modalCloseBtn = document.getElementById('modalCloseBtn');
             const modalCancelBtn = document.getElementById('modalCancelBtn');
-            const modalForm = document.getElementById('modalForm');
+            const deactivateForm = document.getElementById('deactivateForm');
+            const deactivateItemName = document.getElementById('deactivateItemName');
 
             window.openDeactivateModal = function(actionUrl, itemName = '') {
-                modalForm.action = actionUrl;
-                if (itemName) {
-                    document.getElementById('modalDescription').textContent =
-                        `Data "${itemName}" akan dinonaktifkan dan tidak lagi tampil di halaman publik.`;
-                } else {
-                    document.getElementById('modalDescription').textContent =
-                        'Data akan dinonaktifkan dan tidak lagi tampil di halaman publik.';
-                }
+                deactivateForm.action = actionUrl;
+                deactivateItemName.textContent = itemName || 'ini';
                 modal.classList.add('show');
                 modal.setAttribute('aria-hidden', 'false');
             };

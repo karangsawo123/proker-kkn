@@ -1,115 +1,108 @@
 @extends('layouts.public')
 
-@section('title', $umkm->nama_umkm . ' — UMKM — Portal Informasi')
+@section('title', $umkm->nama_umkm . ' - UMKM - Portal Informasi')
 @push('meta')
     <meta name="description" content="{{ $umkm->nama_umkm }}: {{ $umkm->jenis_usaha }} di {{ $umkm->dusun?->nama_dusun ?? 'Desa Bendung' }}.">
 @endpush
 
 @section('content')
+<div class="page-public-detail page-umkm-detail">
+    <section class="detail-shell" aria-labelledby="umkm-title">
+        <div class="container">
+            <a href="{{ route('dusun.show', $umkm->dusun_id) }}#umkm" class="detail-back-link">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                <span>Kembali ke UMKM</span>
+            </a>
 
-<div class="section-public">
-    <div class="container-narrow">
+            <div class="detail-layout" data-reveal>
+                <figure class="detail-media-card detail-media-feature">
+                    <x-partials.media-placeholder
+                        :src="$umkm->foto_utama_path"
+                        :alt="'Foto ' . $umkm->nama_umkm"
+                        class="detail-media-img"
+                    />
+                    <figcaption class="detail-media-caption">
+                        Dokumentasi usaha {{ $umkm->nama_umkm }}
+                    </figcaption>
+                </figure>
 
-        {{-- Back link --}}
-        <a href="{{ route('dusun.show', $umkm->dusun_id) }}#umkm" class="back-link mb-3" style="display:inline-flex;">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"/></svg>
-            Kembali ke UMKM
-        </a>
+                <article class="detail-main-card">
+                    <div class="detail-kicker">
+                        <span class="section-badge" aria-hidden="true">UMKM</span>
+                        @if($umkm->jenis_usaha)
+                            <span class="detail-chip">{{ $umkm->jenis_usaha }}</span>
+                        @endif
+                    </div>
 
-        <div class="detail-grid" style="gap:var(--space-4);">
+                    <header class="detail-header-compact">
+                        <h1 class="detail-page-title" id="umkm-title">{{ $umkm->nama_umkm }}</h1>
+                        <p class="detail-page-subtitle">
+                            @if($umkm->dusun)
+                                {{ $umkm->dusun->nama_dusun }}
+                            @else
+                                Informasi UMKM Desa Bendung
+                            @endif
+                        </p>
+                    </header>
 
-            {{-- Left: Media --}}
-            <div>
-                <x-partials.media-placeholder
-                    :src="$umkm->foto_utama_path"
-                    :alt="'Foto ' . $umkm->nama_umkm"
-                    class="media-img"
-                />
+                    <dl class="detail-fact-grid">
+                        <div class="detail-fact">
+                            <dt>Pemilik</dt>
+                            <dd>{{ $umkm->nama_pemilik }}</dd>
+                        </div>
+                        <div class="detail-fact">
+                            <dt>Jenis usaha</dt>
+                            <dd>{{ $umkm->jenis_usaha }}</dd>
+                        </div>
+                        @if($umkm->jam_operasional)
+                            <div class="detail-fact">
+                                <dt>Jam operasional</dt>
+                                <dd>{{ $umkm->jam_operasional }}</dd>
+                            </div>
+                        @endif
+                    </dl>
+
+                    @if($umkm->produkUmkms->isNotEmpty())
+                        <section class="detail-block" aria-labelledby="produk-title">
+                            <h2 class="detail-block-title" id="produk-title">Produk</h2>
+                            <ul class="detail-tag-list" aria-label="Produk {{ $umkm->nama_umkm }}">
+                                @foreach($umkm->produkUmkms as $p)
+                                    <li class="detail-tag">{{ $p->nama_produk }}</li>
+                                @endforeach
+                            </ul>
+                        </section>
+                    @endif
+
+                    <div class="detail-action-row">
+                        <x-partials.whatsapp-btn :nomor="$umkm->nomor_whatsapp" label="Hubungi via WhatsApp" />
+
+                        @if($umkm->latitude !== null && $umkm->longitude !== null)
+                            <x-partials.directions-btn :lat="$umkm->latitude" :lng="$umkm->longitude" label="Petunjuk Arah" />
+                        @endif
+                    </div>
+                </article>
             </div>
 
-            {{-- Right: Info + Actions --}}
-            <div style="display:flex;flex-direction:column;gap:var(--space-2);">
-                <h1 class="detail-title" style="margin-bottom:var(--space-1);">{{ $umkm->nama_umkm }}</h1>
-
-                <table class="detail-meta-table">
-                    <tbody>
-                        <tr class="detail-meta-row">
-                            <td class="detail-meta-label">Pemilik</td>
-                            <td class="detail-meta-value">{{ $umkm->nama_pemilik }}</td>
-                        </tr>
-                        <tr class="detail-meta-row">
-                            <td class="detail-meta-label">Jenis Usaha</td>
-                            <td class="detail-meta-value">{{ $umkm->jenis_usaha }}</td>
-                        </tr>
-                        @if($umkm->jam_operasional)
-                            <tr class="detail-meta-row">
-                                <td class="detail-meta-label">Jam Operasional</td>
-                                <td class="detail-meta-value">{{ $umkm->jam_operasional }}</td>
-                            </tr>
-                        @endif
-                    </tbody>
-                </table>
-
-                {{-- Produk tags --}}
-                @if($umkm->produkUmkms->isNotEmpty())
-                    <div>
-                        <p class="form-label" style="margin-bottom:var(--space-1);">Produk</p>
-                        <ul class="produk-tag-list">
-                            @foreach($umkm->produkUmkms as $p)
-                                <li class="produk-tag">
-                                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                                    {{ $p->nama_produk }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    </div>
+            <div class="detail-secondary-grid" data-reveal>
+                @if($umkm->deskripsi)
+                    <section class="detail-info-panel" aria-labelledby="deskripsi-title">
+                        <h2 class="detail-block-title" id="deskripsi-title">Informasi usaha</h2>
+                        <p class="detail-reading-text">{{ $umkm->deskripsi }}</p>
+                    </section>
                 @endif
 
-                {{-- WhatsApp CTA --}}
-                <x-partials.whatsapp-btn :nomor="$umkm->nomor_whatsapp" label="Hubungi via WhatsApp" class="w-full" style="margin-top:var(--space-1);" />
+                @if($umkm->alamat)
+                    <section class="detail-info-panel" aria-labelledby="alamat-title">
+                        <h2 class="detail-block-title" id="alamat-title">Alamat</h2>
+                        <p class="detail-reading-text">{{ $umkm->alamat }}</p>
+
+                        @if($umkm->latitude !== null && $umkm->longitude !== null)
+                            <p class="detail-coordinate">{{ $umkm->latitude }}, {{ $umkm->longitude }}</p>
+                        @endif
+                    </section>
+                @endif
             </div>
         </div>
-
-        {{-- Description --}}
-        @if($umkm->deskripsi)
-            <div class="resource-row mt-3" style="flex-direction:column;gap:var(--space-2);">
-                <div style="display:flex;gap:var(--space-2);align-items:center;">
-                    <span style="color:var(--color-moss);" aria-hidden="true">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                    </span>
-                    <strong class="info-value">Deskripsi</strong>
-                </div>
-                <p style="font-size:0.9375rem;color:var(--color-dark-olive);line-height:1.7;">{{ $umkm->deskripsi }}</p>
-            </div>
-        @endif
-
-        {{-- Address --}}
-        @if($umkm->alamat)
-            <div class="resource-row mt-2" style="justify-content:space-between;align-items:center;">
-                <div style="display:flex;gap:var(--space-2);align-items:flex-start;">
-                    <span style="color:var(--color-moss);margin-top:2px;" aria-hidden="true">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    </span>
-                    <div>
-                        <p class="info-label">Alamat</p>
-                        <p class="info-value">{{ $umkm->alamat }}</p>
-                    </div>
-                </div>
-                @if($umkm->latitude !== null && $umkm->longitude !== null)
-                    <a
-                        href="https://www.google.com/maps/dir/?api=1&destination={{ urlencode($umkm->latitude . ',' . $umkm->longitude) }}"
-                        class="btn-link"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        aria-label="Lihat lokasi {{ $umkm->nama_umkm }} di peta"
-                    >
-                        Lihat Lokasi →
-                    </a>
-                @endif
-            </div>
-        @endif
-
-    </div>
+    </section>
 </div>
-
 @endsection

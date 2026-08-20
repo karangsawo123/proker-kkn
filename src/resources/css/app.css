@@ -5421,12 +5421,11 @@ html.js .public-layout [data-reveal]:not(.is-revealed) {
 }
 
 .public-layout .page-dusun .map-toolbar {
-    background: var(--g-paper);
+    background: linear-gradient(135deg, #1f5b3a, #2f6a45);
     border: none;
-    border-bottom: 1px solid var(--g-line);
-    border-radius: 0;
+    border-radius: 13px 13px 0 0;
     box-shadow: none;
-    padding: 14px 18px;
+    padding: 12px 14px;
     margin-bottom: 0;
 }
 
@@ -6824,10 +6823,8 @@ html.js .public-layout [data-reveal]:not(.is-revealed) {
    -------------------------------------------------------------------------- */
 
 .public-layout .page-home .section-dusun {
-    background:
-        radial-gradient(ellipse 90% 70% at 100% 0%, rgba(222, 146, 87, 0.07), transparent 55%),
-        linear-gradient(160deg, var(--g-forest) 0%, var(--g-forest-deep) 100%);
-    color: var(--g-paper);
+    background: var(--g-paper);
+    color: var(--g-ink);
     padding-block: clamp(64px, 9vw, 112px);
 }
 
@@ -6946,7 +6943,10 @@ html.js .public-layout [data-reveal]:not(.is-revealed) {
    -------------------------------------------------------------------------- */
 
 .public-layout .page-home .section-info-desa {
-    background: var(--g-paper);
+    background:
+        radial-gradient(ellipse 90% 70% at 100% 0%, rgba(222, 146, 87, 0.07), transparent 55%),
+        linear-gradient(160deg, var(--g-forest) 0%, var(--g-forest-deep) 100%);
+    color: var(--g-paper);
     padding-block: clamp(64px, 9vw, 112px);
 }
 
@@ -7464,14 +7464,13 @@ html.js .public-layout [data-reveal]:not(.is-revealed) {
 }
 
 .public-layout .page-home .map-toolbar {
-    background: var(--g-paper);
+    background: linear-gradient(135deg, #1f5b3a, #2f6a45);
     border: none;
-    border-bottom: 1px solid var(--g-line);
-    border-radius: 0;
+    border-radius: 13px 13px 0 0;
     box-shadow: none;
-    padding: 14px 18px;
+    padding: 12px 14px;
     margin-bottom: 0;
-    gap: 14px 28px;
+    gap: 12px;
 }
 
 .public-layout .page-home .map-filter-label {

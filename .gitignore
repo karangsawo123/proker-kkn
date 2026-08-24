@@ -32,3 +32,7 @@ Thumbs.db
 .idea/
 .vscode/
 *.log
+
+# Handover Generated Binaries
+/docs/07-handover/04-final-book/docx/*.docx
+

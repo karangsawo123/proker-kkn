@@ -89,9 +89,12 @@ class GeminiAiService
 
             if (! $response->successful()) {
                 $status = $response->status();
+                $googleError = $response->json('error.message') ?? (string) $response->body();
+
                 Log::warning('[AI_ASSISTANT] API request failed', [
                     'status' => $status,
                     'feature' => $feature,
+                    'google_error' => $googleError,
                     'latency_ms' => $latencyMs,
                 ]);
 
@@ -99,7 +102,20 @@ class GeminiAiService
                     throw new Exception('Batas kuota layanan AI tercapai. Silakan coba beberapa saat lagi.');
                 }
 
-                throw new Exception('Gagal menghubungi penyedia layanan AI. Silakan gunakan pengisian manual.');
+                if ($status === 400 && str_contains(strtolower($googleError), 'api key')) {
+                    throw new Exception('Kunci API Google Gemini tidak valid. Pastikan GEMINI_API_KEY di file .env sudah benar.');
+                }
+
+                if ($status === 404) {
+                    throw new Exception("Model AI '{$this->model}' tidak ditemukan di Google AI Studio. Pastikan AI_MODEL di file .env sudah sesuai.");
+                }
+
+                if ($status === 403) {
+                    throw new Exception('Akses Google Gemini API ditolak (403). Pastikan Generative Language API di Google AI Studio Anda aktif.');
+                }
+
+                $previewError = mb_strimwidth($googleError, 0, 160, '...');
+                throw new Exception("Gagal menghubungi Google AI ({$status}): {$previewError}");
             }
 
             $responseData = $response->json();

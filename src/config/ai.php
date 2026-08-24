@@ -22,8 +22,9 @@ return [
     |
     */
     'provider' => env('AI_PROVIDER', 'gemini'),
+    'base_url' => env('AI_BASE_URL'),
     'model' => env('AI_MODEL', 'gemini-3.5-flash-lite'),
-    'api_key' => env('GEMINI_API_KEY'),
+    'api_key' => env('AI_API_KEY', env('GEMINI_API_KEY')),
 
     /*
     |--------------------------------------------------------------------------

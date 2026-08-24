@@ -10,6 +10,10 @@ class GeminiAiService
 {
     private bool $enabled;
 
+    private string $provider;
+
+    private ?string $baseUrl;
+
     private string $model;
 
     private ?string $apiKey;
@@ -21,8 +25,10 @@ class GeminiAiService
     public function __construct()
     {
         $this->enabled = (bool) config('ai.enabled', true);
-        $rawModel = (string) config('ai.model', 'gemini-3.6-flash');
-        $this->model = $this->normalizeModelName($rawModel);
+        $this->provider = strtolower((string) config('ai.provider', 'gemini'));
+        $this->baseUrl = config('ai.base_url') ? trim((string) config('ai.base_url')) : null;
+        $rawModel = (string) config('ai.model', 'gemini-3.5-flash-lite');
+        $this->model = $this->provider === 'gemini' ? $this->normalizeModelName($rawModel) : $rawModel;
         $this->apiKey = trim((string) config('ai.api_key'), " \t\n\r\0\x0B\"'");
         $this->timeout = (int) config('ai.timeout_seconds', 20);
         $this->maxTokens = (int) config('ai.max_output_tokens', 2048);
@@ -87,37 +93,57 @@ class GeminiAiService
         $systemInstruction = $this->buildSystemInstruction($feature, $mode);
         $userPrompt = $this->buildUserPrompt($feature, $mode, $notes, $existingText);
 
-        $endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{$this->model}:generateContent?key={$this->apiKey}";
-
-        $payload = [
-            'contents' => [
-                [
-                    'role' => 'user',
-                    'parts' => [
-                        ['text' => $userPrompt],
+        if ($this->provider === 'gemini') {
+            $endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{$this->model}:generateContent?key={$this->apiKey}";
+            $payload = [
+                'contents' => [
+                    [
+                        'role' => 'user',
+                        'parts' => [
+                            ['text' => $userPrompt],
+                        ],
                     ],
                 ],
-            ],
-            'systemInstruction' => [
-                'parts' => [
-                    ['text' => $systemInstruction],
+                'systemInstruction' => [
+                    'parts' => [
+                        ['text' => $systemInstruction],
+                    ],
                 ],
-            ],
-            'generationConfig' => [
-                'responseMimeType' => 'application/json',
-                'temperature' => 0.2,
-                'maxOutputTokens' => $this->maxTokens,
-            ],
-        ];
+                'generationConfig' => [
+                    'responseMimeType' => 'application/json',
+                    'temperature' => 0.3,
+                    'maxOutputTokens' => $this->maxTokens,
+                ],
+            ];
+            $headers = [
+                'x-goog-api-key' => $this->apiKey,
+                'Content-Type' => 'application/json',
+            ];
+        } else {
+            // OpenAI-Compatible Providers (9Router, OpenRouter, Groq, DeepSeek, etc.)
+            $endpoint = $this->resolveOpenAiEndpoint();
+            $payload = [
+                'model' => $this->model,
+                'messages' => [
+                    ['role' => 'system', 'content' => $systemInstruction],
+                    ['role' => 'user', 'content' => $userPrompt],
+                ],
+                'temperature' => 0.3,
+                'max_tokens' => $this->maxTokens,
+            ];
+            $headers = [
+                'Authorization' => 'Bearer '.$this->apiKey,
+                'HTTP-Referer' => 'https://bendung.online',
+                'X-Title' => 'Portal Informasi Desa Bendung',
+                'Content-Type' => 'application/json',
+            ];
+        }
 
         $startTime = microtime(true);
 
         try {
             $response = Http::timeout($this->timeout)
-                ->withHeaders([
-                    'x-goog-api-key' => $this->apiKey,
-                    'Content-Type' => 'application/json',
-                ])
+                ->withHeaders($headers)
                 ->post($endpoint, $payload);
             $latencyMs = round((microtime(true) - $startTime) * 1000);
 
@@ -126,6 +152,7 @@ class GeminiAiService
                 $googleError = $response->json('error.message') ?? (string) $response->body();
 
                 Log::warning('[AI_ASSISTANT] API request failed', [
+                    'provider' => $this->provider,
                     'status' => $status,
                     'feature' => $feature,
                     'google_error' => $googleError,
@@ -137,23 +164,28 @@ class GeminiAiService
                 }
 
                 if ($status === 400 && str_contains(strtolower($googleError), 'api key')) {
-                    throw new Exception('Kunci API Google Gemini tidak valid. Pastikan GEMINI_API_KEY di file .env sudah benar.');
+                    throw new Exception('Kunci API AI tidak valid. Pastikan API Key di file .env sudah benar.');
                 }
 
                 if ($status === 404) {
-                    throw new Exception("Model AI '{$this->model}' tidak ditemukan di Google AI Studio. Pastikan AI_MODEL di file .env sudah sesuai.");
+                    throw new Exception("Model AI '{$this->model}' tidak ditemukan pada provider. Pastikan AI_MODEL di file .env sudah sesuai.");
                 }
 
                 if ($status === 403) {
-                    throw new Exception('Akses Google Gemini API ditolak (403). Pastikan Generative Language API di Google AI Studio Anda aktif.');
+                    throw new Exception('Akses API AI ditolak (403). Pastikan akun provider AI Anda aktif.');
                 }
 
                 $previewError = mb_strimwidth($googleError, 0, 160, '...');
-                throw new Exception("Gagal menghubungi Google AI ({$status}): {$previewError}");
+                throw new Exception("Gagal menghubungi penyedia AI ({$status}): {$previewError}");
             }
 
             $responseData = $response->json();
-            $rawText = $responseData['candidates'][0]['content']['parts'][0]['text'] ?? null;
+
+            if ($this->provider === 'gemini') {
+                $rawText = $responseData['candidates'][0]['content']['parts'][0]['text'] ?? null;
+            } else {
+                $rawText = $responseData['choices'][0]['message']['content'] ?? null;
+            }
 
             if (empty($rawText)) {
                 throw new Exception('Penyedia AI tidak mengembalikan konten yang valid.');
@@ -237,6 +269,25 @@ INSTRUCTION;
         }
 
         return $prompt;
+    }
+
+    /**
+     * Resolve endpoint URL for OpenAI-compatible providers.
+     */
+    private function resolveOpenAiEndpoint(): string
+    {
+        if (! empty($this->baseUrl)) {
+            $base = rtrim($this->baseUrl, '/');
+
+            return str_ends_with($base, '/chat/completions') ? $base : "{$base}/chat/completions";
+        }
+
+        return match ($this->provider) {
+            'openrouter' => 'https://openrouter.ai/api/v1/chat/completions',
+            'groq' => 'https://api.groq.com/openai/v1/chat/completions',
+            '9router' => 'http://localhost:20128/v1/chat/completions',
+            default => 'https://openrouter.ai/api/v1/chat/completions',
+        };
     }
 
     /**

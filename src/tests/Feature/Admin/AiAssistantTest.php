@@ -356,4 +356,46 @@ class AiAssistantTest extends TestCase
             'message' => 'Layanan asisten AI sedang dinonaktifkan oleh administrator.',
         ]);
     }
+
+    public function test_openai_compatible_provider_can_generate_draft(): void
+    {
+        config([
+            'ai.enabled' => true,
+            'ai.provider' => 'openai_compatible',
+            'ai.base_url' => 'https://api.groq.com/openai/v1',
+            'ai.model' => 'llama-3.3-70b-versatile',
+            'ai.api_key' => 'fake-openai-key',
+        ]);
+
+        Http::fake([
+            'https://api.groq.com/openai/v1/chat/completions' => Http::response([
+                'choices' => [
+                    [
+                        'message' => [
+                            'content' => json_encode([
+                                'judul' => 'Pengumuman Via Groq',
+                                'isi' => 'Isi pengumuman via generic provider.',
+                            ]),
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->actingAs($this->adminDusun)
+            ->postJson(route('admin.ai.generate-draft'), [
+                'feature' => 'pengumuman_draft',
+                'mode' => 'draft',
+                'notes' => 'Catatan via provider generic',
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'data' => [
+                'judul' => 'Pengumuman Via Groq',
+                'isi' => 'Isi pengumuman via generic provider.',
+            ],
+        ]);
+    }
 }

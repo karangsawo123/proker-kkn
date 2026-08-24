@@ -21,10 +21,27 @@ class GeminiAiService
     public function __construct()
     {
         $this->enabled = (bool) config('ai.enabled', true);
-        $this->model = (string) config('ai.model', 'gemini-2.0-flash');
-        $this->apiKey = config('ai.api_key');
+        $rawModel = (string) config('ai.model', 'gemini-2.0-flash');
+        $this->model = $this->normalizeModelName($rawModel);
+        $this->apiKey = trim((string) config('ai.api_key'), " \t\n\r\0\x0B\"'");
         $this->timeout = (int) config('ai.timeout_seconds', 15);
         $this->maxTokens = (int) config('ai.max_output_tokens', 600);
+    }
+
+    private function normalizeModelName(string $rawModel): string
+    {
+        $cleaned = trim(strtolower($rawModel), " \t\n\r\0\x0B\"'");
+        $cleaned = preg_replace('/\s+/', '-', $cleaned);
+
+        if ($cleaned === 'gemini-2-flash' || $cleaned === 'gemini-2' || $cleaned === 'gemini-2-flash-exp') {
+            return 'gemini-2.0-flash';
+        }
+
+        if ($cleaned === 'gemini-1.5' || $cleaned === 'gemini-1.5-flash-latest') {
+            return 'gemini-1.5-flash';
+        }
+
+        return $cleaned ?: 'gemini-2.0-flash';
     }
 
     /**

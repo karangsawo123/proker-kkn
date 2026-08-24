@@ -236,6 +236,44 @@ class AiAssistantTest extends TestCase
         ]);
     }
 
+    public function test_markdown_wrapped_json_response_is_successfully_parsed(): void
+    {
+        $markdownJson = "```json\n".json_encode([
+            'judul' => 'Pengumuman Kerja Bakti',
+            'isi' => 'Rincian kerja bakti dusun.',
+        ])."\n```";
+
+        Http::fake([
+            'https://generativelanguage.googleapis.com/*' => Http::response([
+                'candidates' => [
+                    [
+                        'content' => [
+                            'parts' => [
+                                ['text' => $markdownJson],
+                            ],
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->actingAs($this->adminDusun)
+            ->postJson(route('admin.ai.generate-draft'), [
+                'feature' => 'pengumuman_draft',
+                'mode' => 'draft',
+                'notes' => 'Kerja bakti hari minggu',
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'data' => [
+                'judul' => 'Pengumuman Kerja Bakti',
+                'isi' => 'Rincian kerja bakti dusun.',
+            ],
+        ]);
+    }
+
     public function test_invalid_feature_returns_validation_error(): void
     {
         $response = $this->actingAs($this->adminDusun)

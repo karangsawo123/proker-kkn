@@ -156,11 +156,7 @@ class GeminiAiService
                 throw new Exception('Penyedia AI tidak mengembalikan konten yang valid.');
             }
 
-            $parsedData = json_decode($rawText, true);
-
-            if (! is_array($parsedData)) {
-                throw new Exception('Format respons AI tidak sesuai standar JSON terstruktur.');
-            }
+            $parsedData = $this->parseResponseContent($rawText, $feature);
 
             Log::info('[AI_ASSISTANT] Draft generated successfully', [
                 'feature' => $feature,
@@ -238,5 +234,55 @@ INSTRUCTION;
         }
 
         return $prompt;
+    }
+
+    /**
+     * Parse structured JSON from raw model text, stripping code fences or gracefully falling back.
+     */
+    private function parseResponseContent(string $rawText, string $feature): array
+    {
+        $cleanText = trim($rawText);
+
+        // 1. Strip markdown code fences if present (e.g. ```json ... ``` or ``` ...)
+        if (preg_match('/^```(?:json)?\s*(.*?)\s*```$/s', $cleanText, $matches)) {
+            $cleanText = trim($matches[1]);
+        }
+
+        // 2. Try direct json_decode
+        $decoded = json_decode($cleanText, true);
+        if (is_array($decoded) && ! empty($decoded)) {
+            return $decoded;
+        }
+
+        // 3. Extract JSON object substring if model added surrounding text
+        if (preg_match('/\{[\s\S]*\}/', $cleanText, $jsonMatch)) {
+            $decoded = json_decode($jsonMatch[0], true);
+            if (is_array($decoded) && ! empty($decoded)) {
+                return $decoded;
+            }
+        }
+
+        // 4. Graceful Fallback if model returned plain text instead of JSON
+        $lines = array_values(array_filter(array_map('trim', explode("\n", $cleanText))));
+        $firstLine = $lines[0] ?? 'Draf Otomatis';
+        $remainingLines = implode("\n", array_slice($lines, 1));
+        $fallbackBody = ! empty($remainingLines) ? $remainingLines : $cleanText;
+
+        return match ($feature) {
+            'pengumuman_draft' => [
+                'judul' => ltrim($firstLine, '#* -'),
+                'isi' => $fallbackBody,
+            ],
+            'agenda_draft' => [
+                'judul' => ltrim($firstLine, '#* -'),
+                'deskripsi' => $fallbackBody,
+            ],
+            'umkm_draft' => [
+                'deskripsi' => $cleanText,
+            ],
+            default => [
+                'teks_hasil' => $cleanText,
+            ],
+        };
     }
 }

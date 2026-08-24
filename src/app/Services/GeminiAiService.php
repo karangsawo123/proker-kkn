@@ -21,7 +21,7 @@ class GeminiAiService
     public function __construct()
     {
         $this->enabled = (bool) config('ai.enabled', true);
-        $this->model = (string) config('ai.model', 'gemini-1.5-flash');
+        $this->model = (string) config('ai.model', 'gemini-2.0-flash');
         $this->apiKey = config('ai.api_key');
         $this->timeout = (int) config('ai.timeout_seconds', 15);
         $this->maxTokens = (int) config('ai.max_output_tokens', 600);

@@ -30,7 +30,7 @@ class AiAssistantTest extends TestCase
         config([
             'ai.enabled' => true,
             'ai.api_key' => 'fake-gemini-key-for-testing',
-            'ai.model' => 'gemini-1.5-flash',
+            'ai.model' => 'gemini-2.0-flash',
         ]);
 
         $this->desa = Desa::query()->forceCreate([

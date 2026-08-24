@@ -33,6 +33,10 @@ class GeminiAiService
         $cleaned = trim(strtolower($rawModel), " \t\n\r\0\x0B\"'");
         $cleaned = preg_replace('/\s+/', '-', $cleaned);
 
+        if ($cleaned === 'gemini-2.5-flash' || $cleaned === 'gemini-2.5' || $cleaned === 'gemini-2-5-flash' || $cleaned === 'gemini-2.5-flash-latest') {
+            return 'gemini-2.5-flash';
+        }
+
         if ($cleaned === 'gemini-2-flash' || $cleaned === 'gemini-2' || $cleaned === 'gemini-2-flash-exp') {
             return 'gemini-2.0-flash';
         }
@@ -41,7 +45,7 @@ class GeminiAiService
             return 'gemini-1.5-flash';
         }
 
-        return $cleaned ?: 'gemini-2.0-flash';
+        return $cleaned ?: 'gemini-2.5-flash';
     }
 
     /**

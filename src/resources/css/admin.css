@@ -2378,15 +2378,25 @@
     .admin-body .dashboard-action-grid,
     .admin-body .dashboard-profile-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+    }
+
+    .admin-body .dashboard-kpi-grid-dusun .dashboard-kpi-card:last-child {
+        grid-column: span 2;
+    }
+
+    .admin-body .dashboard-action-grid .dashboard-action-link:last-child {
+        grid-column: span 2;
     }
 
     .admin-body .dashboard-kpi-card {
-        min-height: 130px;
-        padding: 13px;
+        min-height: 110px;
+        padding: 12px 13px;
     }
 
     .admin-body .dashboard-kpi-value {
-        font-size: 1.75rem;
+        font-size: 1.6rem;
+        margin-top: 8px;
     }
 
     .admin-body .dashboard-chart-data-list,
@@ -2414,9 +2424,86 @@
 
 @media (max-width: 420px) {
     .admin-body .dashboard-kpi-grid,
-    .admin-body .dashboard-kpi-grid-dusun,
-    .admin-body .dashboard-action-grid,
-    .admin-body .dashboard-profile-grid,
+    .admin-body .dashboard-kpi-grid-dusun {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .admin-body .dashboard-kpi-grid-dusun .dashboard-kpi-card:last-child {
+        grid-column: span 2;
+    }
+
+    .admin-body .dashboard-action-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .admin-body .dashboard-action-grid .dashboard-action-link:last-child {
+        grid-column: span 2;
+    }
+
+    .admin-body .dashboard-profile-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px;
+    }
+
+    .admin-body .dashboard-kpi-card {
+        min-height: auto;
+        padding: 10px;
+    }
+
+    .admin-body .dashboard-kpi-top {
+        gap: 6px;
+    }
+
+    .admin-body .dashboard-kpi-icon {
+        width: 26px;
+        height: 26px;
+    }
+
+    .admin-body .dashboard-kpi-icon svg {
+        width: 15px;
+        height: 15px;
+    }
+
+    .admin-body .dashboard-kpi-label {
+        font-size: 0.71rem;
+    }
+
+    .admin-body .dashboard-kpi-value {
+        font-size: 1.35rem;
+        margin-top: 6px;
+    }
+
+    .admin-body .dashboard-kpi-link {
+        font-size: 0.69rem;
+        padding-top: 6px;
+    }
+
+    .admin-body .dashboard-action-link {
+        min-height: 42px;
+        padding: 8px 9px;
+        font-size: 0.72rem;
+    }
+
+    .admin-body .dashboard-action-symbol {
+        width: 20px;
+        height: 20px;
+        font-size: 0.85rem;
+    }
+
+    .admin-body .dashboard-profile-grid > div {
+        padding: 9px;
+    }
+
+    .admin-body .dashboard-profile-grid span {
+        font-size: 0.65rem;
+    }
+
+    .admin-body .dashboard-profile-grid strong {
+        font-size: 0.73rem;
+    }
+
     .admin-body .dashboard-chart-data-list,
     .admin-body .dashboard-chart-data-list-four,
     .admin-body .dashboard-info-list-two {

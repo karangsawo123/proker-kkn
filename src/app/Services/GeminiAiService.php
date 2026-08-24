@@ -101,7 +101,12 @@ class GeminiAiService
         $startTime = microtime(true);
 
         try {
-            $response = Http::timeout($this->timeout)->post($endpoint, $payload);
+            $response = Http::timeout($this->timeout)
+                ->withHeaders([
+                    'x-goog-api-key' => $this->apiKey,
+                    'Content-Type' => 'application/json',
+                ])
+                ->post($endpoint, $payload);
             $latencyMs = round((microtime(true) - $startTime) * 1000);
 
             if (! $response->successful()) {

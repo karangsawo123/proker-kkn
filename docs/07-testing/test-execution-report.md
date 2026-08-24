@@ -330,3 +330,20 @@ The following **2 external pre-production dependencies** remain deliberately cla
      * Official launch dataset insertion (post-handover).
 ======================================================================
 ```
+
+---
+
+## 7. Post-DEV-08 Change Verification — PDS-CR-002
+
+| Attribute | Value |
+| :--- | :--- |
+| **Change Request** | `PDS-CR-002` (Remember Me / `remember_token` Support) |
+| **Approval Status** | `APPROVED — HUMAN DECISION` |
+| **Frozen Testing Specification Authority** | Version 1.2 — FROZEN FOR MVP |
+| **Formal Test Catalog** | Remains exactly **108 Test Cases** (106 PASS, 2 BLOCKED) |
+| **Affected Existing Formal TCs** | `TC-AD-001` (Admin Dusun Login with optional Remember Me), `TC-SA-001` (Super Admin Login with optional Remember Me), `TC-DATA-003` (Account persistence with nullable `remember_token`) |
+| **Verification Scope** | 1. Persistent Remember Me login stores `remember_token` and sets recaller cookie.<br>2. Standard login without Remember Me functions normally.<br>3. Logout clears session and rotates/cycles `remember_token`.<br>4. `remember_token` hidden from Eloquent array/JSON serialization.<br>5. Logically removed accounts (`removed_at IS NOT NULL`) rejected unconditionally. |
+| **Post-Change Automated Suite Result** | **`AuthenticationTest`: 18/18 PASS (85 assertions)**<br>**Full Test Suite: 304/304 PASS (1277 assertions)** |
+| **Implementation Defects Identified** | **0 New Defects** (Defect Register remains 0 open defects) |
+| **Production Impact & Status** | Additive nullable migration `2026_08_20_000012_add_remember_token_to_admin_accounts_table.php` is staged for release packaging. Production migration remains **PENDING DEPLOYMENT** (requires `php artisan migrate --force` after live database backup). |
+

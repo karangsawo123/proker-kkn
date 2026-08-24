@@ -21,7 +21,7 @@ class GeminiAiService
     public function __construct()
     {
         $this->enabled = (bool) config('ai.enabled', true);
-        $rawModel = (string) config('ai.model', 'gemini-2.0-flash');
+        $rawModel = (string) config('ai.model', 'gemini-3.6-flash');
         $this->model = $this->normalizeModelName($rawModel);
         $this->apiKey = trim((string) config('ai.api_key'), " \t\n\r\0\x0B\"'");
         $this->timeout = (int) config('ai.timeout_seconds', 15);
@@ -33,19 +33,24 @@ class GeminiAiService
         $cleaned = trim(strtolower($rawModel), " \t\n\r\0\x0B\"'");
         $cleaned = preg_replace('/\s+/', '-', $cleaned);
 
-        if ($cleaned === 'gemini-2.5-flash' || $cleaned === 'gemini-2.5' || $cleaned === 'gemini-2-5-flash' || $cleaned === 'gemini-2.5-flash-latest') {
-            return 'gemini-2.5-flash';
+        if ($cleaned === 'gemini-3.6-flash' || $cleaned === 'gemini-3.6' || $cleaned === 'gemini-3-6-flash') {
+            return 'gemini-3.6-flash';
         }
 
-        if ($cleaned === 'gemini-2-flash' || $cleaned === 'gemini-2' || $cleaned === 'gemini-2-flash-exp') {
-            return 'gemini-2.0-flash';
+        if ($cleaned === 'gemini-3.5-flash' || $cleaned === 'gemini-3.5') {
+            return 'gemini-3.5-flash';
         }
 
-        if ($cleaned === 'gemini-1.5' || $cleaned === 'gemini-1.5-flash-latest') {
-            return 'gemini-1.5-flash';
+        if ($cleaned === 'gemini-flash-latest' || $cleaned === 'flash-latest') {
+            return 'gemini-flash-latest';
         }
 
-        return $cleaned ?: 'gemini-2.5-flash';
+        if (str_starts_with($cleaned, 'gemini-2') || str_starts_with($cleaned, 'gemini-1')) {
+            // Google transitioned new users to gemini-3.6-flash
+            return 'gemini-3.6-flash';
+        }
+
+        return $cleaned ?: 'gemini-3.6-flash';
     }
 
     /**

@@ -1,7 +1,7 @@
 import 'leaflet/dist/leaflet.css';
 import { initMap } from './map.js';
 import { initDashboardCharts } from './dashboard-charts.js';
-import './ai-assistant.js';
+import { initAiAssistant } from './ai-assistant.js';
 
 // Expose initMap globally
 window.initMap = initMap;
@@ -12,6 +12,7 @@ document.documentElement.classList.add('js');
 // Progressive enhancement: mobile nav toggle
 document.addEventListener('DOMContentLoaded', () => {
     initDashboardCharts();
+    initAiAssistant();
 
     const toggle = document.getElementById('mobile-menu-toggle');
     const nav = document.getElementById('mobile-nav');

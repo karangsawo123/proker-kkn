@@ -1,4 +1,3 @@
-@if(config('ai.enabled'))
 <div class="ai-modal-backdrop" id="aiModalBackdrop" style="display: none;" aria-hidden="true">
     <div class="ai-modal-dialog" role="dialog" aria-labelledby="aiModalTitle" aria-modal="true">
         <div class="ai-modal-header">
@@ -106,4 +105,3 @@
         </div>
     </div>
 </div>
-@endif

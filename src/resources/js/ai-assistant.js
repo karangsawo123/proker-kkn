@@ -181,9 +181,10 @@ export function initAiAssistant() {
         if (elements.generateBtn) elements.generateBtn.disabled = true;
 
         const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content');
+        const endpoint = elements.modalBackdrop?.dataset.endpoint || '/admin/ai/generate-draft';
 
         try {
-            const response = await fetch('/admin/ai/generate-draft', {
+            const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

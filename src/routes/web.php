@@ -75,7 +75,7 @@ Route::middleware(['auth', 'admin.active'])->group(function (): void {
 
     // AI Assistant Endpoint — Shared between Admin Dusun and Super Admin
     Route::post('/admin/ai/generate-draft', [AiAssistantController::class, 'generate'])
-        ->middleware('throttle:10,1')
+        ->middleware('throttle:60,1')
         ->name('admin.ai.generate-draft');
 
     // ════════════════════════════════════════════════════════════════════════════

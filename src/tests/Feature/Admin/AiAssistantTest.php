@@ -363,7 +363,7 @@ class AiAssistantTest extends TestCase
             'ai.enabled' => true,
             'ai.provider' => 'openai_compatible',
             'ai.base_url' => 'https://api.groq.com/openai/v1',
-            'ai.model' => 'llama-3.3-70b-versatile',
+            'ai.model' => 'openai/gpt-oss-120b',
             'ai.api_key' => 'fake-openai-key',
         ]);
 

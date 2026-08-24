@@ -1,5 +1,6 @@
 import 'leaflet/dist/leaflet.css';
 import { initMap } from './map.js';
+import { initDashboardCharts } from './dashboard-charts.js';
 
 // Expose initMap globally
 window.initMap = initMap;
@@ -9,6 +10,8 @@ document.documentElement.classList.add('js');
 
 // Progressive enhancement: mobile nav toggle
 document.addEventListener('DOMContentLoaded', () => {
+    initDashboardCharts();
+
     const toggle = document.getElementById('mobile-menu-toggle');
     const nav = document.getElementById('mobile-nav');
 
@@ -103,6 +106,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 });
-
 
 

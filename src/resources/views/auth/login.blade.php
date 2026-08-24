@@ -111,7 +111,7 @@
 
                 <div class="auth-form-options">
                     <label class="auth-checkbox-label">
-                        <input type="checkbox" name="remember" class="auth-checkbox">
+                        <input type="checkbox" name="remember" value="1" class="auth-checkbox">
                         <span>Ingat saya</span>
                     </label>
                     <span class="auth-forgot-link" title="Silakan hubungi Super Administrator bila lupa password">Lupa password?</span>

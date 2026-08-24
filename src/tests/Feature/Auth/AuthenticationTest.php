@@ -118,7 +118,7 @@ class AuthenticationTest extends TestCase
         $response->assertSee('Login Admin');
         $response->assertSee('name="username"', false);
         $response->assertSee('name="password"', false);
-        $response->assertSee('name="remember"', false);
+        $response->assertSee('name="remember" value="1"', false);
         $response->assertSee('Ingat saya');
         $response->assertDontSee('Remember Me');
         $response->assertDontSee('Daftar');

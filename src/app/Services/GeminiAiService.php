@@ -24,8 +24,8 @@ class GeminiAiService
         $rawModel = (string) config('ai.model', 'gemini-3.6-flash');
         $this->model = $this->normalizeModelName($rawModel);
         $this->apiKey = trim((string) config('ai.api_key'), " \t\n\r\0\x0B\"'");
-        $this->timeout = (int) config('ai.timeout_seconds', 15);
-        $this->maxTokens = (int) config('ai.max_output_tokens', 600);
+        $this->timeout = (int) config('ai.timeout_seconds', 20);
+        $this->maxTokens = (int) config('ai.max_output_tokens', 2048);
     }
 
     private function normalizeModelName(string $rawModel): string
@@ -251,18 +251,51 @@ INSTRUCTION;
         // 2. Try direct json_decode
         $decoded = json_decode($cleanText, true);
         if (is_array($decoded) && ! empty($decoded)) {
-            return $decoded;
+            return $this->formatParsedOutput($decoded, $feature, $cleanText);
         }
 
         // 3. Extract JSON object substring if model added surrounding text
         if (preg_match('/\{[\s\S]*\}/', $cleanText, $jsonMatch)) {
             $decoded = json_decode($jsonMatch[0], true);
             if (is_array($decoded) && ! empty($decoded)) {
-                return $decoded;
+                return $this->formatParsedOutput($decoded, $feature, $cleanText);
             }
         }
 
-        // 4. Graceful Fallback if model returned plain text instead of JSON
+        // 4. Regex extraction for specific keys (handles incomplete or partially cut-off JSON)
+        $extractedJudul = null;
+        $extractedIsi = null;
+
+        if (preg_match('/"judul"\s*:\s*"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"/s', $cleanText, $mJudul)) {
+            $extractedJudul = stripslashes($mJudul[1]);
+        }
+
+        if (preg_match('/"(?:isi|deskripsi|teks_hasil)"\s*:\s*"([^"\\\\]*(?:\\\\.[^"\\\\]*)*)"/s', $cleanText, $mText)) {
+            $extractedIsi = stripslashes($mText[1]);
+        } elseif (preg_match('/"(?:isi|deskripsi|teks_hasil)"\s*:\s*"([^"]*)$/s', $cleanText, $mTextCut)) {
+            $extractedIsi = stripslashes($mTextCut[1]);
+        }
+
+        if ($extractedJudul || $extractedIsi) {
+            return match ($feature) {
+                'pengumuman_draft' => [
+                    'judul' => $extractedJudul ?: 'Pengumuman Resmi',
+                    'isi' => $extractedIsi ?: '',
+                ],
+                'agenda_draft' => [
+                    'judul' => $extractedJudul ?: 'Agenda Kegiatan',
+                    'deskripsi' => $extractedIsi ?: '',
+                ],
+                'umkm_draft' => [
+                    'deskripsi' => $extractedIsi ?: ($extractedJudul ?: $cleanText),
+                ],
+                default => [
+                    'teks_hasil' => $extractedIsi ?: ($extractedJudul ?: $cleanText),
+                ],
+            };
+        }
+
+        // 5. Graceful Fallback if model returned plain text instead of JSON
         $lines = array_values(array_filter(array_map('trim', explode("\n", $cleanText))));
         $firstLine = $lines[0] ?? 'Draf Otomatis';
         $remainingLines = implode("\n", array_slice($lines, 1));
@@ -282,6 +315,29 @@ INSTRUCTION;
             ],
             default => [
                 'teks_hasil' => $cleanText,
+            ],
+        };
+    }
+
+    /**
+     * Map decoded array keys to expected domain attributes.
+     */
+    private function formatParsedOutput(array $data, string $feature, string $fallback): array
+    {
+        return match ($feature) {
+            'pengumuman_draft' => [
+                'judul' => (string) ($data['judul'] ?? $data['title'] ?? 'Pengumuman Resmi'),
+                'isi' => (string) ($data['isi'] ?? $data['content'] ?? $data['deskripsi'] ?? $fallback),
+            ],
+            'agenda_draft' => [
+                'judul' => (string) ($data['judul'] ?? $data['nama_kegiatan'] ?? 'Agenda Kegiatan'),
+                'deskripsi' => (string) ($data['deskripsi'] ?? $data['isi'] ?? $fallback),
+            ],
+            'umkm_draft' => [
+                'deskripsi' => (string) ($data['deskripsi'] ?? $data['isi'] ?? $data['deskripsi_usaha'] ?? $fallback),
+            ],
+            default => [
+                'teks_hasil' => (string) ($data['teks_hasil'] ?? $data['hasil'] ?? $data['isi'] ?? $fallback),
             ],
         };
     }

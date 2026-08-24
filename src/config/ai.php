@@ -34,7 +34,7 @@ return [
     | excessively verbose output from the AI model.
     |
     */
-    'timeout_seconds' => (int) env('AI_TIMEOUT_SECONDS', 15),
-    'max_output_tokens' => (int) env('AI_MAX_OUTPUT_TOKENS', 600),
-    'rate_limit_per_minute' => (int) env('AI_RATE_LIMIT_PER_MINUTE', 10),
+    'timeout_seconds' => (int) env('AI_TIMEOUT_SECONDS', 20),
+    'max_output_tokens' => (int) env('AI_MAX_OUTPUT_TOKENS', 2048),
+    'rate_limit_per_minute' => (int) env('AI_RATE_LIMIT_PER_MINUTE', 15),
 ];

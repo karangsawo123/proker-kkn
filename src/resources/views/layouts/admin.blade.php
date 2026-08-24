@@ -312,6 +312,7 @@
             });
         });
     </script>
+    <x-admin.ai-modal />
     @stack('scripts')
 </body>
 </html>

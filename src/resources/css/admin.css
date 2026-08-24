@@ -2667,3 +2667,319 @@
 .admin-body .sa-metric-group .stat-card-link {
     margin-top: 12px;
 }
+
+/* ════════════════════════════════════════════════════════════════════════════
+   AI WRITING ASSISTANT UI STYLES
+   ════════════════════════════════════════════════════════════════════════════ */
+
+.form-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.form-label-row .form-label {
+    margin-bottom: 0;
+}
+
+.btn-ai-assist {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border: 1px solid rgba(46, 94, 62, 0.35);
+    border-radius: 6px;
+    background: #F0F6F1;
+    color: #2E5E3E;
+    font-size: 0.76rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 160ms ease;
+}
+
+.btn-ai-assist:hover {
+    background: #E2EFE4;
+    border-color: #2E5E3E;
+    transform: translateY(-1px);
+}
+
+.btn-ai-assist .ai-sparkle-icon {
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+/* AI Modal Dialog */
+.ai-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    background: rgba(18, 30, 20, 0.55);
+    backdrop-filter: blur(4px);
+}
+
+.ai-modal-dialog {
+    position: relative;
+    width: min(100%, 560px);
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 12px;
+    background: #FFFFFF;
+    border: 1px solid #D5DEC8;
+    box-shadow: 0 24px 70px rgba(18, 30, 20, 0.28);
+    animation: aiModalFadeIn 180ms ease;
+}
+
+@keyframes aiModalFadeIn {
+    from { opacity: 0; transform: scale(0.96) translateY(8px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.ai-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 20px;
+    border-bottom: 1px solid #E8EFE5;
+    background: #F9FBF8;
+}
+
+.ai-modal-header-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ai-sparkle-badge {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: rgba(46, 94, 62, 0.12);
+    font-size: 1.15rem;
+}
+
+.ai-modal-title {
+    margin: 0;
+    color: #1F3325;
+    font-size: 1.05rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.ai-modal-subtitle {
+    margin: 2px 0 0;
+    color: #556B5A;
+    font-size: 0.77rem;
+}
+
+.ai-modal-close {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border: none;
+    border-radius: 7px;
+    background: transparent;
+    color: #556B5A;
+    cursor: pointer;
+    transition: background 150ms ease;
+}
+
+.ai-modal-close:hover {
+    background: #E8EFE5;
+    color: #1F3325;
+}
+
+.ai-modal-body {
+    padding: 20px;
+    overflow-y: auto;
+    flex: 1 1 auto;
+}
+
+.ai-mode-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-bottom: 14px;
+}
+
+.ai-mode-pill {
+    padding: 6px 12px;
+    border: 1px solid #D5DEC8;
+    border-radius: 20px;
+    background: #F7F9F5;
+    color: #3B5240;
+    font-size: 0.78rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 150ms ease;
+}
+
+.ai-mode-pill:hover {
+    background: #EAF2E8;
+    border-color: #2E5E3E;
+}
+
+.ai-mode-pill.is-active {
+    background: #2E5E3E;
+    border-color: #2E5E3E;
+    color: #FFFFFF;
+}
+
+.ai-safety-notice {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 10px 12px;
+    margin-bottom: 16px;
+    border-radius: 7px;
+    background: #F2F7F2;
+    border-left: 3px solid #2E5E3E;
+    color: #38553F;
+    font-size: 0.76rem;
+    line-height: 1.45;
+}
+
+.ai-safety-notice svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+/* Loading State */
+.ai-loading-state {
+    text-align: center;
+    padding: 36px 16px;
+}
+
+.ai-spinner {
+    width: 38px;
+    height: 38px;
+    margin: 0 auto 12px;
+    border: 3px solid rgba(46, 94, 62, 0.15);
+    border-top-color: #2E5E3E;
+    border-radius: 50%;
+    animation: aiSpin 700ms linear infinite;
+}
+
+@keyframes aiSpin {
+    to { transform: rotate(360deg); }
+}
+
+.ai-loading-state p {
+    margin: 0;
+    color: #1F3325;
+    font-weight: 800;
+    font-size: 0.95rem;
+}
+
+.ai-loading-state small {
+    display: block;
+    margin-top: 4px;
+    color: #647B6A;
+    font-size: 0.78rem;
+}
+
+/* Error State */
+.ai-error-box {
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    border-radius: 7px;
+    background: #FDF2F2;
+    border: 1px solid #FAC8C8;
+    color: #A82424;
+    font-size: 0.82rem;
+    line-height: 1.45;
+}
+
+.ai-error-box p {
+    margin: 0;
+}
+
+/* Result Section */
+.ai-result-section {
+    animation: aiResultFadeIn 200ms ease;
+}
+
+@keyframes aiResultFadeIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.ai-result-header {
+    margin-bottom: 12px;
+}
+
+.ai-result-badge {
+    display: inline-block;
+    padding: 4px 9px;
+    border-radius: 5px;
+    background: #E8F4E9;
+    color: #245233;
+    font-size: 0.74rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.ai-preview-box {
+    padding: 12px 14px;
+    border-radius: 7px;
+    background: #F7FAF6;
+    border: 1px solid #D8E4D5;
+    color: #1F3325;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    white-space: pre-wrap;
+}
+
+.ai-preview-content {
+    max-height: 240px;
+    overflow-y: auto;
+}
+
+.ai-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 14px 20px;
+    border-top: 1px solid #E8EFE5;
+    background: #F9FBF8;
+}
+
+.ai-footer-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ai-footer-right .btn-apply {
+    background: #2E5E3E;
+    border-color: #2E5E3E;
+    color: #FFFFFF;
+}
+
+.ai-footer-right .btn-apply:hover {
+    background: #234A31;
+    border-color: #234A31;
+}
+
+/* Flash Highlight Effect on Field */
+.ai-updated-flash {
+    animation: aiFieldFlash 1.2s ease;
+}
+
+@keyframes aiFieldFlash {
+    0% { background-color: rgba(46, 94, 62, 0.25); border-color: #2E5E3E; }
+    100% { background-color: inherit; border-color: inherit; }
+}
+

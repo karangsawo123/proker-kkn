@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\AgendaKegiatanController as AdminAgendaController;
+use App\Http\Controllers\Admin\AiAssistantController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\FasilitasController as AdminFasilitasController;
 use App\Http\Controllers\Admin\KontakPelayananController as AdminKontakController;
@@ -71,6 +72,11 @@ Route::middleware('guest')->group(function (): void {
 
 Route::middleware(['auth', 'admin.active'])->group(function (): void {
     Route::post('/admin/logout', [LoginController::class, 'logout'])->name('admin.logout');
+
+    // AI Assistant Endpoint — Shared between Admin Dusun and Super Admin
+    Route::post('/admin/ai/generate-draft', [AiAssistantController::class, 'generate'])
+        ->middleware('throttle:10,1')
+        ->name('admin.ai.generate-draft');
 
     // ════════════════════════════════════════════════════════════════════════════
     // ADMIN DUSUN MANAGEMENT ROUTES — DEV-06 (UX-SCR-011 through UX-SCR-017)

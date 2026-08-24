@@ -456,6 +456,7 @@
             document.getElementById(modalId).classList.remove('show');
         }
     </script>
+    <x-admin.ai-modal />
     @stack('scripts')
 </body>
 </html>

@@ -1,6 +1,7 @@
 import 'leaflet/dist/leaflet.css';
 import { initMap } from './map.js';
 import { initDashboardCharts } from './dashboard-charts.js';
+import './ai-assistant.js';
 
 // Expose initMap globally
 window.initMap = initMap;

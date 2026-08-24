@@ -25,9 +25,14 @@
             @csrf
 
             <div class="form-group">
-                <label for="judul" class="form-label">
-                    Judul Pengumuman <span class="required-mark">*</span>
-                </label>
+                <div class="form-label-row">
+                    <label for="judul" class="form-label">
+                        Judul Pengumuman <span class="required-mark">*</span>
+                    </label>
+                    <button type="button" class="btn-ai-assist" data-ai-feature="pengumuman_draft" data-target-title="judul" data-target-text="isi">
+                        <span class="ai-sparkle-icon">✨</span> Bantu Tulis Pengumuman
+                    </button>
+                </div>
                 <input
                     type="text"
                     name="judul"

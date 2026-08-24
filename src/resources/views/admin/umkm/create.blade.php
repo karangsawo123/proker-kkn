@@ -141,9 +141,14 @@
             </div>
 
             <div class="form-group">
-                <label for="deskripsi" class="form-label">
-                    Deskripsi Usaha <span class="required-mark">*</span>
-                </label>
+                <div class="form-label-row">
+                    <label for="deskripsi" class="form-label">
+                        Deskripsi Usaha <span class="required-mark">*</span>
+                    </label>
+                    <button type="button" class="btn-ai-assist" data-ai-feature="umkm_draft" data-target-text="deskripsi">
+                        <span class="ai-sparkle-icon">✨</span> Bantu Tulis Deskripsi UMKM
+                    </button>
+                </div>
                 <textarea
                     name="deskripsi"
                     id="deskripsi"

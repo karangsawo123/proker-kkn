@@ -1,0 +1,40 @@
+<?php
+
+return [
+    /*
+    |--------------------------------------------------------------------------
+    | AI Assistant Master Switch
+    |--------------------------------------------------------------------------
+    |
+    | When set to false, all AI assistant endpoints and UI triggers are disabled.
+    | Normal CRUD operations in the portal continue to work completely unaffected.
+    |
+    */
+    'enabled' => env('AI_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
+    | AI Provider & Model Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Default provider is Google Gemini API. The model and API key are configured
+    | server-side only through environment variables.
+    |
+    */
+    'provider' => env('AI_PROVIDER', 'gemini'),
+    'model' => env('AI_MODEL', 'gemini-1.5-flash'),
+    'api_key' => env('GEMINI_API_KEY'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Request Limits & Timeouts
+    |--------------------------------------------------------------------------
+    |
+    | Strict timeouts prevent hanging HTTP requests. Max output tokens prevent
+    | excessively verbose output from the AI model.
+    |
+    */
+    'timeout_seconds' => (int) env('AI_TIMEOUT_SECONDS', 15),
+    'max_output_tokens' => (int) env('AI_MAX_OUTPUT_TOKENS', 600),
+    'rate_limit_per_minute' => (int) env('AI_RATE_LIMIT_PER_MINUTE', 10),
+];

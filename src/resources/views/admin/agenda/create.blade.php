@@ -25,9 +25,14 @@
             @csrf
 
             <div class="form-group">
-                <label for="judul" class="form-label">
-                    Judul Agenda / Kegiatan <span class="required-mark">*</span>
-                </label>
+                <div class="form-label-row">
+                    <label for="judul" class="form-label">
+                        Judul Agenda / Kegiatan <span class="required-mark">*</span>
+                    </label>
+                    <button type="button" class="btn-ai-assist" data-ai-feature="agenda_draft" data-target-title="judul" data-target-text="deskripsi_singkat">
+                        <span class="ai-sparkle-icon">✨</span> Bantu Tulis Agenda
+                    </button>
+                </div>
                 <input
                     type="text"
                     name="judul"

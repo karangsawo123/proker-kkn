@@ -35,50 +35,93 @@
         </div>
     </header>
 
-    {{-- QUICK NAVIGATION — IDs/classes retained for app.js scrollspy --}}
-    <nav class="quick-nav" aria-label="Navigasi cepat halaman {{ $dusun->nama_dusun }}">
-        <div class="container quick-nav-container">
-            <button type="button" class="quick-nav-arrow quick-nav-arrow-prev" aria-label="Geser navigasi ke kiri" title="Geser ke kiri">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-            </button>
+    {{-- QUICK NAVIGATION --}}
+    <nav class="quick-nav-section dusun-quick-nav quick-nav" aria-label="Navigasi cepat halaman {{ $dusun->nama_dusun }}">
+        <div class="container">
+            <div class="quick-nav-grid dusun-grid" role="list">
+                <a href="#profil-dusun" class="quick-nav-card quick-nav-link" role="listitem">
+                    <span class="quick-nav-iconbox" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10.5V20h14v-9.5"/><path d="M9 20v-6h6v6"/></svg>
+                    </span>
+                    <strong class="quick-nav-label">Profil Dusun</strong>
+                    <span class="quick-nav-arrow" aria-hidden="true">↗</span>
+                </a>
 
-            <ul class="quick-nav-list" role="list">
-                <li><a href="#profil-dusun" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">01</span>Profil Dusun</a></li>
-                <li><a href="#peta-dusun" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">02</span>Peta Dusun</a></li>
-                <li><a href="#kontak-pelayanan" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">03</span>Pelayanan</a></li>
-                <li><a href="#umkm" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">04</span>UMKM</a></li>
-                <li><a href="#fasilitas" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">05</span>Fasilitas</a></li>
-                <li><a href="#agenda" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">06</span>Agenda</a></li>
-                <li><a href="#pengumuman" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">07</span>Pengumuman</a></li>
-            </ul>
+                <a href="#peta-dusun" class="quick-nav-card quick-nav-link" role="listitem">
+                    <span class="quick-nav-iconbox" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s6-5.2 6-11a6 6 0 1 0-12 0c0 5.8 6 11 6 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    </span>
+                    <strong class="quick-nav-label">Peta Dusun</strong>
+                    <span class="quick-nav-arrow" aria-hidden="true">↗</span>
+                </a>
 
-            <button type="button" class="quick-nav-arrow quick-nav-arrow-next" aria-label="Geser navigasi ke kanan" title="Geser ke kanan">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
+                <a href="#kontak-pelayanan" class="quick-nav-card quick-nav-link" role="listitem">
+                    <span class="quick-nav-iconbox" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19h16M6 16V8h12v8M9 8V5h6v3M9 12h2M13 12h2"/></svg>
+                    </span>
+                    <strong class="quick-nav-label">Pelayanan</strong>
+                    <span class="quick-nav-arrow" aria-hidden="true">↗</span>
+                </a>
+
+                <a href="#umkm" class="quick-nav-card quick-nav-link" role="listitem">
+                    <span class="quick-nav-iconbox" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                    </span>
+                    <strong class="quick-nav-label">UMKM</strong>
+                    <span class="quick-nav-arrow" aria-hidden="true">↗</span>
+                </a>
+
+                <a href="#fasilitas" class="quick-nav-card quick-nav-link" role="listitem">
+                    <span class="quick-nav-iconbox" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"/><path d="M2 20h20M14 12v.01M10 12v.01M14 16v.01M10 16v.01M10 8v.01M14 8v.01"/></svg>
+                    </span>
+                    <strong class="quick-nav-label">Fasilitas</strong>
+                    <span class="quick-nav-arrow" aria-hidden="true">↗</span>
+                </a>
+
+                <a href="#agenda" class="quick-nav-card quick-nav-link" role="listitem">
+                    <span class="quick-nav-iconbox" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+                    </span>
+                    <strong class="quick-nav-label">Agenda</strong>
+                    <span class="quick-nav-arrow" aria-hidden="true">↗</span>
+                </a>
+
+                <a href="#pengumuman" class="quick-nav-card quick-nav-link" role="listitem">
+                    <span class="quick-nav-iconbox" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 13 12-5v10L4 13Z"/><path d="M16 10h3M16 16h3M7 14.5l1.5 4"/></svg>
+                    </span>
+                    <strong class="quick-nav-label">Pengumuman</strong>
+                    <span class="quick-nav-arrow" aria-hidden="true">↗</span>
+                </a>
+            </div>
         </div>
     </nav>
 
-    {{-- PROFIL DUSUN --}}
+    {{-- PROFIL DUSUN (SOFT SECTION) --}}
     <section class="section-tentang" id="profil-dusun" aria-labelledby="profil-heading">
         <div class="container">
             <div class="about" data-reveal>
-                <h2 id="profil-heading">Profil Dusun</h2>
+                <div class="profile-heading">
+                    <span class="profile-mark" aria-hidden="true"></span>
+                    <h2 id="profil-heading">Profil Dusun</h2>
+                </div>
 
                 @if($dusun->deskripsi_singkat)
                     <p class="lead">{{ $dusun->deskripsi_singkat }}</p>
                 @else
-                    <x-partials.empty-state label="Profil Dusun belum tersedia." />
+                    <p class="lead text-muted">Deskripsi profil dusun belum tersedia.</p>
                 @endif
 
                 <div class="stats">
                     <div class="stat">
                         <small>Rukun Tetangga</small>
-                        <b>{{ $dusun->jumlah_rt }} RT</b>
+                        <b>{{ $dusun->jumlah_rt ?? 0 }} RT</b>
                     </div>
 
                     <div class="stat">
                         <small>Rukun Warga</small>
-                        <b>{{ $dusun->jumlah_rw }} RW</b>
+                        <b>{{ $dusun->jumlah_rw ?? 0 }} RW</b>
                     </div>
 
                     <div class="stat">
@@ -92,10 +135,16 @@
                     </div>
                 </div>
 
-                <div class="head">
-                    <small>Kepala Dusun</small>
-                    <strong>{{ $dusun->nama_kepala_dusun }}</strong>
-                </div>
+                @if($dusun->nama_kepala_dusun)
+                    <div class="person">
+                        <div class="avatar" aria-hidden="true">{{ mb_substr($dusun->nama_kepala_dusun, 0, 1) }}</div>
+                        <div class="person-info">
+                            <small>Kepala Dusun</small>
+                            <b>{{ $dusun->nama_kepala_dusun }}</b>
+                        </div>
+                        <div class="person-line" aria-hidden="true"></div>
+                    </div>
+                @endif
             </div>
         </div>
     </section>

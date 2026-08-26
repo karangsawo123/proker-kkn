@@ -32,110 +32,62 @@
     </section>
 
     {{-- QUICK ACCESS --}}
-    <nav class="home-quick-nav" aria-label="Akses cepat navigasi halaman">
+    <nav class="home-quick-nav" aria-label="Akses cepat halaman">
         <div class="container home-quick-container">
-            <div class="home-quick-header">
-                <span class="home-quick-tag">Akses Cepat</span>
-                <p class="home-quick-lead">Pilih navigasi untuk langsung menuju bagian informasi desa</p>
-            </div>
-            <ul class="home-quick-list" role="list">
-                <li class="home-quick-item">
-                    <a href="#dusun" class="home-quick-link" id="quick-nav-dusun">
-                        <div class="home-quick-card-top">
-                            <span class="home-quick-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7v9H3v-9Z"/><path d="M9 20v-6h6v6"/></svg>
-                            </span>
-                            <span class="home-quick-arrow-indicator" aria-hidden="true">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                        <div class="home-quick-content">
-                            <span class="home-quick-title">Dusun</span>
-                            <span class="home-quick-desc">Jelajahi wilayah</span>
-                        </div>
+            <ul class="home-quick-list">
+                <li>
+                    <a href="#dusun" class="home-quick-link">
+                        <span class="home-quick-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11 12 4l9 7v9H3v-9Z"/><path d="M9 20v-6h6v6"/></svg>
+                        </span>
+                        Dusun
                     </a>
                 </li>
-                <li class="home-quick-item">
-                    <a href="#informasi-desa" class="home-quick-link" id="quick-nav-informasi">
-                        <div class="home-quick-card-top">
-                            <span class="home-quick-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2Z"/><path d="M8 7h6M8 11h7"/></svg>
-                            </span>
-                            <span class="home-quick-arrow-indicator" aria-hidden="true">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                        <div class="home-quick-content">
-                            <span class="home-quick-title">Informasi</span>
-                            <span class="home-quick-desc">Profil desa</span>
-                        </div>
+                <li>
+                    <a href="#informasi-desa" class="home-quick-link">
+                        <span class="home-quick-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5V5a2 2 0 0 1 2-2h12v16H6a2 2 0 0 0-2 2Z"/><path d="M8 7h6M8 11h7"/></svg>
+                        </span>
+                        Informasi
                     </a>
                 </li>
-                <li class="home-quick-item">
-                    <a href="#pengumuman" class="home-quick-link" id="quick-nav-pengumuman">
-                        <div class="home-quick-card-top">
-                            <span class="home-quick-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 13v-2Z"/><path d="M7 14v5"/></svg>
-                            </span>
-                            <span class="home-quick-arrow-indicator" aria-hidden="true">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                        <div class="home-quick-content">
-                            <span class="home-quick-title">Pengumuman</span>
-                            <span class="home-quick-desc">Warta resmi</span>
-                        </div>
+                <li>
+                    <a href="#pengumuman" class="home-quick-link">
+                        <span class="home-quick-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 11 18-5v12L3 13v-2Z"/><path d="M7 14v5"/></svg>
+                        </span>
+                        Pengumuman
                     </a>
                 </li>
-                <li class="home-quick-item">
-                    <a href="#agenda" class="home-quick-link" id="quick-nav-agenda">
-                        <div class="home-quick-card-top">
-                            <span class="home-quick-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
-                            </span>
-                            <span class="home-quick-arrow-indicator" aria-hidden="true">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                        <div class="home-quick-content">
-                            <span class="home-quick-title">Agenda</span>
-                            <span class="home-quick-desc">Jadwal kegiatan</span>
-                        </div>
+                <li>
+                    <a href="#agenda" class="home-quick-link">
+                        <span class="home-quick-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                        </span>
+                        Agenda
                     </a>
                 </li>
-                <li class="home-quick-item">
-                    <a href="#peta-desa" class="home-quick-link" id="quick-nav-peta">
-                        <div class="home-quick-card-top">
-                            <span class="home-quick-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                            </span>
-                            <span class="home-quick-arrow-indicator" aria-hidden="true">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                        <div class="home-quick-content">
-                            <span class="home-quick-title">Peta</span>
-                            <span class="home-quick-desc">Peta wilayah</span>
-                        </div>
+                <li>
+                    <a href="#peta-desa" class="home-quick-link">
+                        <span class="home-quick-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                        </span>
+                        Peta
                     </a>
                 </li>
-                <li class="home-quick-item">
-                    <a href="#kontak-desa" class="home-quick-link" id="quick-nav-kontak">
-                        <div class="home-quick-card-top">
-                            <span class="home-quick-icon" aria-hidden="true">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7"/></svg>
-                            </span>
-                            <span class="home-quick-arrow-indicator" aria-hidden="true">
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                            </span>
-                        </div>
-                        <div class="home-quick-content">
-                            <span class="home-quick-title">Kontak</span>
-                            <span class="home-quick-desc">Hubungi kami</span>
-                        </div>
+                <li>
+                    <a href="#kontak-desa" class="home-quick-link">
+                        <span class="home-quick-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7"/></svg>
+                        </span>
+                        Kontak
                     </a>
                 </li>
             </ul>
+
+            <button type="button" class="home-quick-arrow home-quick-arrow-next" aria-label="Geser akses cepat ke kanan" title="Geser ke kanan">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
         </div>
     </nav>
 

@@ -66,6 +66,36 @@ document.addEventListener('DOMContentLoaded', () => {
         sections.forEach((s) => spy.observe(s));
     }
 
+    // Quick-nav horizontal slide arrows for mobile
+    const quickNavBlocks = document.querySelectorAll('.quick-nav');
+    quickNavBlocks.forEach((qn) => {
+        const list = qn.querySelector('.quick-nav-list');
+        const prevBtn = qn.querySelector('.quick-nav-arrow-prev');
+        const nextBtn = qn.querySelector('.quick-nav-arrow-next');
+
+        if (list && prevBtn && nextBtn) {
+            prevBtn.addEventListener('click', () => {
+                list.scrollBy({ left: -140, behavior: 'smooth' });
+            });
+
+            nextBtn.addEventListener('click', () => {
+                list.scrollBy({ left: 140, behavior: 'smooth' });
+            });
+        }
+    });
+
+    // Home quick-nav slide arrow for mobile
+    const homeQuickNav = document.querySelector('.home-quick-nav');
+    if (homeQuickNav) {
+        const homeList = homeQuickNav.querySelector('.home-quick-list');
+        const homeNextBtn = homeQuickNav.querySelector('.home-quick-arrow-next');
+        if (homeList && homeNextBtn) {
+            homeNextBtn.addEventListener('click', () => {
+                homeList.scrollBy({ left: 140, behavior: 'smooth' });
+            });
+        }
+    }
+
     // Dusun-wall slide arrow for mobile
     const dusunWallWrapper = document.querySelector('.dusun-wall-wrapper');
     if (dusunWallWrapper) {

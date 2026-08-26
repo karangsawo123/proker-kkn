@@ -483,54 +483,157 @@
 
 /* ========================= HOMEPAGE QUICK ACCESS ========================= */
 .public-layout .page-home .home-quick-nav {
-    padding: 9px 0 10px;
-    border-bottom: 1px solid rgba(196, 106, 58, .10);
+    padding: 24px 0 28px;
+    border-bottom: 1px solid rgba(46, 94, 62, .10);
     background: var(--public-cream);
-    box-shadow: 0 4px 14px rgba(43, 47, 35, .04);
+    box-shadow: 0 4px 16px rgba(43, 47, 35, .03);
 }
 
-.public-layout .page-home .home-quick-arrow {
-    display: none;
+.public-layout .page-home .home-quick-header {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.public-layout .page-home .home-quick-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--public-moss);
+    background: rgba(46, 94, 62, .08);
+    border: 1px solid rgba(46, 94, 62, .15);
+    padding: 3px 10px;
+    border-radius: 999px;
+}
+
+.public-layout .page-home .home-quick-lead {
+    margin: 5px auto 0;
+    color: var(--public-muted);
+    font-size: .76rem;
+    max-width: 480px;
 }
 
 .public-layout .page-home .home-quick-list {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
-    gap: 8px;
+    gap: 12px;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
+.public-layout .page-home .home-quick-item {
+    min-width: 0;
+}
+
 .public-layout .page-home .home-quick-link {
-    min-height: 62px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
-    border: 1px solid rgba(46, 94, 62, .09);
-    border-radius: 10px;
-    background: rgba(241, 231, 211, .34);
+    justify-content: space-between;
+    min-height: 98px;
+    padding: 14px 14px 12px;
+    border: 1px solid rgba(46, 94, 62, .12);
+    border-radius: var(--public-radius-md);
+    background: var(--public-surface);
+    box-shadow: var(--public-shadow-sm);
     color: var(--public-olive);
-    font-size: .53rem;
-    font-weight: 700;
-    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .22s ease, border-color .22s ease, background .22s ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.public-layout .page-home .home-quick-link:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(46, 94, 62, .12);
+    border-color: rgba(46, 94, 62, .32);
+    background: #FFFFFF;
+}
+
+.public-layout .page-home .home-quick-link:active {
+    transform: scale(0.98);
+    background: #edf4ec;
+}
+
+.public-layout .page-home .home-quick-link:focus-visible {
+    outline: 2px solid var(--public-moss);
+    outline-offset: 2px;
+}
+
+.public-layout .page-home .home-quick-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .public-layout .page-home .home-quick-icon {
-    width: 28px;
-    height: 28px;
+    width: 36px;
+    height: 36px;
     display: grid;
     place-items: center;
-    border-radius: 50%;
-    background: rgba(122, 143, 107, .18);
+    border-radius: 10px;
+    background: rgba(46, 94, 62, .08);
     color: var(--public-moss);
+    transition: background .22s ease, color .22s ease, transform .22s ease;
 }
 
 .public-layout .page-home .home-quick-icon svg {
-    width: 15px;
-    height: 15px;
+    width: 18px;
+    height: 18px;
+}
+
+.public-layout .page-home .home-quick-link:hover .home-quick-icon {
+    background: var(--public-moss);
+    color: #FFFFFF;
+    transform: scale(1.05);
+}
+
+.public-layout .page-home .home-quick-arrow-indicator {
+    width: 20px;
+    height: 20px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: rgba(46, 94, 62, .40);
+    transition: transform .22s ease, color .22s ease;
+}
+
+.public-layout .page-home .home-quick-arrow-indicator svg {
+    width: 13px;
+    height: 13px;
+}
+
+.public-layout .page-home .home-quick-link:hover .home-quick-arrow-indicator {
+    color: var(--public-moss);
+    transform: translateX(3px);
+}
+
+.public-layout .page-home .home-quick-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: left;
+}
+
+.public-layout .page-home .home-quick-title {
+    font-size: .88rem;
+    font-weight: 700;
+    color: var(--public-olive);
+    line-height: 1.2;
+}
+
+.public-layout .page-home .home-quick-desc {
+    font-size: .68rem;
+    color: var(--public-muted);
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* ========================= HOMEPAGE DUSUN ========================= */
@@ -1260,77 +1363,170 @@
 
 /* ========================= DUSUN QUICK NAV ========================= */
 .public-layout .page-dusun .quick-nav {
-    padding: 14px 0 6px;
-    border-bottom: none;
-    background: linear-gradient(to bottom, #FAF7F2 0%, rgba(250, 247, 242, 0.85) 60%, transparent 100%);
-    box-shadow: none;
+    padding: 20px 0 24px;
+    border-bottom: 1px solid rgba(46, 94, 62, .10);
+    background: linear-gradient(to bottom, #FAF7F2 0%, rgba(250, 247, 242, 0.95) 75%, rgba(250, 247, 242, 0.7) 100%);
     position: relative;
     z-index: 2;
 }
 
-.public-layout .page-dusun .quick-nav-arrow {
-    display: none;
+.public-layout .page-dusun .quick-nav-header {
+    text-align: center;
+    margin-bottom: 14px;
+}
+
+.public-layout .page-dusun .quick-nav-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: .68rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--public-moss);
+    background: rgba(46, 94, 62, .08);
+    border: 1px solid rgba(46, 94, 62, .15);
+    padding: 3px 10px;
+    border-radius: 999px;
+}
+
+.public-layout .page-dusun .quick-nav-lead {
+    margin: 5px auto 0;
+    color: var(--public-muted);
+    font-size: .76rem;
+    max-width: 480px;
 }
 
 .public-layout .page-dusun .quick-nav-list {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 6px;
+    gap: 10px;
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
+.public-layout .page-dusun .quick-nav-item {
+    min-width: 0;
+}
+
 .public-layout .page-dusun .quick-nav-link {
-    min-height: 54px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 4px;
-    padding: 6px 5px;
-    border: 1px solid rgba(222, 215, 202, 0.75);
-    border-radius: 11px;
-    background: rgba(255, 253, 248, 0.82);
-    color: #485144;
-    font-size: .48rem;
-    font-weight: 700;
-    text-align: center;
-    box-shadow: 0 2px 8px rgba(60, 60, 45, 0.03);
-    backdrop-filter: blur(5px);
-    transition: all .2s ease;
+    justify-content: space-between;
+    min-height: 94px;
+    padding: 12px 12px 10px;
+    border: 1px solid rgba(222, 215, 202, 0.85);
+    border-radius: var(--public-radius-md);
+    background: var(--public-surface);
+    color: var(--public-olive);
+    text-decoration: none;
+    box-shadow: 0 2px 8px rgba(60, 60, 45, 0.04);
+    cursor: pointer;
+    transition: transform .22s cubic-bezier(0.16, 1, 0.3, 1), box-shadow .22s ease, border-color .22s ease, background .22s ease;
+    -webkit-tap-highlight-color: transparent;
 }
 
 .public-layout .page-dusun .quick-nav-link:hover {
-    background: rgba(255, 255, 255, 0.95);
-    border-color: rgba(46, 94, 62, 0.25);
-    transform: translateY(-1px);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 22px rgba(46, 94, 62, .12);
+    border-color: rgba(46, 94, 62, .32);
+    background: #FFFFFF;
+}
+
+.public-layout .page-dusun .quick-nav-link:active {
+    transform: scale(0.98);
+    background: #edf4ec;
+}
+
+.public-layout .page-dusun .quick-nav-link:focus-visible {
+    outline: 2px solid var(--public-moss);
+    outline-offset: 2px;
 }
 
 .public-layout .page-dusun .quick-nav-link.is-active {
-    border-color: #bdcdb8;
-    background: #edf2e9;
-    color: var(--public-moss);
-    box-shadow: 0 4px 12px rgba(46, 94, 62, 0.08);
+    border-color: var(--public-moss);
+    background: #edf4ec;
+    box-shadow: 0 4px 16px rgba(46, 94, 62, 0.12);
 }
 
-.public-layout .page-dusun .quick-nav-num {
-    width: 25px;
-    height: 25px;
+.public-layout .page-dusun .quick-nav-card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+.public-layout .page-dusun .quick-nav-icon {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: rgba(46, 94, 62, .08);
+    color: var(--public-moss);
+    transition: background .22s ease, color .22s ease, transform .22s ease;
+}
+
+.public-layout .page-dusun .quick-nav-icon svg {
+    width: 17px;
+    height: 17px;
+}
+
+.public-layout .page-dusun .quick-nav-link:hover .quick-nav-icon,
+.public-layout .page-dusun .quick-nav-link.is-active .quick-nav-icon {
+    background: var(--public-moss);
+    color: #FFFFFF;
+    transform: scale(1.05);
+}
+
+.public-layout .page-dusun .quick-nav-arrow-indicator {
+    width: 18px;
+    height: 18px;
     display: grid;
     place-items: center;
     border-radius: 50%;
-    background: #edf0e7;
-    color: #7a9276;
-    font-family: 'Lora', serif;
-    font-size: .54rem;
-    font-weight: 700;
-    transition: all .2s ease;
+    color: rgba(46, 94, 62, .40);
+    transition: transform .22s ease, color .22s ease;
 }
 
-.public-layout .page-dusun .quick-nav-link.is-active .quick-nav-num {
-    background: #dfe9da;
-    color: #3b6037;
+.public-layout .page-dusun .quick-nav-arrow-indicator svg {
+    width: 12px;
+    height: 12px;
+}
+
+.public-layout .page-dusun .quick-nav-link:hover .quick-nav-arrow-indicator,
+.public-layout .page-dusun .quick-nav-link.is-active .quick-nav-arrow-indicator {
+    color: var(--public-moss);
+    transform: translateX(3px);
+}
+
+.public-layout .page-dusun .quick-nav-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: left;
+}
+
+.public-layout .page-dusun .quick-nav-title {
+    font-size: .84rem;
+    font-weight: 700;
+    color: var(--public-olive);
+    line-height: 1.2;
+}
+
+.public-layout .page-dusun .quick-nav-link.is-active .quick-nav-title {
+    color: var(--public-moss);
+}
+
+.public-layout .page-dusun .quick-nav-desc {
+    font-size: .66rem;
+    color: var(--public-muted);
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* ========================= DUSUN SECTIONS ========================= */
@@ -2537,6 +2733,20 @@ html.js .public-layout [data-reveal].is-revealed {
         min-height: 42px;
     }
 
+    .public-layout .page-home .home-quick-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+    }
+
+    .public-layout .page-dusun .quick-nav-list {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 8px;
+    }
+
+    .public-layout .page-dusun .quick-nav-item-featured {
+        grid-column: span 2;
+    }
+
     .public-layout .page-home .dusun-wall {
         gap: 6px;
     }
@@ -2722,80 +2932,77 @@ html.js .public-layout [data-reveal].is-revealed {
         font-size: .4rem;
     }
 
-    /* Home quick */
+    /* Home quick nav mobile */
     .public-layout .page-home .home-quick-nav {
-        padding: 6px 0 7px;
+        padding: 16px 0 20px;
     }
 
     .public-layout .page-home .home-quick-container {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 0 10px;
-    }
-
-    .public-layout .page-home .home-quick-arrow {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        flex: 0 0 30px;
+        display: block;
         padding: 0;
-        border: 1px solid rgba(222, 215, 202, 0.85);
-        border-radius: 50%;
-        background: rgba(255, 253, 248, 0.95);
-        color: var(--public-moss);
-        box-shadow: 0 2px 6px rgba(55, 63, 45, 0.08);
-        backdrop-filter: blur(4px);
-        cursor: pointer;
-        transition: all .2s ease;
-        -webkit-tap-highlight-color: transparent;
     }
 
-    .public-layout .page-home .home-quick-arrow:active {
-        transform: scale(0.92);
-        background: #edf2e9;
-        border-color: #bdcdb8;
+    .public-layout .page-home .home-quick-header {
+        margin-bottom: 12px;
     }
 
-    .public-layout .page-home .home-quick-arrow svg {
-        width: 14px;
-        height: 14px;
+    .public-layout .page-home .home-quick-tag {
+        font-size: .60rem;
+        padding: 2px 8px;
+    }
+
+    .public-layout .page-home .home-quick-lead {
+        font-size: .68rem;
+        margin-top: 4px;
     }
 
     .public-layout .page-home .home-quick-list {
-        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        overflow: visible;
+    }
+
+    .public-layout .page-home .home-quick-item {
+        flex: unset;
         min-width: 0;
-        display: flex;
-        gap: 5px;
-        overflow-x: auto;
-        padding: 0 2px 3px;
-        scroll-snap-type: x proximity;
-        scrollbar-width: none;
-    }
-
-    .public-layout .page-home .home-quick-list::-webkit-scrollbar {
-        display: none;
-    }
-
-    .public-layout .page-home .home-quick-list li {
-        flex: 0 0 68px;
-        scroll-snap-align: start;
     }
 
     .public-layout .page-home .home-quick-link {
-        min-height: 55px;
-        gap: 3px;
-        padding: 4px 2px;
-        border-radius: 8px;
-        font-size: .4rem;
+        min-height: 82px;
+        padding: 10px 10px 9px;
+        border-radius: 11px;
+        gap: 6px;
+    }
+
+    .public-layout .page-home .home-quick-card-top {
+        margin-bottom: 4px;
     }
 
     .public-layout .page-home .home-quick-icon {
-        width: 25px;
-        height: 25px;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+
+    .public-layout .page-home .home-quick-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .public-layout .page-home .home-quick-arrow-indicator svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .public-layout .page-home .home-quick-title {
+        font-size: .80rem;
+    }
+
+    .public-layout .page-home .home-quick-desc {
+        font-size: .62rem;
     }
 
     /* Shared home mobile sections */
@@ -3197,82 +3404,104 @@ html.js .public-layout [data-reveal].is-revealed {
         line-height: 1.43;
     }
 
-    /* Dusun quick nav */
+    /* Dusun quick nav mobile */
     .public-layout .page-dusun .quick-nav {
-        padding: 10px 0 4px;
-        border-bottom: none;
-        background: linear-gradient(to bottom, #FAF7F2 0%, rgba(250, 247, 242, 0.88) 65%, transparent 100%);
+        padding: 14px 0 18px;
+        background: linear-gradient(to bottom, #FAF7F2 0%, rgba(250, 247, 242, 0.95) 75%, rgba(250, 247, 242, 0.7) 100%);
     }
 
     .public-layout .page-dusun .quick-nav-container {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-        padding: 0 10px;
-    }
-
-    .public-layout .page-dusun .quick-nav-arrow {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 30px;
-        height: 30px;
-        flex: 0 0 30px;
+        display: block;
         padding: 0;
-        border: 1px solid rgba(222, 215, 202, 0.85);
-        border-radius: 50%;
-        background: rgba(255, 253, 248, 0.95);
-        color: var(--public-moss);
-        box-shadow: 0 2px 6px rgba(55, 63, 45, 0.08);
-        backdrop-filter: blur(4px);
-        cursor: pointer;
-        transition: all .2s ease;
-        -webkit-tap-highlight-color: transparent;
     }
 
-    .public-layout .page-dusun .quick-nav-arrow:active {
-        transform: scale(0.92);
-        background: #edf2e9;
-        border-color: #bdcdb8;
+    .public-layout .page-dusun .quick-nav-header {
+        margin-bottom: 12px;
     }
 
-    .public-layout .page-dusun .quick-nav-arrow svg {
-        width: 14px;
-        height: 14px;
+    .public-layout .page-dusun .quick-nav-tag {
+        font-size: .60rem;
+        padding: 2px 8px;
+    }
+
+    .public-layout .page-dusun .quick-nav-lead {
+        font-size: .68rem;
+        margin-top: 4px;
     }
 
     .public-layout .page-dusun .quick-nav-list {
-        flex: 1;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        overflow: visible;
+    }
+
+    .public-layout .page-dusun .quick-nav-item {
+        flex: unset;
         min-width: 0;
-        display: flex;
-        gap: 6px;
-        overflow-x: auto;
-        padding: 0 2px 4px;
-        scroll-snap-type: x proximity;
-        scrollbar-width: none;
     }
 
-    .public-layout .page-dusun .quick-nav-list::-webkit-scrollbar {
-        display: none;
-    }
-
-    .public-layout .page-dusun .quick-nav-list li {
-        flex: 0 0 68px;
-        scroll-snap-align: start;
+    .public-layout .page-dusun .quick-nav-item-featured {
+        grid-column: span 2;
     }
 
     .public-layout .page-dusun .quick-nav-link {
-        min-height: 52px;
-        padding: 6px 4px 5px;
-        border-radius: 10px;
-        font-size: .40rem;
+        min-height: 80px;
+        padding: 10px 10px 9px;
+        border-radius: 11px;
+        gap: 6px;
     }
 
-    .public-layout .page-dusun .quick-nav-num {
-        width: 24px;
-        height: 24px;
-        font-size: .45rem;
+    .public-layout .page-dusun .quick-nav-item-featured .quick-nav-link {
+        flex-direction: row;
+        align-items: center;
+        min-height: 54px;
+        padding: 8px 12px;
+        gap: 10px;
+    }
+
+    .public-layout .page-dusun .quick-nav-item-featured .quick-nav-card-top {
+        margin-bottom: 0;
+        width: auto;
+        gap: 0;
+    }
+
+    .public-layout .page-dusun .quick-nav-item-featured .quick-nav-card-top .quick-nav-arrow-indicator {
+        display: none;
+    }
+
+    .public-layout .page-dusun .quick-nav-item-featured .quick-nav-content {
+        flex: 1;
+    }
+
+    .public-layout .page-dusun .quick-nav-card-top {
+        margin-bottom: 4px;
+    }
+
+    .public-layout .page-dusun .quick-nav-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+
+    .public-layout .page-dusun .quick-nav-icon svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    .public-layout .page-dusun .quick-nav-arrow-indicator svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .public-layout .page-dusun .quick-nav-title {
+        font-size: .78rem;
+    }
+
+    .public-layout .page-dusun .quick-nav-desc {
+        font-size: .62rem;
     }
 
     /* Dusun sections */

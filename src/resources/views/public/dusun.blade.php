@@ -38,23 +38,124 @@
     {{-- QUICK NAVIGATION — IDs/classes retained for app.js scrollspy --}}
     <nav class="quick-nav" aria-label="Navigasi cepat halaman {{ $dusun->nama_dusun }}">
         <div class="container quick-nav-container">
-            <button type="button" class="quick-nav-arrow quick-nav-arrow-prev" aria-label="Geser navigasi ke kiri" title="Geser ke kiri">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>
-            </button>
-
+            <div class="quick-nav-header">
+                <span class="quick-nav-tag">Jelajahi Dusun</span>
+                <p class="quick-nav-lead">Navigasi langsung menuju informasi dan layanan {{ $dusun->nama_dusun }}</p>
+            </div>
             <ul class="quick-nav-list" role="list">
-                <li><a href="#profil-dusun" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">01</span>Profil Dusun</a></li>
-                <li><a href="#peta-dusun" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">02</span>Peta Dusun</a></li>
-                <li><a href="#kontak-pelayanan" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">03</span>Pelayanan</a></li>
-                <li><a href="#umkm" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">04</span>UMKM</a></li>
-                <li><a href="#fasilitas" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">05</span>Fasilitas</a></li>
-                <li><a href="#agenda" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">06</span>Agenda</a></li>
-                <li><a href="#pengumuman" class="quick-nav-link"><span class="quick-nav-num" aria-hidden="true">07</span>Pengumuman</a></li>
+                <li class="quick-nav-item">
+                    <a href="#profil-dusun" class="quick-nav-link" id="quick-dusun-profil">
+                        <div class="quick-nav-card-top">
+                            <span class="quick-nav-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11 12 4l9 7v9H3v-9Z"/><path d="M9 20v-6h6v6"/></svg>
+                            </span>
+                            <span class="quick-nav-arrow-indicator" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                        <div class="quick-nav-content">
+                            <span class="quick-nav-title">Profil Dusun</span>
+                            <span class="quick-nav-desc">Tentang wilayah</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="quick-nav-item">
+                    <a href="#peta-dusun" class="quick-nav-link" id="quick-dusun-peta">
+                        <div class="quick-nav-card-top">
+                            <span class="quick-nav-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                            </span>
+                            <span class="quick-nav-arrow-indicator" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                        <div class="quick-nav-content">
+                            <span class="quick-nav-title">Peta Dusun</span>
+                            <span class="quick-nav-desc">Sebaran lokasi</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="quick-nav-item">
+                    <a href="#kontak-pelayanan" class="quick-nav-link" id="quick-dusun-pelayanan">
+                        <div class="quick-nav-card-top">
+                            <span class="quick-nav-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7"/></svg>
+                            </span>
+                            <span class="quick-nav-arrow-indicator" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                        <div class="quick-nav-content">
+                            <span class="quick-nav-title">Pelayanan</span>
+                            <span class="quick-nav-desc">Kontak petugas</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="quick-nav-item">
+                    <a href="#umkm" class="quick-nav-link" id="quick-dusun-umkm">
+                        <div class="quick-nav-card-top">
+                            <span class="quick-nav-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                            </span>
+                            <span class="quick-nav-arrow-indicator" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                        <div class="quick-nav-content">
+                            <span class="quick-nav-title">UMKM</span>
+                            <span class="quick-nav-desc">Potensi usaha</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="quick-nav-item">
+                    <a href="#fasilitas" class="quick-nav-link" id="quick-dusun-fasilitas">
+                        <div class="quick-nav-card-top">
+                            <span class="quick-nav-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M8 10h.01M16 10h.01M8 14h.01M16 14h.01"/></svg>
+                            </span>
+                            <span class="quick-nav-arrow-indicator" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                        <div class="quick-nav-content">
+                            <span class="quick-nav-title">Fasilitas</span>
+                            <span class="quick-nav-desc">Fasilitas umum</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="quick-nav-item">
+                    <a href="#agenda" class="quick-nav-link" id="quick-dusun-agenda">
+                        <div class="quick-nav-card-top">
+                            <span class="quick-nav-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M16 3v4M8 3v4M3 10h18"/></svg>
+                            </span>
+                            <span class="quick-nav-arrow-indicator" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                        <div class="quick-nav-content">
+                            <span class="quick-nav-title">Agenda</span>
+                            <span class="quick-nav-desc">Jadwal kegiatan</span>
+                        </div>
+                    </a>
+                </li>
+                <li class="quick-nav-item quick-nav-item-featured">
+                    <a href="#pengumuman" class="quick-nav-link" id="quick-dusun-pengumuman">
+                        <div class="quick-nav-card-top">
+                            <span class="quick-nav-icon" aria-hidden="true">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 13v-2Z"/><path d="M7 14v5"/></svg>
+                            </span>
+                            <span class="quick-nav-arrow-indicator" aria-hidden="true">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                            </span>
+                        </div>
+                        <div class="quick-nav-content">
+                            <span class="quick-nav-title">Pengumuman</span>
+                            <span class="quick-nav-desc">Warta terkini</span>
+                        </div>
+                    </a>
+                </li>
             </ul>
-
-            <button type="button" class="quick-nav-arrow quick-nav-arrow-next" aria-label="Geser navigasi ke kanan" title="Geser ke kanan">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
         </div>
     </nav>
 

@@ -216,7 +216,7 @@ class GeminiAiService
     private function buildSystemInstruction(string $feature, string $mode): string
     {
         return <<<'INSTRUCTION'
-Anda adalah asisten penulisan portal informasi desa resmi untuk Desa Bendung, Kapanewon Semin, Kabupaten Gunungkidul.
+Anda adalah asisten penulisan portal informasi desa resmi untuk Desa Bendung, Kecamatan Jetis, Kabupaten Mojokerto.
 Tugas Anda HANYA menyusun, merapikan, atau memformat draf teks berdasarkan catatan fakta mentah yang diberikan oleh admin desa.
 
 ATURAN KESELAMATAN & KEBIJAKAN KETAT:

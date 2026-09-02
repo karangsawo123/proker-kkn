@@ -1,11 +1,14 @@
 /**
  * AI Writing Assistant Frontend Client (Vanilla JS)
  * Non-blocking, Human-in-the-loop draft generator.
+ * Supports 5W+1H structured inputs and tailored UMKM business profiling.
  */
 
 export function initAiAssistant() {
     let currentFeature = 'pengumuman_draft';
     let currentMode = 'draft';
+    let currentInputType = 'structured';
+    let currentLength = 'standar';
     let targetTitleElement = null;
     let targetTextElement = null;
     let generatedData = null;
@@ -22,9 +25,16 @@ export function initAiAssistant() {
             applyBtn: document.getElementById('aiApplyBtn'),
             retryBtn: document.getElementById('aiRetryBtn'),
             inputSection: document.getElementById('aiInputSection'),
+            inputTypeWrapper: document.getElementById('aiInputTypeWrapper'),
+            typeStructuredBtn: document.getElementById('aiTypeStructuredBtn'),
+            typeFreeBtn: document.getElementById('aiTypeFreeBtn'),
+            form5w1hSection: document.getElementById('ai5w1hFormSection'),
+            formUmkmSection: document.getElementById('aiUmkmFormSection'),
             notesGroup: document.getElementById('aiNotesGroup'),
-            existingTextGroup: document.getElementById('aiExistingTextGroup'),
             notesInput: document.getElementById('aiNotesInput'),
+            lengthGroup: document.getElementById('aiLengthGroup'),
+            lengthPills: document.querySelectorAll('.ai-length-pill'),
+            existingTextGroup: document.getElementById('aiExistingTextGroup'),
             existingTextInput: document.getElementById('aiExistingTextInput'),
             loadingState: document.getElementById('aiLoadingState'),
             errorBox: document.getElementById('aiErrorBox'),
@@ -34,7 +44,56 @@ export function initAiAssistant() {
             previewTitle: document.getElementById('aiPreviewTitle'),
             previewContent: document.getElementById('aiPreviewContent'),
             modePills: document.querySelectorAll('.ai-mode-pill'),
+            // 5W1H Inputs
+            input5wWho: document.getElementById('ai5wWho'),
+            input5wWhat: document.getElementById('ai5wWhat'),
+            input5wWhen: document.getElementById('ai5wWhen'),
+            input5wWhere: document.getElementById('ai5wWhere'),
+            input5wWhy: document.getElementById('ai5wWhy'),
+            input5wHow: document.getElementById('ai5wHow'),
+            // UMKM Inputs
+            inputUmkmName: document.getElementById('aiUmkmName'),
+            inputUmkmProduct: document.getElementById('aiUmkmProduct'),
+            inputUmkmUsp: document.getElementById('aiUmkmUsp'),
+            inputUmkmLocation: document.getElementById('aiUmkmLocation'),
+            inputUmkmOrder: document.getElementById('aiUmkmOrder'),
         };
+    }
+
+    function syncInputVisibility(elements) {
+        if (!elements) return;
+
+        if (currentMode === 'draft') {
+            if (elements.inputTypeWrapper) elements.inputTypeWrapper.style.display = 'block';
+            if (elements.lengthGroup) elements.lengthGroup.style.display = 'block';
+
+            if (currentInputType === 'structured') {
+                if (elements.notesGroup) elements.notesGroup.style.display = 'none';
+                if (currentFeature === 'umkm_draft') {
+                    if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
+                    if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'block';
+                } else {
+                    if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'block';
+                    if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
+                }
+            } else {
+                if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
+                if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
+                if (elements.notesGroup) elements.notesGroup.style.display = 'block';
+            }
+
+            if (elements.existingTextGroup) {
+                elements.existingTextGroup.style.display = elements.existingTextInput?.value.trim() ? 'block' : 'none';
+            }
+        } else {
+            // Improve text modes (rapikan, formal, persingkat)
+            if (elements.inputTypeWrapper) elements.inputTypeWrapper.style.display = 'none';
+            if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
+            if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
+            if (elements.lengthGroup) elements.lengthGroup.style.display = 'none';
+            if (elements.existingTextGroup) elements.existingTextGroup.style.display = 'block';
+            if (elements.notesGroup) elements.notesGroup.style.display = 'block';
+        }
     }
 
     function resetModal(elements) {
@@ -49,6 +108,8 @@ export function initAiAssistant() {
         }
         if (elements.applyBtn) elements.applyBtn.style.display = 'none';
         if (elements.retryBtn) elements.retryBtn.style.display = 'none';
+
+        syncInputVisibility(elements);
     }
 
     function closeModal() {
@@ -78,17 +139,33 @@ export function initAiAssistant() {
             elements.existingTextInput.value = existingVal;
         }
 
-        if (elements.existingTextGroup) {
-            elements.existingTextGroup.style.display = existingVal.trim().length > 0 ? 'block' : 'none';
+        // Auto pre-fill UMKM or Title into what/product field if empty
+        if (currentFeature === 'umkm_draft' && elements.inputUmkmProduct && !elements.inputUmkmProduct.value.trim() && targetTitleElement?.value) {
+            elements.inputUmkmName.value = targetTitleElement.value;
+        } else if ((currentFeature === 'pengumuman_draft' || currentFeature === 'agenda_draft') && elements.input5wWhat && !elements.input5wWhat.value.trim() && targetTitleElement?.value) {
+            elements.input5wWhat.value = targetTitleElement.value;
         }
 
         resetModal(elements);
         elements.modalBackdrop.style.display = 'flex';
         elements.modalBackdrop.setAttribute('aria-hidden', 'false');
 
-        if (elements.notesInput) {
-            setTimeout(() => elements.notesInput.focus(), 50);
-        }
+        // Auto focus appropriate input
+        setTimeout(() => {
+            if (currentMode === 'draft') {
+                if (currentInputType === 'structured') {
+                    if (currentFeature === 'umkm_draft') {
+                        elements.inputUmkmName?.focus();
+                    } else {
+                        elements.input5wWhat?.focus();
+                    }
+                } else {
+                    elements.notesInput?.focus();
+                }
+            } else {
+                elements.existingTextInput?.focus();
+            }
+        }, 60);
     }
 
     // Global Document Click Delegation for Trigger Buttons
@@ -114,6 +191,7 @@ export function initAiAssistant() {
             return;
         }
 
+        // Mode Selector (Draft, Rapikan, Formal, Persingkat)
         const pill = e.target.closest('.ai-mode-pill');
         if (pill) {
             e.preventDefault();
@@ -123,16 +201,34 @@ export function initAiAssistant() {
             elements.modePills.forEach(p => p.classList.remove('is-active'));
             pill.classList.add('is-active');
             currentMode = pill.dataset.mode || 'draft';
+            syncInputVisibility(elements);
+            return;
+        }
 
-            if (currentMode === 'draft') {
-                if (elements.notesGroup) elements.notesGroup.style.display = 'block';
-                if (elements.existingTextGroup) {
-                    elements.existingTextGroup.style.display = elements.existingTextInput?.value.trim() ? 'block' : 'none';
-                }
-            } else {
-                if (elements.existingTextGroup) elements.existingTextGroup.style.display = 'block';
-                if (elements.notesGroup) elements.notesGroup.style.display = 'block';
-            }
+        // Input Type Selector (Structured vs Free Notes)
+        const typeBtn = e.target.closest('.ai-type-btn');
+        if (typeBtn) {
+            e.preventDefault();
+            const elements = getModalElements();
+            if (!elements) return;
+
+            document.querySelectorAll('.ai-type-btn').forEach(b => b.classList.remove('is-active'));
+            typeBtn.classList.add('is-active');
+            currentInputType = typeBtn.dataset.type || 'structured';
+            syncInputVisibility(elements);
+            return;
+        }
+
+        // Draft Length Selector (Ringkas, Standar, Lengkap)
+        const lengthBtn = e.target.closest('.ai-length-pill');
+        if (lengthBtn) {
+            e.preventDefault();
+            const elements = getModalElements();
+            if (!elements) return;
+
+            elements.lengthPills.forEach(b => b.classList.remove('is-active'));
+            lengthBtn.classList.add('is-active');
+            currentLength = lengthBtn.dataset.length || 'standar';
             return;
         }
 
@@ -163,15 +259,69 @@ export function initAiAssistant() {
         const elements = getModalElements();
         if (!elements) return;
 
-        const notes = elements.notesInput?.value.trim() || '';
+        let notes = elements.notesInput?.value.trim() || '';
         const existingText = elements.existingTextInput?.value.trim() || '';
+        let structuredInput = null;
 
-        if (!notes && !existingText) {
-            if (elements.errorBox && elements.errorMessage) {
-                elements.errorBox.style.display = 'block';
-                elements.errorMessage.textContent = 'Silakan isi catatan fakta atau teks yang ingin disempurnakan.';
+        if (currentMode === 'draft') {
+            if (currentInputType === 'structured') {
+                if (currentFeature === 'umkm_draft') {
+                    const businessName = elements.inputUmkmName?.value.trim() || '';
+                    const productService = elements.inputUmkmProduct?.value.trim() || '';
+                    const uspAdvantage = elements.inputUmkmUsp?.value.trim() || '';
+                    const location = elements.inputUmkmLocation?.value.trim() || '';
+                    const orderingInfo = elements.inputUmkmOrder?.value.trim() || '';
+
+                    if (!productService && !businessName && !uspAdvantage) {
+                        showError(elements, 'Silakan isi minimal Produk / Layanan Unggulan atau Nama Usaha.');
+                        elements.inputUmkmProduct?.focus();
+                        return;
+                    }
+
+                    structuredInput = {
+                        business_name: businessName,
+                        product_service: productService,
+                        usp_advantage: uspAdvantage,
+                        location: location,
+                        ordering_info: orderingInfo,
+                    };
+                } else {
+                    const who = elements.input5wWho?.value.trim() || '';
+                    const what = elements.input5wWhat?.value.trim() || '';
+                    const when = elements.input5wWhen?.value.trim() || '';
+                    const where = elements.input5wWhere?.value.trim() || '';
+                    const why = elements.input5wWhy?.value.trim() || '';
+                    const how = elements.input5wHow?.value.trim() || '';
+
+                    if (!what && !who && !where) {
+                        showError(elements, 'Silakan isi minimal perihal/kegiatan pada kolom WHAT.');
+                        elements.input5wWhat?.focus();
+                        return;
+                    }
+
+                    structuredInput = {
+                        who: who,
+                        what: what,
+                        when: when,
+                        where: where,
+                        why: why,
+                        how: how,
+                    };
+                }
+            } else {
+                if (!notes) {
+                    showError(elements, 'Silakan isi catatan fakta mentah.');
+                    elements.notesInput?.focus();
+                    return;
+                }
             }
-            return;
+        } else {
+            // Text improvement mode
+            if (!existingText && !notes) {
+                showError(elements, 'Silakan isi teks yang ingin disempurnakan.');
+                elements.existingTextInput?.focus();
+                return;
+            }
         }
 
         if (elements.inputSection) elements.inputSection.style.display = 'none';
@@ -196,6 +346,8 @@ export function initAiAssistant() {
                     mode: currentMode,
                     notes: notes || null,
                     existing_text: existingText || null,
+                    structured_input: structuredInput || null,
+                    draft_length: currentLength || 'standar',
                 }),
             });
 
@@ -205,10 +357,7 @@ export function initAiAssistant() {
 
             if (!response.ok || !result.success) {
                 if (elements.inputSection) elements.inputSection.style.display = 'block';
-                if (elements.errorBox && elements.errorMessage) {
-                    elements.errorBox.style.display = 'block';
-                    elements.errorMessage.textContent = result.message || 'Layanan bantuan AI sedang tidak tersedia.';
-                }
+                showError(elements, result.message || 'Layanan bantuan AI sedang tidak tersedia.');
                 if (elements.generateBtn) elements.generateBtn.disabled = false;
                 return;
             }
@@ -219,11 +368,15 @@ export function initAiAssistant() {
         } catch (err) {
             if (elements.loadingState) elements.loadingState.style.display = 'none';
             if (elements.inputSection) elements.inputSection.style.display = 'block';
-            if (elements.errorBox && elements.errorMessage) {
-                elements.errorBox.style.display = 'block';
-                elements.errorMessage.textContent = 'Gagal terhubung dengan server. Silakan isi form secara manual.';
-            }
+            showError(elements, 'Gagal terhubung dengan server. Silakan coba lagi atau isi form manual.');
             if (elements.generateBtn) elements.generateBtn.disabled = false;
+        }
+    }
+
+    function showError(elements, message) {
+        if (elements.errorBox && elements.errorMessage) {
+            elements.errorBox.style.display = 'block';
+            elements.errorMessage.textContent = message;
         }
     }
 

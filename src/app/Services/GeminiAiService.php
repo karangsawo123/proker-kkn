@@ -77,11 +77,19 @@ class GeminiAiService
      * @param  string  $mode  (draft|rapikan|persingkat|formal)
      * @param  string|null  $notes  Factual raw notes supplied by admin
      * @param  string|null  $existingText  Existing text if improving
+     * @param  array|null  $structuredInput  Structured 5W1H or UMKM parameters
+     * @param  string  $draftLength  (ringkas|standar|lengkap)
      *
      * @throws Exception
      */
-    public function generate(string $feature, string $mode, ?string $notes = null, ?string $existingText = null): array
-    {
+    public function generate(
+        string $feature,
+        string $mode,
+        ?string $notes = null,
+        ?string $existingText = null,
+        ?array $structuredInput = null,
+        string $draftLength = 'standar'
+    ): array {
         if (! $this->enabled) {
             throw new Exception('Layanan asisten AI sedang dinonaktifkan oleh administrator.');
         }
@@ -91,7 +99,7 @@ class GeminiAiService
         }
 
         $systemInstruction = $this->buildSystemInstruction($feature, $mode);
-        $userPrompt = $this->buildUserPrompt($feature, $mode, $notes, $existingText);
+        $userPrompt = $this->buildUserPrompt($feature, $mode, $notes, $existingText, $structuredInput, $draftLength);
 
         if ($this->provider === 'gemini') {
             $endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{$this->model}:generateContent?key={$this->apiKey}";
@@ -231,12 +239,67 @@ INSTRUCTION;
     /**
      * Build user prompt with expected JSON structure.
      */
-    private function buildUserPrompt(string $feature, string $mode, ?string $notes, ?string $existingText): string
-    {
+    private function buildUserPrompt(
+        string $feature,
+        string $mode,
+        ?string $notes,
+        ?string $existingText,
+        ?array $structuredInput = null,
+        string $draftLength = 'standar'
+    ): string {
         $prompt = "Mode Penulisan: {$mode}\n";
 
+        if ($draftLength === 'ringkas') {
+            $prompt .= "Gaya Panjang Draf: Ringkas, padat, dan langsung ke inti informasi pokok.\n\n";
+        } elseif ($draftLength === 'lengkap') {
+            $prompt .= "Gaya Panjang Draf: Lengkap, terperinci, dan jelas dengan susunan paragraf atau poin yang informatif.\n\n";
+        }
+
+        if (! empty($structuredInput) && is_array($structuredInput)) {
+            if ($feature === 'pengumuman_draft' || $feature === 'agenda_draft') {
+                $prompt .= "Rincian Fakta Terstruktur (Format 5W+1H):\n";
+                if (! empty($structuredInput['who'])) {
+                    $prompt .= "- WHO (Sasaran/Penyelenggara): {$structuredInput['who']}\n";
+                }
+                if (! empty($structuredInput['what'])) {
+                    $prompt .= "- WHAT (Perihal/Nama Kegiatan): {$structuredInput['what']}\n";
+                }
+                if (! empty($structuredInput['when'])) {
+                    $prompt .= "- WHEN (Hari, Tanggal & Jam): {$structuredInput['when']}\n";
+                }
+                if (! empty($structuredInput['where'])) {
+                    $prompt .= "- WHERE (Tempat/Lokasi Gedung): {$structuredInput['where']}\n";
+                }
+                if (! empty($structuredInput['why'])) {
+                    $prompt .= "- WHY (Tujuan/Latar Belakang): {$structuredInput['why']}\n";
+                }
+                if (! empty($structuredInput['how'])) {
+                    $prompt .= "- HOW (Instruksi/Syarat/Perlengkapan): {$structuredInput['how']}\n";
+                }
+                $prompt .= "\n";
+            } elseif ($feature === 'umkm_draft') {
+                $prompt .= "Rincian Profil & Promosi Usaha UMKM:\n";
+                if (! empty($structuredInput['business_name'])) {
+                    $prompt .= "- Nama Usaha / Pemilik: {$structuredInput['business_name']}\n";
+                }
+                if (! empty($structuredInput['product_service'])) {
+                    $prompt .= "- Produk / Layanan Unggulan: {$structuredInput['product_service']}\n";
+                }
+                if (! empty($structuredInput['usp_advantage'])) {
+                    $prompt .= "- Keunggulan & Ciri Khas Produk: {$structuredInput['usp_advantage']}\n";
+                }
+                if (! empty($structuredInput['location'])) {
+                    $prompt .= "- Lokasi / Dusun Produksi: {$structuredInput['location']}\n";
+                }
+                if (! empty($structuredInput['ordering_info'])) {
+                    $prompt .= "- Cara Pesan / Kontak / Rentang Harga: {$structuredInput['ordering_info']}\n";
+                }
+                $prompt .= "\n";
+            }
+        }
+
         if ($notes) {
-            $prompt .= "Catatan/Poin Fakta Admin:\n{$notes}\n\n";
+            $prompt .= "Catatan Tambahan Admin:\n{$notes}\n\n";
         }
 
         if ($existingText) {

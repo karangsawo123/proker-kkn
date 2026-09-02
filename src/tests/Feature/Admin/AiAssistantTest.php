@@ -398,4 +398,93 @@ class AiAssistantTest extends TestCase
             ],
         ]);
     }
+
+    public function test_can_generate_draft_using_structured_5w1h_input(): void
+    {
+        Http::fake([
+            'https://generativelanguage.googleapis.com/*' => Http::response([
+                'candidates' => [
+                    [
+                        'content' => [
+                            'parts' => [
+                                [
+                                    'text' => json_encode([
+                                        'judul' => 'Kerja Bakti Bersih Dusun',
+                                        'isi' => 'Diberitahukan kepada seluruh warga RT 01-04 untuk mengikuti kerja bakti pada Minggu pagi.',
+                                    ]),
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->actingAs($this->adminDusun)
+            ->postJson(route('admin.ai.generate-draft'), [
+                'feature' => 'pengumuman_draft',
+                'mode' => 'draft',
+                'draft_length' => 'lengkap',
+                'structured_input' => [
+                    'who' => 'Seluruh warga RT 01-04',
+                    'what' => 'Kerja Bakti Bersih Saluran Air',
+                    'when' => 'Minggu, 15 Okt 2026, 08:00 WIB',
+                    'where' => 'Jalan Utama Dusun Bendung',
+                    'why' => 'Antisipasi musim penghujan',
+                    'how' => 'Membawa cangkul dan sapu',
+                ],
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'data' => [
+                'judul' => 'Kerja Bakti Bersih Dusun',
+                'isi' => 'Diberitahukan kepada seluruh warga RT 01-04 untuk mengikuti kerja bakti pada Minggu pagi.',
+            ],
+        ]);
+    }
+
+    public function test_can_generate_draft_using_structured_umkm_input_with_length_option(): void
+    {
+        Http::fake([
+            'https://generativelanguage.googleapis.com/*' => Http::response([
+                'candidates' => [
+                    [
+                        'content' => [
+                            'parts' => [
+                                [
+                                    'text' => json_encode([
+                                        'deskripsi' => 'Keripik Pisang Berkah Bu Siti menyajikan keripik pisang renyah khas Dusun Bendung tanpa bahan pengawet.',
+                                    ]),
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->actingAs($this->superAdmin)
+            ->postJson(route('admin.ai.generate-draft'), [
+                'feature' => 'umkm_draft',
+                'mode' => 'draft',
+                'draft_length' => 'ringkas',
+                'structured_input' => [
+                    'business_name' => 'Keripik Berkah Bu Siti',
+                    'product_service' => 'Keripik Pisang Aneka Rasa',
+                    'usp_advantage' => 'Tanpa bahan pengawet, higienis',
+                    'location' => 'Dusun Bendung RT 03',
+                    'ordering_info' => 'Mulai Rp10.000/bks, hubungi WA',
+                ],
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'data' => [
+                'deskripsi' => 'Keripik Pisang Berkah Bu Siti menyajikan keripik pisang renyah khas Dusun Bendung tanpa bahan pengawet.',
+            ],
+        ]);
+    }
 }

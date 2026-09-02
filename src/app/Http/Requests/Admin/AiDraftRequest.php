@@ -29,6 +29,9 @@ class AiDraftRequest extends FormRequest
             ],
             'notes' => ['nullable', 'string', 'max:2500'],
             'existing_text' => ['nullable', 'string', 'max:4500'],
+            'structured_input' => ['nullable', 'array'],
+            'structured_input.*' => ['nullable', 'string', 'max:1000'],
+            'draft_length' => ['nullable', 'string', Rule::in(['ringkas', 'standar', 'lengkap'])],
         ];
     }
 

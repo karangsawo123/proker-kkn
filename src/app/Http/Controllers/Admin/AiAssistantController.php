@@ -22,8 +22,10 @@ class AiAssistantController extends Controller
             $mode = $validated['mode'];
             $notes = $validated['notes'] ?? null;
             $existingText = $validated['existing_text'] ?? null;
+            $structuredInput = $validated['structured_input'] ?? null;
+            $draftLength = $validated['draft_length'] ?? 'standar';
 
-            $result = $aiService->generate($feature, $mode, $notes, $existingText);
+            $result = $aiService->generate($feature, $mode, $notes, $existingText, $structuredInput, $draftLength);
 
             return response()->json([
                 'success' => true,

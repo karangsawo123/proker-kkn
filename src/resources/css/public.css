@@ -2104,34 +2104,117 @@
 
 /* ========================= DUSUN FACILITY ========================= */
 .public-layout .page-dusun .fasilitas-strip {
-    grid-auto-columns: minmax(190px, 1fr);
+    grid-auto-columns: minmax(230px, 1fr);
 }
 
 .public-layout .page-dusun .facility-card {
-    min-height: 125px;
-    padding: 12px;
+    overflow: hidden;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    border: 1px solid rgba(46, 94, 62, .10);
-    border-radius: 10px;
+    border: 1px solid rgba(46, 94, 62, .12);
+    border-radius: 12px;
     background: var(--public-surface);
     box-shadow: var(--public-shadow-sm);
     scroll-snap-align: start;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.public-layout .page-dusun .facility-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--public-shadow-md);
+}
+
+.public-layout .page-dusun .facility-card-media {
+    position: relative;
+    height: 126px;
+    overflow: hidden;
+    background: linear-gradient(135deg, #EEF3EB 0%, #E2EBDD 100%);
+}
+
+.public-layout .page-dusun .facility-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 300ms ease;
+}
+
+.public-layout .page-dusun .facility-card:hover .facility-card-img {
+    transform: scale(1.04);
+}
+
+.public-layout .page-dusun .media-placeholder.facility-card-img {
+    display: grid;
+    place-items: center;
+    color: var(--public-sage);
+    background: linear-gradient(135deg, rgba(46, 94, 62, 0.08) 0%, rgba(46, 94, 62, 0.15) 100%);
+}
+
+.public-layout .page-dusun .facility-badge-float {
+    position: absolute;
+    top: 9px;
+    left: 9px;
+    display: inline-flex;
+    align-items: center;
+    padding: 3px 8px;
+    border-radius: 6px;
+    background: rgba(26, 48, 34, 0.85);
+    backdrop-filter: blur(4px);
+    color: #FFFFFF;
+    font-size: .42rem;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
+}
+
+.public-layout .page-dusun .facility-card-body {
+    flex: 1;
+    padding: 10px 12px 8px;
 }
 
 .public-layout .page-dusun .facility-card-name {
-    margin-top: 6px;
+    margin: 0;
     color: var(--public-olive);
-    font-size: .72rem;
-    line-height: 1.2;
+    font-size: .74rem;
+    font-weight: 800;
+    line-height: 1.25;
 }
 
 .public-layout .page-dusun .facility-card-addr {
-    margin: 4px 0 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    margin: 5px 0 0;
     color: var(--public-muted);
     font-size: .48rem;
-    line-height: 1.42;
+    line-height: 1.4;
+}
+
+.public-layout .page-dusun .facility-card-addr svg {
+    flex-shrink: 0;
+    margin-top: 1px;
+    color: var(--public-moss);
+}
+
+.public-layout .page-dusun .facility-card-footer {
+    padding: 8px 12px 10px;
+    border-top: 1px solid rgba(46, 94, 62, .08);
+    background: rgba(248, 250, 246, 0.6);
+}
+
+.public-layout .page-dusun .facility-card-link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    color: var(--public-moss);
+    font-size: .49rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: color 150ms ease;
+}
+
+.public-layout .page-dusun .facility-card-link:hover {
+    color: var(--public-forest);
 }
 
 /* ========================= DUSUN LATEST ========================= */
@@ -3628,21 +3711,35 @@ html.js .public-layout [data-reveal].is-revealed {
     }
 
     .public-layout .page-dusun .fasilitas-strip {
-        grid-auto-columns: 145px;
+        grid-auto-columns: 180px;
     }
 
     .public-layout .page-dusun .facility-card {
-        min-height: 100px;
-        padding: 8px;
-        border-radius: 8px;
+        border-radius: 9px;
+    }
+
+    .public-layout .page-dusun .facility-card-media {
+        height: 100px;
+    }
+
+    .public-layout .page-dusun .facility-card-body {
+        padding: 8px 9px 6px;
     }
 
     .public-layout .page-dusun .facility-card-name {
-        font-size: .55rem;
+        font-size: .58rem;
     }
 
     .public-layout .page-dusun .facility-card-addr {
-        font-size: .37rem;
+        font-size: .40rem;
+    }
+
+    .public-layout .page-dusun .facility-card-footer {
+        padding: 6px 9px 7px;
+    }
+
+    .public-layout .page-dusun .facility-card-link {
+        font-size: .42rem;
     }
 
     .public-layout .page-dusun .terkini-grid {

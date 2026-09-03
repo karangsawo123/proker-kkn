@@ -2132,12 +2132,11 @@
 
 /* ========================= DUSUN FACILITY ========================= */
 .public-layout .page-dusun .fasilitas-strip {
-    display: grid !important;
-    grid-auto-flow: column !important;
-    grid-auto-columns: minmax(240px, 280px);
+    grid-auto-columns: minmax(230px, 1fr);
 }
 
 .public-layout .page-dusun .facility-card {
+    position: relative;
     width: 100% !important;
     max-width: 100% !important;
     min-width: 0 !important;
@@ -2154,11 +2153,15 @@
     box-shadow: var(--public-shadow-sm);
     scroll-snap-align: start;
     transition: transform 180ms ease, box-shadow 180ms ease;
+    z-index: 1;
 }
 
-.public-layout .page-dusun .facility-card:hover {
+.public-layout .page-dusun .facility-card:hover,
+.public-layout .page-dusun .facility-card:active,
+.public-layout .page-dusun .facility-card:focus-within {
     transform: translateY(-2px);
     box-shadow: var(--public-shadow-md);
+    z-index: 10;
 }
 
 .public-layout .page-dusun .facility-card-media {
@@ -3807,10 +3810,8 @@ html.js .public-layout [data-reveal].is-revealed {
     }
 
     .public-layout .page-dusun .fasilitas-strip {
-        display: grid !important;
-        grid-auto-flow: column !important;
-        grid-auto-columns: 215px !important;
-        gap: 12px !important;
+        grid-auto-columns: 180px;
+        gap: 9px;
     }
 
     .public-layout .page-dusun .facility-card {

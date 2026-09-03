@@ -5937,6 +5937,7 @@ html.js .public-layout [data-reveal]:not(.is-revealed) {
 }
 
 .public-layout .page-dusun .facility-card {
+    position: relative;
     width: 100%;
     max-width: 100%;
     min-width: 0;
@@ -5951,11 +5952,15 @@ html.js .public-layout [data-reveal]:not(.is-revealed) {
     flex-direction: column;
     scroll-snap-align: start;
     transition: border-color 0.2s ease, transform 0.2s ease;
+    z-index: 1;
 }
 
-.public-layout .page-dusun .facility-card:hover {
+.public-layout .page-dusun .facility-card:hover,
+.public-layout .page-dusun .facility-card:active,
+.public-layout .page-dusun .facility-card:focus-within {
     border-color: var(--g-line-strong);
     transform: translateY(-2px);
+    z-index: 10;
 }
 
 .public-layout .page-dusun .facility-card-head {

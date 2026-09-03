@@ -102,6 +102,7 @@
                     <li><a href="{{ route('home') }}#agenda" class="mobile-nav-link">Agenda Kegiatan</a></li>
                     <li><a href="{{ request()->routeIs('dusun.show') ? '#peta-dusun' : route('home') . '#peta-desa' }}" class="mobile-nav-link">Peta</a></li>
                     <li><a href="{{ request()->routeIs('dusun.show') ? '#kontak-pelayanan' : route('home') . '#kontak-desa' }}" class="mobile-nav-link">Kontak & Pelayanan</a></li>
+                    <li><a href="{{ route('admin.login') }}" class="mobile-nav-link">Login Admin</a></li>
                 </ul>
             </nav>
         </div>

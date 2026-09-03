@@ -1956,11 +1956,39 @@
     display: grid;
     grid-auto-flow: column;
     grid-auto-columns: minmax(220px, 1fr);
-    gap: 9px;
+    gap: 12px;
     overflow-x: auto;
-    padding-bottom: 4px;
+    padding: 6px 2px 14px;
     scroll-snap-type: x proximity;
     scrollbar-width: thin;
+    scrollbar-color: rgba(46, 94, 62, 0.25) transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+.public-layout .page-dusun .kontak-strip::-webkit-scrollbar,
+.public-layout .page-dusun .umkm-strip::-webkit-scrollbar,
+.public-layout .page-dusun .fasilitas-strip::-webkit-scrollbar {
+    height: 6px;
+}
+
+.public-layout .page-dusun .kontak-strip::-webkit-scrollbar-thumb,
+.public-layout .page-dusun .umkm-strip::-webkit-scrollbar-thumb,
+.public-layout .page-dusun .fasilitas-strip::-webkit-scrollbar-thumb {
+    background: rgba(46, 94, 62, 0.22);
+    border-radius: 999px;
+}
+
+.public-layout .page-dusun .kontak-strip::-webkit-scrollbar-thumb:hover,
+.public-layout .page-dusun .umkm-strip::-webkit-scrollbar-thumb:hover,
+.public-layout .page-dusun .fasilitas-strip::-webkit-scrollbar-thumb:hover {
+    background: rgba(46, 94, 62, 0.40);
+}
+
+.public-layout .page-dusun .kontak-strip::-webkit-scrollbar-track,
+.public-layout .page-dusun .umkm-strip::-webkit-scrollbar-track,
+.public-layout .page-dusun .fasilitas-strip::-webkit-scrollbar-track {
+    background: rgba(46, 94, 62, 0.05);
+    border-radius: 999px;
 }
 
 .public-layout .page-dusun .kontak-card {
@@ -2104,10 +2132,19 @@
 
 /* ========================= DUSUN FACILITY ========================= */
 .public-layout .page-dusun .fasilitas-strip {
-    grid-auto-columns: minmax(230px, 1fr);
+    display: grid !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: minmax(240px, 280px);
 }
 
 .public-layout .page-dusun .facility-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    flex: 0 0 auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
     overflow: hidden;
     display: flex;
     flex-direction: column;
@@ -3770,7 +3807,10 @@ html.js .public-layout [data-reveal].is-revealed {
     }
 
     .public-layout .page-dusun .fasilitas-strip {
-        grid-auto-columns: 180px;
+        display: grid !important;
+        grid-auto-flow: column !important;
+        grid-auto-columns: 215px !important;
+        gap: 12px !important;
     }
 
     .public-layout .page-dusun .facility-card {

@@ -5937,12 +5937,16 @@ html.js .public-layout [data-reveal]:not(.is-revealed) {
 }
 
 .public-layout .page-dusun .facility-card {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     flex: 0 0 auto;
-    width: min(72vw, 292px);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
     background: var(--g-paper);
     border: 1px solid var(--g-line);
     border-radius: var(--g-radius);
-    padding: 16px 18px 15px;
     display: flex;
     flex-direction: column;
     scroll-snap-align: start;

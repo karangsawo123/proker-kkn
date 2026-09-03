@@ -102,7 +102,20 @@
                     <li><a href="{{ route('home') }}#agenda" class="mobile-nav-link">Agenda Kegiatan</a></li>
                     <li><a href="{{ request()->routeIs('dusun.show') ? '#peta-dusun' : route('home') . '#peta-desa' }}" class="mobile-nav-link">Peta</a></li>
                     <li><a href="{{ request()->routeIs('dusun.show') ? '#kontak-pelayanan' : route('home') . '#kontak-desa' }}" class="mobile-nav-link">Kontak & Pelayanan</a></li>
-                    <li><a href="{{ route('admin.login') }}" class="mobile-nav-link">Login Admin</a></li>
+                    <li class="mobile-nav-item-admin">
+                        <a href="{{ route('admin.login') }}" class="mobile-nav-link mobile-nav-link-admin">
+                            <span class="mobile-nav-admin-left">
+                                <svg class="mobile-nav-admin-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                                </svg>
+                                <span>Login Admin</span>
+                            </span>
+                            <svg class="mobile-nav-admin-arrow" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                <polyline points="9 18 15 12 9 6"/>
+                            </svg>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>

@@ -3234,6 +3234,65 @@ html.js .public-layout [data-reveal].is-revealed {
         color: var(--public-moss);
     }
 
+    .public-layout .mobile-nav-item-admin {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px dashed var(--public-line);
+    }
+
+    .public-layout .mobile-nav-list-mobile .mobile-nav-link-admin {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 9px 12px;
+        border-radius: 8px;
+        background: linear-gradient(135deg, rgba(214, 169, 40, 0.16) 0%, rgba(214, 169, 40, 0.07) 100%);
+        border: 1px solid rgba(214, 169, 40, 0.48);
+        color: #7A5706;
+        font-weight: 700;
+        box-shadow: 0 2px 6px rgba(214, 169, 40, 0.12);
+        transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+    }
+
+    .public-layout .mobile-nav-list-mobile .mobile-nav-link-admin:hover {
+        background: linear-gradient(135deg, #E2B230 0%, #CE9D1C 100%);
+        border-color: #B88A12;
+        color: #1A2118;
+        box-shadow: 0 4px 14px rgba(214, 169, 40, 0.32);
+        transform: translateY(-1px);
+    }
+
+    .public-layout .mobile-nav-admin-left {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .public-layout .mobile-nav-admin-icon {
+        color: #B58814;
+        flex-shrink: 0;
+        transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .public-layout .mobile-nav-link-admin:hover .mobile-nav-admin-icon {
+        color: #1A2118;
+        transform: scale(1.08);
+    }
+
+    .public-layout .mobile-nav-admin-arrow {
+        color: #B58814;
+        opacity: 0.85;
+        flex-shrink: 0;
+        transition: transform 0.2s ease, color 0.2s ease, opacity 0.2s ease;
+    }
+
+    .public-layout .mobile-nav-link-admin:hover .mobile-nav-admin-arrow {
+        color: #1A2118;
+        opacity: 1;
+        transform: translateX(3px);
+    }
+
     /* Home hero */
     .public-layout .page-home .home-hero {
         min-height: 245px;

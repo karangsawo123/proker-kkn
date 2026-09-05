@@ -71,7 +71,7 @@
                         </div>
                         <span class="opt1-label">Peta</span>
                     </a>
-                    <a href="#kontak-pelayanan" class="opt1-card">
+                    <a href="#peta-dusun" data-jump-filter="PELAYANAN" class="opt1-card">
                         <div class="opt1-iconbox">
                             <svg class="icon" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-3h6v3"/><rect x="7" y="5.5" width="3" height="2.5" rx="0.5"/><rect x="14" y="5.5" width="3" height="2.5" rx="0.5"/><rect x="7" y="10" width="3" height="2.5" rx="0.5"/><rect x="14" y="10" width="3" height="2.5" rx="0.5"/><rect x="7" y="14.5" width="3" height="2.5" rx="0.5"/><rect x="14" y="14.5" width="3" height="2.5" rx="0.5"/></svg>
                         </div>
@@ -379,16 +379,19 @@
                                                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
                                             </a>
                                         @else
-                                            <a href="#kontak-pelayanan" class="opt2-card-action">
-                                                <span>Lihat Kontak</span>
-                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
-                                            </a>
+                                            <span class="opt2-card-action">
+                                                <span>Pelayanan</span>
+                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+                                            </span>
                                         @endif
                                     </div>
                                 </div>
                             </article>
                         @endforeach
                     </div>
+
+                    {{-- Anchor for backward compatibility if any external link targets #kontak-pelayanan --}}
+                    <div id="kontak-pelayanan" class="sr-only" aria-hidden="true"></div>
 
                     {{-- Empty state notices for test & visual coverage --}}
                     @if($umkms->isEmpty())
@@ -397,59 +400,14 @@
                     @if($fasilitas->isEmpty())
                         <div class="sr-only">Belum ada fasilitas yang terdaftar.</div>
                     @endif
+                    @if($kontaks->isEmpty())
+                        <div class="sr-only">Belum ada kontak pelayanan yang terdaftar.</div>
+                    @endif
                     <div class="explorer-empty-notice" style="display:none;">
                         <x-partials.empty-state label="Tidak ada lokasi yang cocok dengan filter atau pencarian Anda." />
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    {{-- KONTAK PELAYANAN --}}
-    <section class="section-kontak" id="kontak-pelayanan" aria-labelledby="kontak-pel-heading">
-        <div class="container">
-            <div class="section-headbar" data-reveal>
-                <div>
-                    <h2 class="section-title" id="kontak-pel-heading">Kontak Pelayanan</h2>
-                </div>
-                @if($kontaks->isNotEmpty())
-                    <p class="section-note">{{ $kontaks->count() }} petugas pelayanan tersedia untuk membantu warga.</p>
-                @endif
-            </div>
-
-            @if($kontaks->isEmpty())
-                <x-partials.empty-state label="Belum ada kontak pelayanan yang terdaftar." />
-            @else
-                <div class="kontak-strip snap-strip" data-reveal role="region" tabindex="0" aria-label="Daftar petugas pelayanan, geser untuk melihat">
-                    @foreach($kontaks as $k)
-                        <article class="kontak-card" id="kontak-{{ $k->id }}">
-                            <div class="kontak-card-top">
-                                @if($k->foto_path)
-                                    <img
-                                        src="{{ asset('storage/' . $k->foto_path) }}"
-                                        alt="Foto {{ $k->nama }}"
-                                        class="kontak-card-photo"
-                                        loading="lazy"
-                                        width="52"
-                                        height="52"
-                                    >
-                                @else
-                                    <div class="kontak-card-photo kontak-card-photo-fallback" aria-hidden="true">
-                                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-                                    </div>
-                                @endif
-                                <div class="kontak-card-id">
-                                    <strong class="kontak-card-name">{{ $k->nama }}</strong>
-                                    <span class="kontak-card-jabatan">{{ $k->jabatan }}</span>
-                                </div>
-                            </div>
-                            <div class="kontak-card-actions">
-                                <x-partials.whatsapp-btn :nomor="$k->nomor_whatsapp" label="WhatsApp" />
-                            </div>
-                        </article>
-                    @endforeach
-                </div>
-            @endif
         </div>
     </section>
 

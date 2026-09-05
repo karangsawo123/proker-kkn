@@ -2856,6 +2856,351 @@
     white-space: nowrap;
 }
 
+/* ========================= MODAL POP-UP & BOTTOM SHEET DUSUN ========================= */
+body.dusun-modal-open {
+    overflow: hidden !important;
+}
+
+.dusun-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(12, 28, 18, 0.65);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dusun-modal-backdrop.is-active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.dusun-modal-dialog {
+    background: #ffffff;
+    width: 100%;
+    max-width: 520px;
+    max-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    box-shadow: 0 20px 45px -10px rgba(10, 30, 18, 0.35), 0 1px 3px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(22, 61, 39, 0.14);
+    transform: scale(0.93) translateY(12px);
+    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+}
+
+.dusun-modal-backdrop.is-active .dusun-modal-dialog {
+    transform: scale(1) translateY(0);
+}
+
+.dusun-modal-handle {
+    display: none;
+}
+
+.dusun-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 16px 20px;
+    background: #fbf9f5;
+    border-bottom: 1px solid #ede8de;
+    flex-shrink: 0;
+}
+
+.dusun-modal-title-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dusun-modal-icon-badge {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    background: rgba(36, 88, 57, 0.12);
+    color: #245839;
+    font-size: 20px;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.dusun-modal-icon-badge.yellow {
+    background: rgba(217, 119, 6, 0.12);
+}
+
+.dusun-modal-title {
+    font-size: 16.5px;
+    font-weight: 800;
+    color: #153422;
+    margin: 0;
+    line-height: 1.25;
+}
+
+.dusun-modal-subtitle {
+    font-size: 12px;
+    color: #607366;
+    margin: 2px 0 0;
+    font-weight: 500;
+}
+
+.dusun-modal-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dusun-modal-count-pill {
+    font-size: 11px;
+    font-weight: 700;
+    color: #e11d48;
+    background: #ffe4e6;
+    padding: 3px 9px;
+    border-radius: 999px;
+    border: 1px solid #fecdd3;
+    white-space: nowrap;
+}
+
+.dusun-modal-close {
+    width: 34px;
+    height: 34px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid #e2ddd3;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    color: #506657;
+    transition: all 0.2s;
+}
+
+.dusun-modal-close:hover {
+    background: #ece7dc;
+    color: #153422;
+}
+
+.dusun-modal-body {
+    padding: 16px 18px;
+    overflow-y: auto;
+    flex: 1;
+    min-height: 120px;
+    max-height: 480px;
+}
+
+.dusun-modal-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.dusun-modal-card-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    background: #faf8f5;
+    border: 1px solid #eae4d8;
+    border-radius: 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    cursor: pointer;
+}
+
+.dusun-modal-card-item:hover {
+    background: #f0f7f2;
+    border-color: #2e7d52;
+    transform: translateY(-1.5px);
+    box-shadow: 0 4px 12px rgba(46, 125, 82, 0.12);
+}
+
+.dusun-modal-date-badge {
+    width: 44px;
+    height: 48px;
+    border-radius: 10px;
+    background: #245839;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    line-height: 1;
+}
+
+.dusun-modal-date-badge.yellow {
+    background: #b45309;
+}
+
+.dusun-modal-date-badge .dm-day {
+    font-size: 17px;
+    font-weight: 800;
+}
+
+.dusun-modal-date-badge .dm-month {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-top: 3px;
+    letter-spacing: 0.5px;
+}
+
+.dusun-modal-card-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.dusun-modal-card-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+    flex-wrap: wrap;
+}
+
+.dusun-modal-badge-warta {
+    font-size: 10.5px;
+    font-weight: 700;
+    color: #b45309;
+    background: #fef3c7;
+    border: 1px solid #fde68a;
+    padding: 2px 7px;
+    border-radius: 6px;
+}
+
+.dusun-modal-meta-location,
+.dusun-modal-meta-exp {
+    font-size: 11px;
+    color: #6c7e72;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dusun-modal-card-title {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: #163624;
+    margin: 0;
+    line-height: 1.35;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.dusun-modal-card-arrow {
+    color: #92a498;
+    transition: transform 0.2s, color 0.2s;
+    flex-shrink: 0;
+}
+
+.dusun-modal-card-item:hover .dusun-modal-card-arrow {
+    color: #2e7d52;
+    transform: translateX(3px);
+}
+
+.dusun-modal-footer {
+    padding: 12px 18px 14px;
+    background: #fbf9f5;
+    border-top: 1px solid #ede8de;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.dusun-modal-btn-archive {
+    font-size: 12px;
+    font-weight: 700;
+    color: #245839;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-right: auto;
+    padding: 5px 8px;
+    border-radius: 8px;
+    transition: background 0.15s;
+}
+
+.dusun-modal-btn-archive:hover {
+    background: #eef5f0;
+    text-decoration: underline;
+}
+
+.dusun-modal-btn-secondary {
+    font-size: 12px;
+    font-weight: 700;
+    color: #435b4c;
+    background: #ece7dc;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.dusun-modal-btn-secondary:hover {
+    background: #dfd8cb;
+    color: #153422;
+}
+
+/* Bottom Sheet on Mobile */
+@media (max-width: 640px) {
+    .dusun-modal-backdrop {
+        padding: 0;
+        align-items: flex-end;
+    }
+
+    .dusun-modal-dialog {
+        max-width: 100%;
+        border-radius: 24px 24px 0 0;
+        border-bottom: none;
+        border-left: none;
+        border-right: none;
+        max-height: 82vh;
+        transform: translateY(100%);
+    }
+
+    .dusun-modal-backdrop.is-active .dusun-modal-dialog {
+        transform: translateY(0);
+    }
+
+    .dusun-modal-handle {
+        display: block;
+        width: 38px;
+        height: 4px;
+        border-radius: 2px;
+        background: #cfc7b8;
+        margin: 10px auto 2px;
+        flex-shrink: 0;
+    }
+
+    .dusun-modal-header {
+        padding: 12px 16px 14px;
+    }
+
+    .dusun-modal-body {
+        padding: 12px 14px;
+    }
+
+    .dusun-modal-footer {
+        padding: 10px 14px 14px;
+    }
+}
+
 /* ========================= 2. PROFIL & DATA WILAYAH (SESUAI GAMBAR 2) ========================= */
 .public-layout .page-dusun .opt1-profil-section {
     padding: 22px 0 28px;

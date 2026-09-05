@@ -77,7 +77,7 @@
                         </div>
                         <span class="opt1-label">Pelayanan</span>
                     </a>
-                    <a href="#agenda" class="opt1-card">
+                    <a href="#agenda" class="opt1-card" data-open-modal="modal-agenda" role="button" aria-haspopup="dialog" aria-controls="modal-agenda">
                         <div class="opt1-iconbox">
                             <svg class="icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
                             @if(($agendaCount ?? $agendas->count()) > 0)
@@ -100,7 +100,7 @@
                         </div>
                         <span class="opt1-label">Fasilitas</span>
                     </a>
-                    <a href="#pengumuman" class="opt1-card">
+                    <a href="#pengumuman" class="opt1-card" data-open-modal="modal-pengumuman" role="button" aria-haspopup="dialog" aria-controls="modal-pengumuman">
                         <div class="opt1-iconbox">
                             <svg class="icon" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
                             @if(($pengumumanCount ?? $pengumumans->count()) > 0)
@@ -417,90 +417,140 @@
         </div>
     </section>
 
-    {{-- INFORMASI TERKINI --}}
-    <section class="section-terkini" aria-labelledby="terkini-heading">
-        <div class="container">
-            <div class="section-head" data-reveal>
-                <h2 class="section-title" id="terkini-heading">Informasi Terkini</h2>
+    </div> {{-- End .dusun-sheet-wrapper --}}
+
+    {{-- MODAL INTERAKTIF: AGENDA & KEGIATAN DUSUN --}}
+    <div class="dusun-modal-backdrop" id="modal-agenda" role="dialog" aria-modal="true" aria-labelledby="modal-agenda-title" style="display: none;">
+        <div class="dusun-modal-dialog">
+            <div class="dusun-modal-handle" aria-hidden="true"></div>
+            
+            <div class="dusun-modal-header">
+                <div class="dusun-modal-title-group">
+                    <div class="dusun-modal-icon-badge" aria-hidden="true">📅</div>
+                    <div>
+                        <h3 class="dusun-modal-title" id="modal-agenda-title">Agenda &amp; Kegiatan</h3>
+                        <p class="dusun-modal-subtitle">{{ $dusun->nama_dusun }}</p>
+                    </div>
+                </div>
+                <div class="dusun-modal-header-actions">
+                    @if(($agendaCount ?? $agendas->count()) > 0)
+                        <span class="dusun-modal-count-pill">{{ $agendaCount ?? $agendas->count() }} Acara</span>
+                    @endif
+                    <button type="button" class="dusun-modal-close" data-close-modal="modal-agenda" aria-label="Tutup jendela agenda">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                    </button>
+                </div>
             </div>
 
-            <div class="terkini-grid">
-                <div class="terkini-col" id="agenda" aria-labelledby="agenda-dusun-heading">
-                    <div class="section-head">
-                        <h3 class="terkini-col-title" id="agenda-dusun-heading">Agenda &amp; Kegiatan</h3>
-                    </div>
-
-                    @if($agendas->isEmpty())
+            <div class="dusun-modal-body">
+                @if($agendas->isEmpty())
+                    <div class="dusun-modal-empty">
                         <x-partials.empty-state label="Belum ada agenda atau kegiatan." />
-                    @else
-                        <div class="timeline" data-reveal>
-                            @foreach($agendas as $ag)
-                                @php
-                                    $now = \Illuminate\Support\Carbon::now(config('app.business_timezone', 'Asia/Jakarta'));
-                                    $status = $ag->effectiveStatusFor($now);
-                                    $startDate = \Illuminate\Support\Carbon::parse($ag->tanggal_mulai)->locale('id');
-                                @endphp
-                                <article class="timeline-item" id="agenda-{{ $ag->id }}">
-                                    <div class="timeline-icon green" aria-hidden="true">📅</div>
-                                    <div>
-                                        <div class="meta">
-                                            <span class="date">{{ $startDate->isoFormat('D MMM') }}</span>
-                                            <x-partials.status-badge :status="$status" />
-                                            @if($ag->lokasi_text)
-                                                <span class="subtle">{{ $ag->lokasi_text }}</span>
-                                            @endif
-                                        </div>
-                                        <h4 class="item-title">
-                                            <a href="{{ route('agenda.show', $ag->id) }}">{{ $ag->judul }}</a>
-                                        </h4>
-                                    </div>
-                                    <a href="{{ route('agenda.show', $ag->id) }}" class="arrow" aria-label="Detail agenda: {{ $ag->judul }}">›</a>
-                                </article>
-                            @endforeach
-                        </div>
-                    @endif
-                </div>
-
-                <div class="terkini-col" id="pengumuman" aria-labelledby="pengumuman-dusun-heading">
-                    <div class="section-head">
-                        <h3 class="terkini-col-title" id="pengumuman-dusun-heading">Pengumuman</h3>
-                        <a href="{{ route('pengumuman.arsip', ['dusun' => $dusun->id]) }}" class="see-all" aria-label="Lihat arsip pengumuman {{ $dusun->nama_dusun }}">
-                            Lihat Semua →
-                        </a>
                     </div>
-
-                    @if($pengumumans->isEmpty())
-                        <x-partials.empty-state label="Belum ada pengumuman aktif." />
-                    @else
-                        <div class="timeline" data-reveal>
-                            @foreach($pengumumans as $p)
-                                @php $pDate = \Illuminate\Support\Carbon::parse($p->created_at)->locale('id'); @endphp
-                                <article class="timeline-item" id="pengumuman-{{ $p->id }}">
-                                    <div class="timeline-icon" aria-hidden="true">📣</div>
-                                    <div>
-                                        <div class="meta">
-                                            <span class="date">{{ $pDate->isoFormat('D MMM YYYY') }}</span>
-                                            <span class="badge">Warta Resmi</span>
-                                            @if($p->tanggal_kedaluwarsa)
-                                                <span class="subtle">s.d {{ \Illuminate\Support\Carbon::parse($p->tanggal_kedaluwarsa)->locale('id')->isoFormat('D MMM YYYY') }}</span>
-                                            @endif
-                                        </div>
-                                        <h4 class="item-title">
-                                            <a href="{{ route('pengumuman.show', $p->id) }}">{{ $p->judul }}</a>
-                                        </h4>
+                @else
+                    <div class="dusun-modal-list" role="list">
+                        @foreach($agendas as $ag)
+                            @php
+                                $now = \Illuminate\Support\Carbon::now(config('app.business_timezone', 'Asia/Jakarta'));
+                                $status = $ag->effectiveStatusFor($now);
+                                $startDate = \Illuminate\Support\Carbon::parse($ag->tanggal_mulai)->locale('id');
+                            @endphp
+                            <a href="{{ route('agenda.show', $ag->id) }}" class="dusun-modal-card-item" role="listitem">
+                                <div class="dusun-modal-date-badge" aria-hidden="true">
+                                    <span class="dm-day">{{ $startDate->format('d') }}</span>
+                                    <span class="dm-month">{{ $startDate->isoFormat('MMM') }}</span>
+                                </div>
+                                <div class="dusun-modal-card-content">
+                                    <div class="dusun-modal-card-meta">
+                                        <x-partials.status-badge :status="$status" />
+                                        @if($ag->lokasi_text)
+                                            <span class="dusun-modal-meta-location">
+                                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+                                                {{ $ag->lokasi_text }}
+                                            </span>
+                                        @endif
                                     </div>
-                                    <a href="{{ route('pengumuman.show', $p->id) }}" class="arrow" aria-label="Baca pengumuman: {{ $p->judul }}">›</a>
-                                </article>
-                            @endforeach
-                        </div>
-                        <a class="outline-btn" href="{{ route('pengumuman.arsip', ['dusun' => $dusun->id]) }}">Lihat Semua Pengumuman</a>
-                    @endif
-                </div>
+                                    <h4 class="dusun-modal-card-title">{{ $ag->judul }}</h4>
+                                </div>
+                                <div class="dusun-modal-card-arrow" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+
+            <div class="dusun-modal-footer">
+                <button type="button" class="dusun-modal-btn-secondary" data-close-modal="modal-agenda">Tutup Jendela</button>
             </div>
         </div>
-    </section>
+    </div>
 
-    </div> {{-- End .dusun-sheet-wrapper --}}
+    {{-- MODAL INTERAKTIF: WARTA & PENGUMUMAN DUSUN --}}
+    <div class="dusun-modal-backdrop" id="modal-pengumuman" role="dialog" aria-modal="true" aria-labelledby="modal-pengumuman-title" style="display: none;">
+        <div class="dusun-modal-dialog">
+            <div class="dusun-modal-handle" aria-hidden="true"></div>
+
+            <div class="dusun-modal-header">
+                <div class="dusun-modal-title-group">
+                    <div class="dusun-modal-icon-badge yellow" aria-hidden="true">📣</div>
+                    <div>
+                        <h3 class="dusun-modal-title" id="modal-pengumuman-title">Warta &amp; Pengumuman</h3>
+                        <p class="dusun-modal-subtitle">{{ $dusun->nama_dusun }}</p>
+                    </div>
+                </div>
+                <div class="dusun-modal-header-actions">
+                    @if(($pengumumanCount ?? $pengumumans->count()) > 0)
+                        <span class="dusun-modal-count-pill">{{ $pengumumanCount ?? $pengumumans->count() }} Warta Aktif</span>
+                    @endif
+                    <button type="button" class="dusun-modal-close" data-close-modal="modal-pengumuman" aria-label="Tutup jendela pengumuman">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                    </button>
+                </div>
+            </div>
+
+            <div class="dusun-modal-body">
+                @if($pengumumans->isEmpty())
+                    <div class="dusun-modal-empty">
+                        <x-partials.empty-state label="Belum ada pengumuman aktif." />
+                    </div>
+                @else
+                    <div class="dusun-modal-list" role="list">
+                        @foreach($pengumumans as $p)
+                            @php $pDate = \Illuminate\Support\Carbon::parse($p->created_at)->locale('id'); @endphp
+                            <a href="{{ route('pengumuman.show', $p->id) }}" class="dusun-modal-card-item" role="listitem">
+                                <div class="dusun-modal-date-badge yellow" aria-hidden="true">
+                                    <span class="dm-day">{{ $pDate->format('d') }}</span>
+                                    <span class="dm-month">{{ $pDate->isoFormat('MMM') }}</span>
+                                </div>
+                                <div class="dusun-modal-card-content">
+                                    <div class="dusun-modal-card-meta">
+                                        <span class="dusun-modal-badge-warta">Warta Resmi</span>
+                                        @if($p->tanggal_kedaluwarsa)
+                                            <span class="dusun-modal-meta-exp">s.d {{ \Illuminate\Support\Carbon::parse($p->tanggal_kedaluwarsa)->locale('id')->isoFormat('D MMM YYYY') }}</span>
+                                        @endif
+                                    </div>
+                                    <h4 class="dusun-modal-card-title">{{ $p->judul }}</h4>
+                                </div>
+                                <div class="dusun-modal-card-arrow" aria-hidden="true">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
+                                </div>
+                            </a>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+
+            <div class="dusun-modal-footer">
+                <a href="{{ route('pengumuman.arsip', ['dusun' => $dusun->id]) }}" class="dusun-modal-btn-archive">
+                    <span>Lihat Semua Arsip Pengumuman</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <button type="button" class="dusun-modal-btn-secondary" data-close-modal="modal-pengumuman">Tutup</button>
+            </div>
+        </div>
+    </div>
 
 </div>
 @endsection
@@ -511,8 +561,32 @@
     window.MAP_MARKERS = {!! $mapMarkersJson !!};
     // map.js automatically initializes every [data-map] element on DOMContentLoaded.
 
-    // Smooth handle click to reveal sheet
+    // Modal Helper functions
+    function openDusunModal(modalId) {
+        var modal = document.getElementById(modalId);
+        if (!modal) return;
+        modal.style.display = 'flex';
+        // Request animation frame for smooth transition
+        requestAnimationFrame(function () {
+            modal.classList.add('is-active');
+            document.body.classList.add('dusun-modal-open');
+        });
+    }
+
+    function closeDusunModal(modalId) {
+        var modal = document.getElementById(modalId);
+        if (!modal) return;
+        modal.classList.remove('is-active');
+        document.body.classList.remove('dusun-modal-open');
+        setTimeout(function () {
+            if (!modal.classList.contains('is-active')) {
+                modal.style.display = 'none';
+            }
+        }, 250);
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
+        // Smooth handle click to reveal sheet
         var handleBtn = document.getElementById('sheet-handle-btn');
         if (handleBtn) {
             handleBtn.addEventListener('click', function (e) {
@@ -522,6 +596,51 @@
                     target.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             });
+        }
+
+        // Open modal triggers
+        document.querySelectorAll('[data-open-modal]').forEach(function (trigger) {
+            trigger.addEventListener('click', function (e) {
+                e.preventDefault();
+                var modalId = this.getAttribute('data-open-modal');
+                openDusunModal(modalId);
+            });
+        });
+
+        // Close modal triggers
+        document.querySelectorAll('[data-close-modal]').forEach(function (closeBtn) {
+            closeBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                var modalId = this.getAttribute('data-close-modal');
+                closeDusunModal(modalId);
+            });
+        });
+
+        // Backdrop click to close
+        document.querySelectorAll('.dusun-modal-backdrop').forEach(function (backdrop) {
+            backdrop.addEventListener('click', function (e) {
+                if (e.target === this) {
+                    closeDusunModal(this.id);
+                }
+            });
+        });
+
+        // ESC key to close
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Escape' || e.key === 'Esc') {
+                var activeModal = document.querySelector('.dusun-modal-backdrop.is-active');
+                if (activeModal) {
+                    closeDusunModal(activeModal.id);
+                }
+            }
+        });
+
+        // URL hash auto-open support
+        var hash = window.location.hash;
+        if (hash === '#agenda') {
+            openDusunModal('modal-agenda');
+        } else if (hash === '#pengumuman') {
+            openDusunModal('modal-pengumuman');
         }
     });
 </script>

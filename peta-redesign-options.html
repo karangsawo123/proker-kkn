@@ -1470,7 +1470,7 @@
         let map1, map2, map3;
         let markersGroup1, markersGroup2, markersGroup3;
         let currentOption = 1;
-        let isSatellite = false;
+        let isSatellite = true;
         let isMobileMode = true;
         let currentScope = 'dusun'; // 'dusun' or 'desa'
         let currentFilter = 'semua';
@@ -1486,7 +1486,7 @@
                 attributionControl: false
             }).setView([-7.4196, 112.4677], 16);
 
-            L.tileLayer(tileStreets, { maxZoom: 19 }).addTo(map1);
+            L.tileLayer(tileSatellite, { maxZoom: 19 }).addTo(map1);
             markersGroup1 = L.featureGroup().addTo(map1);
             renderMap1Markers();
         }
@@ -1538,7 +1538,7 @@
             L.tileLayer(newLayer, { maxZoom: 19 }).addTo(map1);
         }
 
-        let isSatellite2 = false;
+        let isSatellite2 = true;
         function toggleMap2Layer(btn) {
             isSatellite2 = !isSatellite2;
             const newLayer = isSatellite2 ? tileSatellite : tileStreets;
@@ -1564,7 +1564,7 @@
                 attributionControl: false
             }).setView([-7.4196, 112.4677], 16);
 
-            L.tileLayer(tileStreets, { maxZoom: 19 }).addTo(map2);
+            L.tileLayer(tileSatellite, { maxZoom: 19 }).addTo(map2);
             markersGroup2 = L.featureGroup().addTo(map2);
             renderMap2AndCarousel();
         }

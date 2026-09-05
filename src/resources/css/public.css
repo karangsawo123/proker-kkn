@@ -3535,17 +3535,23 @@
     box-shadow: 0 4px 16px rgba(20, 61, 43, 0.06);
 }
 
+.public-layout .page-dusun .opt2-toolbar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
 .public-layout .page-dusun .opt2-search-box {
     display: flex;
     align-items: center;
     gap: 8px;
-    background: #f4f8f4;
+    background: #ffffff;
     border: 1.5px solid rgba(46, 94, 62, 0.16);
     border-radius: 999px;
-    padding: 7px 14px;
-    flex: 1;
-    min-width: 200px;
-    transition: border-color 0.2s ease, background-color 0.2s ease;
+    padding: 8px 16px;
+    width: 100%;
+    transition: border-color 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 2px 8px rgba(20, 61, 43, 0.05);
 }
 
 .public-layout .page-dusun .opt2-search-box:focus-within {
@@ -3569,48 +3575,99 @@
     width: 100%;
 }
 
+/* Floating HUD Pill Bar Inside Map (Option 1 Aesthetic, Option 2 Non-Truncated & Zero-Scroll) */
 .public-layout .page-dusun .opt2-filter-pills {
-    display: flex;
-    gap: 6px;
-    overflow-x: auto;
-    padding: 2px 0;
-    scrollbar-width: none;
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    right: 10px;
+    z-index: 800;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 4px;
+    padding: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 4px 20px rgba(15, 38, 25, 0.18);
+    overflow: hidden;
+    pointer-events: auto;
+    box-sizing: border-box;
 }
-.public-layout .page-dusun .opt2-filter-pills::-webkit-scrollbar { display: none; }
 
 .public-layout .page-dusun .opt2-chip {
-    background: #f8faf6;
-    border: 1.5px solid rgba(46, 94, 62, 0.14);
+    width: 100%;
+    min-width: 0;
+    background: transparent;
+    border: 1px solid transparent;
     color: #4a5d51;
     border-radius: 999px;
-    padding: 6px 14px;
-    font-size: 0.76rem;
+    padding: 6px 2px;
+    font-size: 0.72rem;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     white-space: nowrap;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 5px;
+    justify-content: center;
+    gap: 3px;
+    box-sizing: border-box;
+}
+
+.public-layout .page-dusun .opt2-chip .chip-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
 }
 
 .public-layout .page-dusun .opt2-chip:hover {
-    border-color: var(--forest-600, #256b4c);
+    background: rgba(30, 82, 53, 0.08);
     color: var(--forest-700, #1c523a);
-    background: #eef5ee;
-    transform: translateY(-1px);
 }
 
 .public-layout .page-dusun .opt2-chip.active {
     background: linear-gradient(135deg, #173d28, #256b4c);
-    border-color: #173d28;
+    border-color: rgba(201, 147, 51, 0.45);
     color: #ffffff;
-    box-shadow: 0 3px 10px rgba(20, 61, 43, 0.25);
+    box-shadow: 0 2px 10px rgba(20, 61, 43, 0.28);
+}
+
+.public-layout .page-dusun .opt2-chip .chip-emoji {
+    display: none;
+    font-size: 0.75rem;
+    line-height: 1;
+    margin-right: 1px;
+}
+
+@media (min-width: 540px) {
+    .public-layout .page-dusun .opt2-chip .chip-emoji {
+        display: inline-block;
+    }
+}
+
+.public-layout .page-dusun .opt2-chip .opt2-pill-cnt {
+    font-size: 0.62rem;
+    font-weight: 800;
+    padding: 1px 4.5px;
+    border-radius: 999px;
+    background: rgba(0, 0, 0, 0.08);
+    color: inherit;
+    line-height: 1.2;
+    flex-shrink: 0;
+}
+
+.public-layout .page-dusun .opt2-chip.active .opt2-pill-cnt {
+    background: #c99333;
+    color: #ffffff;
 }
 
 /* Map Frame */
 .public-layout .page-dusun .opt2-map-box {
-    height: 440px;
+    height: 520px;
     border-radius: 18px;
     overflow: hidden;
     border: 1.5px solid rgba(46, 94, 62, 0.16);
@@ -3624,7 +3681,7 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
-    margin: 12px 12px 0 0;
+    margin: 70px 12px 0 0;
 }
 
 .public-layout .map-action-btn {
@@ -5502,10 +5559,7 @@ html.js .public-layout [data-reveal].is-revealed {
 
     /* Map Explorer Mobile Styles */
     .public-layout .page-dusun .opt2-toolbar {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-        padding: 8px 10px;
+        margin-bottom: 10px;
     }
 
     .public-layout .page-dusun .opt2-search-box {
@@ -5513,18 +5567,36 @@ html.js .public-layout [data-reveal].is-revealed {
         padding: 6px 12px;
     }
 
+    .public-layout .page-dusun .opt2-filter-pills {
+        top: 10px;
+        left: 10px;
+        right: 10px;
+        padding: 4px;
+        gap: 3px;
+    }
+
     .public-layout .page-dusun .opt2-chip {
-        padding: 5px 11px;
+        padding: 5px 2px;
+        font-size: 0.69rem;
+        gap: 3px;
+    }
+
+    .public-layout .page-dusun .opt2-chip .chip-emoji {
         font-size: 0.72rem;
     }
 
+    .public-layout .page-dusun .opt2-chip .opt2-pill-cnt {
+        font-size: 0.60rem;
+        padding: 1px 4px;
+    }
+
     .public-layout .page-dusun .opt2-map-box {
-        height: 340px;
+        height: 480px;
         border-radius: 14px;
     }
 
     .public-layout .map-floating-actions {
-        margin: 8px 8px 0 0;
+        margin: 68px 12px 0 0;
         gap: 6px;
     }
 
@@ -5997,6 +6069,26 @@ html.js .public-layout [data-reveal].is-revealed {
     .public-layout .archive-empty .empty-state {
         padding: 17px 10px;
         border-radius: 10px;
+    }
+}
+
+@media (max-width: 380px) {
+    .public-layout .page-dusun .opt2-filter-pills {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        padding: 3px;
+        gap: 2px;
+    }
+
+    .public-layout .page-dusun .opt2-chip {
+        padding: 5px 1px;
+        font-size: 0.66rem;
+        gap: 2px;
+    }
+
+    .public-layout .page-dusun .opt2-chip .chip-emoji {
+        display: none;
     }
 }
 

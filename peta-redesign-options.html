@@ -382,34 +382,38 @@
             left: 14px;
             right: 14px;
             z-index: 100;
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            padding: 6px 6px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            padding: 5px;
             border-radius: var(--radius-full);
-            background: rgba(255, 255, 255, 0.90);
+            background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 4px 20px rgba(15, 38, 25, 0.14);
-            scrollbar-width: none;
+            overflow: hidden;
+            box-sizing: border-box;
         }
-        .opt1-hud-bar::-webkit-scrollbar { display: none; }
 
         .opt1-pill {
             background: transparent;
             border: 1px solid transparent;
             color: var(--text-muted);
             font-family: var(--font-sans);
-            font-size: 0.78rem;
+            font-size: 0.73rem;
             font-weight: 700;
-            padding: 7px 14px;
+            padding: 6px 2px;
             border-radius: var(--radius-full);
             white-space: nowrap;
             cursor: pointer;
-            display: inline-flex;
+            display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: 4px;
+            width: 100%;
+            min-width: 0;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            box-sizing: border-box;
         }
 
         .opt1-pill:hover {
@@ -425,8 +429,8 @@
         }
 
         .opt1-pill .pill-counter {
-            font-size: 0.68rem;
-            padding: 1px 6px;
+            font-size: 0.65rem;
+            padding: 1px 5px;
             border-radius: var(--radius-full);
             background: rgba(255, 255, 255, 0.2);
             color: inherit;
@@ -498,65 +502,62 @@
         }
         .dot-umkm { background: #156635; box-shadow: 0 0 6px #28a745; }
         .dot-pelayanan { background: #c46a3a; box-shadow: 0 0 6px #fd7e14; }
-        .dot-fasilitas { background: #A16207; box-shadow: 0 0 6px #ffc107; }
+        .dot-fasilitas { background: #0077b6; box-shadow: 0 0 6px #0096c7; }
 
-        /* Slide-up Bottom Sheet Detail Drawer */
+        /* Sliding Bottom Sheet */
         .opt1-bottom-sheet {
             position: absolute;
-            left: 12px;
-            right: 12px;
-            bottom: 12px;
+            left: 0;
+            right: 0;
+            bottom: 0;
             z-index: 200;
             background: #ffffff;
-            border-radius: var(--radius-lg);
-            box-shadow: 0 -4px 32px rgba(15, 38, 25, 0.22), 0 0 0 1px rgba(42, 111, 73, 0.15);
-            padding: 14px;
-            transform: translateY(120%);
-            opacity: 0;
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.25s ease;
-            pointer-events: none;
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            box-shadow: 0 -8px 30px rgba(15, 38, 25, 0.25);
+            padding: 18px 20px 22px;
+            transform: translateY(105%);
+            transition: transform 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            border-top: 1.5px solid rgba(42, 111, 73, 0.16);
         }
 
         .opt1-bottom-sheet.open {
             transform: translateY(0);
-            opacity: 1;
-            pointer-events: auto;
         }
 
         .opt1-sheet-handle {
-            width: 36px;
-            height: 4px;
-            background: #d8ded9;
-            border-radius: 2px;
-            margin: 0 auto 10px;
+            width: 44px;
+            height: 4.5px;
+            background: #d0d7cf;
+            border-radius: 999px;
+            margin: 0 auto 14px;
             cursor: pointer;
         }
 
         .opt1-sheet-close {
             position: absolute;
-            top: 10px;
-            right: 10px;
+            top: 14px;
+            right: 16px;
+            background: #f0f4ee;
+            border: none;
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #eef2ed;
-            border: none;
-            color: var(--text-muted);
-            cursor: pointer;
             display: grid;
             place-items: center;
-            font-size: 0.9rem;
-            font-weight: 700;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
         }
 
         .opt1-sheet-close:hover {
-            background: #e2e8e0;
+            background: var(--sand-200);
             color: var(--forest-900);
         }
 
         .opt1-sheet-layout {
             display: flex;
-            gap: 14px;
+            gap: 16px;
             align-items: center;
         }
 
@@ -566,7 +567,8 @@
             border-radius: var(--radius-md);
             object-fit: cover;
             flex-shrink: 0;
-            background: #e4ebe2;
+            background: #e2ede5;
+            border: 1px solid rgba(42, 111, 73, 0.15);
         }
 
         .opt1-sheet-info {
@@ -575,124 +577,85 @@
         }
 
         .opt1-sheet-cat {
-            display: inline-block;
             font-size: 0.68rem;
             font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 0.04em;
-            padding: 2px 7px;
-            border-radius: var(--radius-sm);
-            margin-bottom: 4px;
+            letter-spacing: 0.05em;
+            padding: 3px 8px;
+            border-radius: var(--radius-full);
+            display: inline-block;
+            margin-bottom: 6px;
         }
-        .cat-umkm { background: #e7f5eb; color: #156635; }
-        .cat-pelayanan { background: #faede6; color: #ba4f29; }
-        .cat-fasilitas { background: #fdf5e6; color: #9c6300; }
+        .cat-umkm { background: #e6f4ea; color: #137333; }
+        .cat-pelayanan { background: #fce8e6; color: #c5221f; }
+        .cat-fasilitas { background: #e8f0fe; color: #1a73e8; }
 
         .opt1-sheet-name {
-            font-family: var(--font-sans);
-            font-size: 1.02rem;
-            font-weight: 800;
+            font-family: var(--font-serif);
+            font-size: 1.15rem;
+            font-weight: 700;
             color: var(--forest-900);
             line-height: 1.25;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            margin-bottom: 4px;
         }
 
         .opt1-sheet-addr {
-            font-size: 0.76rem;
+            font-size: 0.78rem;
             color: var(--text-muted);
-            margin-top: 3px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            white-space: nowrap;
+            line-height: 1.35;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
             overflow: hidden;
-            text-overflow: ellipsis;
+            margin-bottom: 12px;
         }
 
-        .opt1-sheet-actions {
-            display: flex;
+        .opt1-sheet-action {
+            display: inline-flex;
+            align-items: center;
             gap: 8px;
-            margin-top: 10px;
-        }
-
-        .btn-sheet-primary {
-            flex: 1;
-            background: linear-gradient(135deg, var(--forest-700), var(--forest-800));
+            background: linear-gradient(135deg, var(--forest-700), var(--forest-600));
             color: #ffffff;
-            border: none;
-            border-radius: var(--radius-md);
-            padding: 8px 12px;
+            text-decoration: none;
+            padding: 7px 14px;
+            border-radius: var(--radius-full);
             font-size: 0.78rem;
             font-weight: 700;
-            cursor: pointer;
-            text-align: center;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            transition: background-color 0.2s ease;
+            box-shadow: 0 3px 10px rgba(30, 82, 53, 0.22);
+            transition: all 0.2s ease;
         }
 
-        .btn-sheet-primary:hover {
-            background: var(--forest-600);
-        }
-
-        .btn-sheet-route {
-            background: var(--sand-100);
-            color: var(--forest-800);
-            border: 1px solid var(--sand-300);
-            border-radius: var(--radius-md);
-            padding: 8px 12px;
-            font-size: 0.78rem;
-            font-weight: 700;
-            cursor: pointer;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .btn-sheet-route:hover {
-            background: #ffffff;
-            color: var(--gold-600);
+        .opt1-sheet-action:hover {
+            background: var(--forest-800);
+            transform: translateY(-1px);
         }
 
         /* ══════════════════════════════════════════════════════════════
-           OPTION 2: SPLIT EXPLORER & CARD CAROUSEL (SYNCED STRIP)
+           OPTION 2: SPLIT EXPLORER & CARD CAROUSEL (AIRBNB VIBE)
            ══════════════════════════════════════════════════════════════ */
         .opt2-container {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
             width: 100%;
         }
 
         .opt2-toolbar {
             display: flex;
-            flex-wrap: wrap;
             align-items: center;
-            justify-content: space-between;
-            gap: 10px;
-            background: #ffffff;
-            padding: 12px 16px;
-            border-radius: var(--radius-lg);
-            border: 1px solid rgba(42, 111, 73, 0.14);
-            box-shadow: var(--shadow-sm);
+            margin-bottom: 4px;
         }
 
         .opt2-search-box {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: var(--forest-50);
-            border: 1px solid rgba(42, 111, 73, 0.18);
+            background: #ffffff;
+            border: 1.5px solid rgba(42, 111, 73, 0.18);
             border-radius: var(--radius-full);
-            padding: 6px 14px;
-            flex: 1;
-            min-width: 180px;
+            padding: 8px 16px;
+            width: 100%;
+            box-shadow: var(--shadow-sm);
         }
 
         .opt2-search-box input {
@@ -705,39 +668,84 @@
             width: 100%;
         }
 
+        /* Floating HUD Pill Bar Inside Map (Non-Truncated & Zero-Scroll) */
         .opt2-filter-pills {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding-bottom: 2px;
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            z-index: 500;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 4px;
+            padding: 5px;
+            border-radius: var(--radius-full);
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            box-shadow: 0 4px 20px rgba(15, 38, 25, 0.18);
+            overflow: hidden;
+            box-sizing: border-box;
+            pointer-events: auto;
         }
 
         .opt2-chip {
-            background: var(--sand-50);
-            border: 1px solid var(--sand-200);
+            width: 100%;
+            min-width: 0;
+            background: transparent;
+            border: 1px solid transparent;
             color: var(--text-muted);
             border-radius: var(--radius-full);
-            padding: 5px 12px;
-            font-size: 0.74rem;
+            padding: 6px 2px;
+            font-size: 0.73rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.18s ease;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            box-sizing: border-box;
         }
 
         .opt2-chip:hover {
-            border-color: var(--forest-600);
+            border-color: rgba(42, 111, 73, 0.2);
             color: var(--forest-700);
+            background: rgba(30, 82, 53, 0.08);
         }
 
         .opt2-chip.active {
-            background: var(--forest-700);
-            border-color: var(--forest-700);
+            background: linear-gradient(135deg, var(--forest-800), var(--forest-700));
+            border-color: rgba(201, 147, 51, 0.45);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(22, 61, 39, 0.25);
+        }
+
+        .opt2-chip .chip-emoji {
+            font-size: 0.8rem;
+            line-height: 1;
+        }
+
+        .opt2-chip .opt2-pill-cnt {
+            font-size: 0.65rem;
+            font-weight: 800;
+            padding: 1px 5px;
+            border-radius: var(--radius-full);
+            background: rgba(0, 0, 0, 0.08);
+            color: inherit;
+            line-height: 1.2;
+            flex-shrink: 0;
+        }
+
+        .opt2-chip.active .opt2-pill-cnt {
+            background: var(--gold-500);
             color: #ffffff;
         }
 
         .opt2-map-box {
-            height: 380px;
+            height: 500px;
             border-radius: var(--radius-lg);
             overflow: hidden;
             border: 1.5px solid rgba(42, 111, 73, 0.16);
@@ -748,8 +756,8 @@
         .opt2-map-actions {
             position: absolute;
             right: 14px;
-            top: 14px;
-            z-index: 100;
+            top: 66px;
+            z-index: 500;
             display: flex;
             flex-direction: column;
             gap: 8px;
@@ -1183,28 +1191,38 @@
                      ════════════════════════════════════════════════ -->
                 <div id="view-option-2" class="option-view" style="display:none;">
                     <div class="opt2-container">
-                        <!-- Search & Chips Bar -->
+                        <!-- Search Bar -->
                         <div class="opt2-toolbar">
                             <div class="opt2-search-box">
                                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                                 <input type="text" id="opt2-search" placeholder="Cari nama tempat atau produk..." oninput="handleSearch(this.value)">
                             </div>
-                            <div class="opt2-filter-pills">
-                                <button class="opt2-chip active" onclick="filterMarkers('semua', this)">Semua</button>
-                                <button class="opt2-chip" onclick="filterMarkers('UMKM', this)">UMKM</button>
-                                <button class="opt2-chip" onclick="filterMarkers('Fasilitas', this)">Fasilitas</button>
-                                <button class="opt2-chip" onclick="filterMarkers('Pelayanan', this)">Pelayanan</button>
-                            </div>
                         </div>
 
-                        <!-- Real Leaflet Map #2 -->
+                        <!-- Real Leaflet Map #2 with Floating HUD Pill Bar -->
                         <div class="opt2-map-box">
+                            <!-- Floating Pill Filter HUD (Option 2 Non-Truncated) -->
+                            <div class="opt2-filter-pills" role="toolbar" aria-label="Filter kategori">
+                                <button class="opt2-chip active" onclick="filterMarkers('semua', this)">
+                                    <span>Semua</span> <span class="opt2-pill-cnt" id="opt2-count-all">8</span>
+                                </button>
+                                <button class="opt2-chip" onclick="filterMarkers('UMKM', this)">
+                                    <span><span class="chip-emoji">🏪</span> UMKM</span> <span class="opt2-pill-cnt" id="opt2-count-umkm">3</span>
+                                </button>
+                                <button class="opt2-chip" onclick="filterMarkers('Fasilitas', this)">
+                                    <span><span class="chip-emoji">🏛️</span> Fasilitas</span> <span class="opt2-pill-cnt" id="opt2-count-fasilitas">3</span>
+                                </button>
+                                <button class="opt2-chip" onclick="filterMarkers('Pelayanan', this)">
+                                    <span><span class="chip-emoji">📋</span> Pelayanan</span> <span class="opt2-pill-cnt" id="opt2-count-pelayanan">2</span>
+                                </button>
+                            </div>
+
                             <!-- Floating Map Controls -->
                             <div class="opt2-map-actions">
                                 <button class="opt1-action-btn" title="Pusatkan Ulang Peta" onclick="resetMap2View()">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
                                 </button>
-                                <button class="opt1-action-btn" id="btn-layer-opt2" title="Ganti Mode Satelit / Standar" onclick="toggleMap2Layer(this)">
+                                <button class="opt1-action-btn active" id="btn-layer-opt2" title="Ganti Mode Satelit / Standar" onclick="toggleMap2Layer(this)">
                                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
                                 </button>
                             </div>

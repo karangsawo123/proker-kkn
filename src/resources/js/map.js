@@ -270,7 +270,7 @@ export function initMap(elementId) {
     const map = L.map(elementId, {
         center,
         zoom,
-        zoomControl: true,
+        zoomControl: false,
     });
 
     // ─── Base Tile Layers (Streets & Satellite) ──────────────────────────────
@@ -454,8 +454,8 @@ export function initMap(elementId) {
                     }
                 }
                 const zoomLevel = Math.max(map.getZoom(), 16);
-                const mapHeight = map.getSize().y || 340;
-                const yShift = Math.round(mapHeight * 0.28);
+                const mapHeight = map.getSize().y || 480;
+                const yShift = Math.round(mapHeight * 0.20);
                 const projected = map.project(lMarker.getLatLng(), zoomLevel);
                 const popupCenterLatLng = map.unproject(projected.subtract([0, yShift]), zoomLevel);
                 map.panTo(popupCenterLatLng, { animate: true, duration: 0.4 });
@@ -560,8 +560,8 @@ export function initMap(elementId) {
                 // 3. Project coordinate and center comfortably so popup & photo are fully in view
                 const markerLatLng = targetMarker.getLatLng();
                 const zoomLevel = 17;
-                const mapHeight = map.getSize().y || 340;
-                const yShift = Math.round(mapHeight * 0.32);
+                const mapHeight = map.getSize().y || 480;
+                const yShift = Math.round(mapHeight * 0.20);
                 const projected = map.project(markerLatLng, zoomLevel);
                 const offsetPoint = projected.subtract([0, yShift]);
                 const popupCenterLatLng = map.unproject(offsetPoint, zoomLevel);

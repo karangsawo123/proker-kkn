@@ -195,26 +195,11 @@
             </div>
 
             <div class="map-explorer" data-reveal>
-                <!-- Explorer Toolbar: Live Search & Category Chips -->
+                <!-- Explorer Toolbar: Live Search & Synchronized Filter -->
                 <div class="opt2-toolbar">
                     <div class="opt2-search-box">
                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-                        <input type="text" id="map-dusun-search" placeholder="Cari fasilitas, UMKM, atau alamat..." aria-label="Cari fasilitas atau UMKM di peta">
-                    </div>
-
-                    <div class="opt2-filter-pills" role="toolbar" aria-label="Filter kategori peta">
-                        <button type="button" class="opt2-chip active" data-map-filter-for="map-dusun" data-category="semua">
-                            <span>Semua</span>
-                        </button>
-                        <button type="button" class="opt2-chip" data-map-filter-for="map-dusun" data-category="UMKM">
-                            <span>🏪 UMKM</span>
-                        </button>
-                        <button type="button" class="opt2-chip" data-map-filter-for="map-dusun" data-category="FASILITAS">
-                            <span>🏛️ Fasilitas</span>
-                        </button>
-                        <button type="button" class="opt2-chip" data-map-filter-for="map-dusun" data-category="PELAYANAN">
-                            <span>📋 Pelayanan</span>
-                        </button>
+                        <input type="text" id="map-dusun-search" placeholder="Cari fasilitas, UMKM, atau pelayanan..." aria-label="Cari fasilitas atau UMKM di peta">
                     </div>
 
                     {{-- Hidden synchronized select to maintain 100% test compatibility (PetaTest) --}}
@@ -226,8 +211,28 @@
                     </select>
                 </div>
 
-                <!-- Leaflet Map Container -->
+                <!-- Leaflet Map Container with Floating HUD Filter Pills -->
                 <div class="opt2-map-box">
+                    <!-- Floating Pill Filter HUD -->
+                    <div class="opt2-filter-pills" role="toolbar" aria-label="Filter kategori peta">
+                        <button type="button" class="opt2-chip active" data-map-filter-for="map-dusun" data-category="semua">
+                            <span class="chip-text">Semua</span>
+                            <span class="opt2-pill-cnt">{{ $umkms->count() + $fasilitas->count() + $kontaks->count() }}</span>
+                        </button>
+                        <button type="button" class="opt2-chip" data-map-filter-for="map-dusun" data-category="UMKM">
+                            <span class="chip-text"><span class="chip-emoji">🏪</span>UMKM</span>
+                            <span class="opt2-pill-cnt">{{ $umkms->count() }}</span>
+                        </button>
+                        <button type="button" class="opt2-chip" data-map-filter-for="map-dusun" data-category="FASILITAS">
+                            <span class="chip-text"><span class="chip-emoji">🏛️</span>Fasilitas</span>
+                            <span class="opt2-pill-cnt">{{ $fasilitas->count() }}</span>
+                        </button>
+                        <button type="button" class="opt2-chip" data-map-filter-for="map-dusun" data-category="PELAYANAN">
+                            <span class="chip-text"><span class="chip-emoji">📋</span>Pelayanan</span>
+                            <span class="opt2-pill-cnt">{{ $kontaks->count() }}</span>
+                        </button>
+                    </div>
+
                     <div
                         id="map-dusun"
                         data-map

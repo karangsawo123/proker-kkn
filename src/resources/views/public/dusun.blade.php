@@ -8,7 +8,7 @@
 @section('content')
 <div class="page-dusun">
 
-    {{-- HERO DUSUN (VISUAL STORYTELLING & FLOATING SHEET) --}}
+    {{-- HERO DUSUN (STICKY CINEMATIC VIEWPORT) --}}
     <header
         class="dusun-hero-story"
         id="header-dusun"
@@ -28,10 +28,16 @@
             <span class="dusun-hero-chip">Desa Bendung</span>
         </div>
 
-        {{-- FLOATING OVERLAP SHEET --}}
+        <div class="container dusun-hero-center-badge" data-reveal>
+            <span class="dusun-badge-potensi-hero">Sentra Pertanian & UMKM</span>
+        </div>
+    </header>
+
+    {{-- FLOATING OVERLAP SHEET (SLIDES UP OVER STICKY HERO ON SCROLL) --}}
+    <div class="dusun-sheet-wrapper" id="sheet-wrapper">
         <div class="dusun-floating-sheet" id="sheet-dusun" data-reveal>
             <div class="container">
-                <a href="#quick-nav" class="dusun-sheet-handle-wrap" aria-label="Geser ke navigasi layanan dusun">
+                <a href="#quick-nav" class="dusun-sheet-handle-wrap" id="sheet-handle-btn" aria-label="Geser ke navigasi layanan dusun">
                     <span class="dusun-sheet-handle" aria-hidden="true"></span>
                     <span class="dusun-hint-pulse" aria-hidden="true">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
@@ -72,17 +78,16 @@
                 </div>
             </div>
         </div>
-    </header>
 
-    {{-- QUICK NAVIGATION (ACTION HUB WITH DATA COUNTS) --}}
-    <nav class="dusun-action-hub" id="quick-nav" aria-label="Navigasi cepat halaman {{ $dusun->nama_dusun }}">
-        <div class="container">
-            <div class="dusun-hub-header">
-                <span class="dusun-hub-label">Layanan & Direktori Dusun</span>
-            </div>
-            <div class="dusun-hub-grid" role="list">
-                <a href="#profil-dusun" class="dusun-hub-card highlight" role="listitem">
-                    <div class="dusun-hub-left">
+        {{-- QUICK NAVIGATION (ACTION HUB WITH DATA COUNTS) --}}
+        <nav class="dusun-action-hub" id="quick-nav" aria-label="Navigasi cepat halaman {{ $dusun->nama_dusun }}">
+            <div class="container">
+                <div class="dusun-hub-header">
+                    <span class="dusun-hub-label">Layanan & Direktori Dusun</span>
+                </div>
+                <div class="dusun-hub-grid" role="list">
+                    <a href="#profil-dusun" class="dusun-hub-card highlight" role="listitem">
+                        <div class="dusun-hub-left">
                         <span class="dusun-hub-icon" aria-hidden="true">
                             <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
                         </span>
@@ -468,6 +473,8 @@
         </div>
     </section>
 
+    </div> {{-- End .dusun-sheet-wrapper --}}
+
 </div>
 @endsection
 
@@ -476,5 +483,19 @@
     window.MAP_CONFIG  = {!! $mapConfigJson !!};
     window.MAP_MARKERS = {!! $mapMarkersJson !!};
     // map.js automatically initializes every [data-map] element on DOMContentLoaded.
+
+    // Smooth handle click to reveal sheet
+    document.addEventListener('DOMContentLoaded', function () {
+        var handleBtn = document.getElementById('sheet-handle-btn');
+        if (handleBtn) {
+            handleBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                var target = document.getElementById('quick-nav') || document.getElementById('sheet-dusun');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        }
+    });
 </script>
 @endpush

@@ -1654,16 +1654,23 @@
     line-height: 1.55;
 }
 
-/* ========================= DUSUN HERO (VISUAL STORYTELLING & FLOATING SHEET) ========================= */
-.public-layout .page-dusun .dusun-hero-story {
+/* ========================= DUSUN HERO (VISUAL STORYTELLING & STICKY REVEAL SHEET) ========================= */
+.public-layout .page-dusun {
     position: relative;
-    min-height: 65vh;
+}
+
+.public-layout .page-dusun .dusun-hero-story {
+    position: sticky;
+    top: 84px;
+    height: 62vh;
+    min-height: 480px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     overflow: hidden;
     background: var(--public-olive, #1c261e);
     isolation: isolate;
+    z-index: 1;
 }
 
 .public-layout .page-dusun .dusun-hero-story .dusun-hero-bg {
@@ -1679,7 +1686,7 @@
     position: absolute;
     inset: 0;
     z-index: -1;
-    background: linear-gradient(180deg, rgba(22, 40, 28, 0.45) 0%, rgba(22, 40, 28, 0.12) 35%, rgba(22, 40, 28, 0.88) 100%);
+    background: linear-gradient(180deg, rgba(22, 40, 28, 0.40) 0%, rgba(22, 40, 28, 0.12) 35%, rgba(22, 40, 28, 0.88) 100%);
 }
 
 .public-layout .page-dusun .dusun-hero-story .dusun-hero-topbar {
@@ -1726,15 +1733,45 @@
     letter-spacing: 0.03em;
 }
 
+.public-layout .page-dusun .dusun-hero-center-badge {
+    position: relative;
+    z-index: 4;
+    text-align: center;
+    padding-bottom: 78px;
+}
+
+.public-layout .page-dusun .dusun-badge-potensi-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(14, 38, 24, 0.78);
+    color: #fce29a;
+    border: 1px solid rgba(252, 226, 154, 0.45);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 6px 16px;
+    border-radius: 99px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+/* Sliding Sheet Wrapper */
+.public-layout .page-dusun .dusun-sheet-wrapper {
+    position: relative;
+    z-index: 10;
+    margin-top: -65px;
+    background: var(--public-cream, #F6F1E7);
+    border-radius: 32px 32px 0 0;
+    box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.22);
+    border-top: 1px solid rgba(255, 255, 255, 0.85);
+}
+
 /* Floating Sheet */
 .public-layout .page-dusun .dusun-floating-sheet {
     position: relative;
-    z-index: 5;
-    margin-top: auto;
-    background: var(--public-cream, #F6F1E7);
-    border-radius: 28px 28px 0 0;
-    padding: 16px 0 24px;
-    box-shadow: 0 -12px 30px rgba(0, 0, 0, 0.22);
+    padding: 16px 0 20px;
 }
 
 .public-layout .page-dusun .dusun-sheet-handle-wrap {
@@ -1783,7 +1820,7 @@
     margin-bottom: 6px;
 }
 
-.public-layout .page-dusun .dusun-hero-story .dusun-hero-title {
+.public-layout .page-dusun .dusun-hero-title {
     font-family: 'Lora', Georgia, serif;
     font-size: clamp(1.85rem, 4vw, 2.75rem);
     font-weight: 700;
@@ -1792,7 +1829,7 @@
     margin: 0;
 }
 
-.public-layout .page-dusun .dusun-hero-story .dusun-badge-potensi {
+.public-layout .page-dusun .dusun-badge-potensi {
     background: #fdf2d5;
     border: 1px solid #ebd08b;
     color: #9c670b;
@@ -1804,7 +1841,7 @@
     border-radius: 6px;
 }
 
-.public-layout .page-dusun .dusun-hero-story .dusun-hero-desc {
+.public-layout .page-dusun .dusun-hero-desc {
     font-size: 0.86rem;
     line-height: 1.55;
     color: #515c52;
@@ -4077,40 +4114,55 @@ html.js .public-layout [data-reveal].is-revealed {
         padding: 0 10px;
     }
 
-    /* Dusun hero (Visual Storytelling) */
+    /* Dusun hero (Visual Storytelling & Sticky Reveal) */
     .public-layout .page-dusun .dusun-hero-story {
-        min-height: 68vh;
+        top: 72px;
+        height: 68vh;
+        min-height: 420px;
     }
 
-    .public-layout .page-dusun .dusun-hero-story .dusun-hero-topbar {
+    .public-layout .page-dusun .dusun-hero-topbar {
         padding-top: 14px;
     }
 
-    .public-layout .page-dusun .dusun-hero-story .dusun-hero-back {
+    .public-layout .page-dusun .dusun-hero-back {
         padding: 5px 11px;
         font-size: 0.7rem;
     }
 
-    .public-layout .page-dusun .dusun-hero-story .dusun-hero-chip {
+    .public-layout .page-dusun .dusun-hero-chip {
         padding: 4px 10px;
         font-size: 0.65rem;
     }
 
-    .public-layout .page-dusun .dusun-floating-sheet {
-        padding: 14px 0 18px;
-        border-radius: 24px 24px 0 0;
+    .public-layout .page-dusun .dusun-hero-center-badge {
+        padding-bottom: 65px;
     }
 
-    .public-layout .page-dusun .dusun-hero-story .dusun-hero-title {
+    .public-layout .page-dusun .dusun-badge-potensi-hero {
+        font-size: 0.66rem;
+        padding: 4px 12px;
+    }
+
+    .public-layout .page-dusun .dusun-sheet-wrapper {
+        margin-top: -55px;
+        border-radius: 26px 26px 0 0;
+    }
+
+    .public-layout .page-dusun .dusun-floating-sheet {
+        padding: 14px 0 18px;
+    }
+
+    .public-layout .page-dusun .dusun-hero-title {
         font-size: 1.65rem;
     }
 
-    .public-layout .page-dusun .dusun-hero-story .dusun-badge-potensi {
+    .public-layout .page-dusun .dusun-badge-potensi {
         font-size: 0.6rem;
         padding: 3px 8px;
     }
 
-    .public-layout .page-dusun .dusun-hero-story .dusun-hero-desc {
+    .public-layout .page-dusun .dusun-hero-desc {
         font-size: 0.78rem;
         line-height: 1.48;
         margin: 6px 0 12px;

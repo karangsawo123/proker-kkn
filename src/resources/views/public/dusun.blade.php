@@ -43,7 +43,6 @@
 
                 <div class="dusun-title-row">
                     <h1 class="dusun-hero-title" id="dusun-page-title">{{ $dusun->nama_dusun }}</h1>
-                    <span class="dusun-badge-potensi">Sentra Pertanian & UMKM</span>
                 </div>
 
                 @if($dusun->deskripsi_singkat)

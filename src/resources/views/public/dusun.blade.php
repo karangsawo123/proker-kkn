@@ -27,167 +27,163 @@
             </a>
             <span class="dusun-hero-chip">Desa Bendung</span>
         </div>
+
+        {{-- HERO TITLE & DESC (FULL SCENIC VIEWPORT) --}}
+        <div class="container dusun-hero-content" data-reveal>
+            <span class="dusun-hero-eyebrow">PORTAL RESMI WILAYAH</span>
+            <h1 class="dusun-hero-title" id="dusun-page-title">{{ $dusun->nama_dusun }}</h1>
+            @if($dusun->deskripsi_singkat)
+                <p class="dusun-hero-desc">{{ Str::limit($dusun->deskripsi_singkat, 220) }}</p>
+            @endif
+        </div>
     </header>
 
     {{-- FLOATING OVERLAP SHEET (SLIDES UP OVER STICKY HERO ON SCROLL) --}}
     <div class="dusun-sheet-wrapper" id="sheet-wrapper">
-        <div class="dusun-floating-sheet" id="sheet-dusun" data-reveal>
-            <div class="container">
-                <a href="#quick-nav" class="dusun-sheet-handle-wrap" id="sheet-handle-btn" aria-label="Geser ke navigasi layanan dusun">
-                    <span class="dusun-sheet-handle" aria-hidden="true"></span>
-                    <span class="dusun-hint-pulse" aria-hidden="true">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
-                        <span>Geser atau klik untuk layanan & profil</span>
-                    </span>
-                </a>
-
-                <div class="dusun-title-row">
-                    <h1 class="dusun-hero-title" id="dusun-page-title">{{ $dusun->nama_dusun }}</h1>
-                </div>
-
-                @if($dusun->deskripsi_singkat)
-                    <p class="dusun-hero-desc">{{ Str::limit($dusun->deskripsi_singkat, 200) }}</p>
-                @endif
-
-                {{-- FAST GLANCE METRIC STRIP --}}
-                <div class="dusun-fast-strip" role="region" aria-label="Ringkasan Wilayah">
-                    <div class="dusun-fast-item">
-                        <span>Rukun Tetangga</span>
-                        <strong>{{ $dusun->jumlah_rt ?? 0 }} RT</strong>
-                    </div>
-                    <div class="dusun-fast-div" aria-hidden="true"></div>
-                    <div class="dusun-fast-item">
-                        <span>Rukun Warga</span>
-                        <strong>{{ $dusun->jumlah_rw ?? 0 }} RW</strong>
-                    </div>
-                    <div class="dusun-fast-div" aria-hidden="true"></div>
-                    <div class="dusun-fast-item">
-                        <span>Fasilitas Umum</span>
-                        <strong>{{ $fasilitas->count() }} Titik</strong>
-                    </div>
-                    <div class="dusun-fast-div" aria-hidden="true"></div>
-                    <div class="dusun-fast-item">
-                        <span>UMKM Warga</span>
-                        <strong>{{ $umkms->count() }} Usaha</strong>
-                    </div>
-                </div>
-            </div>
+        <div class="container dusun-sheet-top-strip">
+            <a href="#quick-nav" class="dusun-sheet-handle-wrap" id="sheet-handle-btn" aria-label="Geser ke navigasi layanan dusun">
+                <span class="dusun-sheet-handle" aria-hidden="true"></span>
+                <span class="dusun-hint-pulse" aria-hidden="true">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
+                    <span>Geser atau klik untuk navigasi & profil</span>
+                </span>
+            </a>
         </div>
 
-        {{-- QUICK NAVIGATION (ACTION HUB WITH DATA COUNTS) --}}
-        <nav class="dusun-action-hub" id="quick-nav" aria-label="Navigasi cepat halaman {{ $dusun->nama_dusun }}">
+        {{-- 1. NAVIGASI CEPAT DUSUN (GRID 4 + 3) --}}
+        <section class="opt1-quicknav-section" id="quick-nav" aria-label="Navigasi Cepat Dusun">
             <div class="container">
-                <div class="dusun-hub-header">
-                    <span class="dusun-hub-label">Layanan & Direktori Dusun</span>
-                </div>
-                <div class="dusun-hub-grid" role="list">
-                    <a href="#profil-dusun" class="dusun-hub-card highlight" role="listitem">
-                        <div class="dusun-hub-left">
-                        <span class="dusun-hub-icon" aria-hidden="true">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-                        </span>
-                        <strong class="dusun-hub-text">Profil Dusun</strong>
-                    </div>
-                </a>
-
-                <a href="#peta-dusun" class="dusun-hub-card" role="listitem">
-                    <div class="dusun-hub-left">
-                        <span class="dusun-hub-icon" aria-hidden="true">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-6-5.333-6-10a6 6 0 0 1 12 0c0 4.667-6 10-6 10Z"/><circle cx="12" cy="11" r="2"/></svg>
-                        </span>
-                        <strong class="dusun-hub-text">Peta Dusun</strong>
-                    </div>
-                </a>
-
-                <a href="#kontak-pelayanan" class="dusun-hub-card" role="listitem">
-                    <div class="dusun-hub-left">
-                        <span class="dusun-hub-icon" aria-hidden="true">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4"/></svg>
-                        </span>
-                        <strong class="dusun-hub-text">Pelayanan</strong>
-                    </div>
-                    @if($kontaks->count() > 0)
-                        <span class="dusun-hub-count">{{ $kontaks->count() }}</span>
-                    @endif
-                </a>
-
-                <a href="#agenda" class="dusun-hub-card" role="listitem">
-                    <div class="dusun-hub-left">
-                        <span class="dusun-hub-icon" aria-hidden="true">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                        </span>
-                        <strong class="dusun-hub-text">Agenda</strong>
-                    </div>
-                    @if($agendas->count() > 0)
-                        <span class="dusun-hub-count">{{ $agendas->count() }}</span>
-                    @endif
-                </a>
-
-                <a href="#umkm" class="dusun-hub-card" role="listitem">
-                    <div class="dusun-hub-left">
-                        <span class="dusun-hub-icon" aria-hidden="true">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/></svg>
-                        </span>
-                        <strong class="dusun-hub-text">Sentra UMKM</strong>
-                    </div>
-                    <span class="dusun-hub-count">{{ $umkms->count() }}</span>
-                </a>
-
-                <a href="#fasilitas" class="dusun-hub-card" role="listitem">
-                    <div class="dusun-hub-left">
-                        <span class="dusun-hub-icon" aria-hidden="true">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14"/><path d="M2 20h20"/></svg>
-                        </span>
-                        <strong class="dusun-hub-text">Fasilitas</strong>
-                    </div>
-                    <span class="dusun-hub-count">{{ $fasilitas->count() }}</span>
-                </a>
-
-                <a href="#pengumuman" class="dusun-hub-card dusun-hub-card-wide" role="listitem">
-                    <div class="dusun-hub-left">
-                        <span class="dusun-hub-icon" aria-hidden="true">
-                            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/></svg>
-                        </span>
-                        <strong class="dusun-hub-text">Warta & Pengumuman</strong>
-                    </div>
-                    <span class="dusun-hub-count {{ $pengumumans->count() > 0 ? 'badge-active' : '' }}">
-                        {{ $pengumumans->count() > 0 ? $pengumumans->count() . ' Aktif' : '0' }}
+                <div class="opt1-nav-header">
+                    <span class="opt1-nav-heading">
+                        <span class="opt1-nav-heading-dot"></span>
+                        NAVIGASI CEPAT DUSUN
                     </span>
-                </a>
-            </div>
-        </div>
-    </nav>
-
-    {{-- PROFIL DUSUN (BENTO PAMONG & WILAYAH) --}}
-    <section class="section-tentang dusun-profil-bento" id="profil-dusun" aria-labelledby="profil-heading">
-        <div class="container">
-            <div class="dusun-bento-card" data-reveal>
-                <div class="dusun-bento-header">
-                    <span class="dusun-bento-mark" aria-hidden="true"></span>
-                    <h2 id="profil-heading">Kepala Dusun & Pamong Wilayah</h2>
                 </div>
-
-                @if($dusun->nama_kepala_dusun)
-                    <div class="dusun-dukuh-bento">
-                        <div class="dusun-dukuh-left">
-                            <div class="dusun-dukuh-avatar" aria-hidden="true">
-                                {{ mb_substr($dusun->nama_kepala_dusun, 0, 1) }}
-                            </div>
-                            <div class="dusun-dukuh-meta">
-                                <small>Kepala Dusun {{ $dusun->nama_dusun }}</small>
-                                <strong>{{ $dusun->nama_kepala_dusun }}</strong>
-                                <span class="dusun-dukuh-badge">Masa Bakti Aktif</span>
-                            </div>
+                <div class="opt1-grid">
+                    <a href="#profil-dusun" class="opt1-card">
+                        <div class="opt1-iconbox">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
                         </div>
-                        <a href="#kontak-pelayanan" class="dusun-dukuh-action">
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                            <span>Kontak Pelayanan</span>
-                        </a>
-                    </div>
-                @endif
+                        <span class="opt1-label">Profil</span>
+                    </a>
+                    <a href="#peta-dusun" class="opt1-card">
+                        <div class="opt1-iconbox">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M12 21s-6-5.333-6-10a6 6 0 0 1 12 0c0 4.667-6 10-6 10Z"/><circle cx="12" cy="11" r="2"/></svg>
+                        </div>
+                        <span class="opt1-label">Peta</span>
+                    </a>
+                    <a href="#kontak-pelayanan" class="opt1-card">
+                        <div class="opt1-iconbox">
+                            <svg class="icon" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>
+                        </div>
+                        <span class="opt1-label">Pelayanan</span>
+                    </a>
+                    <a href="#agenda" class="opt1-card">
+                        <div class="opt1-iconbox">
+                            <svg class="icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                        </div>
+                        <span class="opt1-label">Agenda</span>
+                    </a>
+                </div>
+                <div class="opt1-grid-sub">
+                    <a href="#umkm" class="opt1-card">
+                        <div class="opt1-iconbox">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+                        </div>
+                        <span class="opt1-label">UMKM</span>
+                    </a>
+                    <a href="#fasilitas" class="opt1-card">
+                        <div class="opt1-iconbox">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14M2 20h20M14 12v.01M10 12v.01M14 16v.01M10 16v.01"/></svg>
+                        </div>
+                        <span class="opt1-label">Fasilitas</span>
+                    </a>
+                    <a href="#pengumuman" class="opt1-card">
+                        <div class="opt1-iconbox">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+                        </div>
+                        <span class="opt1-label">Pengumuman</span>
+                    </a>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        {{-- 2. PROFIL & DATA WILAYAH --}}
+        <section class="opt1-profil-section" id="profil-dusun" aria-labelledby="profil-heading">
+            <div class="container">
+                <h2 class="opt1-profil-title" id="profil-heading">Profil & Data Wilayah</h2>
+
+                <!-- Leader Card -->
+                <div class="opt1-leader-card">
+                    <div class="opt1-leader-left">
+                        <div class="opt1-leader-avatar" aria-hidden="true">
+                            {{ mb_substr($dusun->nama_kepala_dusun ?? $dusun->nama_dusun, 0, 1) }}
+                        </div>
+                        <div class="opt1-leader-info">
+                            <small>KEPALA DUSUN {{ Str::upper(str_replace(['Dusun ', 'dusun '], '', $dusun->nama_dusun)) }}</small>
+                            <strong>{{ $dusun->nama_kepala_dusun ?? 'Bapak Kadar' }}</strong>
+                        </div>
+                    </div>
+                    @php
+                        $waNumber = preg_replace('/[^0-9]/', '', $dusun->kontak_kepala_dusun ?? '');
+                        if ($waNumber && str_starts_with($waNumber, '0')) {
+                            $waNumber = '62' . substr($waNumber, 1);
+                        }
+                    @endphp
+                    @if($waNumber)
+                        <a href="https://wa.me/{{ $waNumber }}" class="opt1-leader-btn" target="_blank" rel="noopener" aria-label="Hubungi WhatsApp Kepala Dusun">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>Kontak</span>
+                        </a>
+                    @else
+                        <a href="#kontak-pelayanan" class="opt1-leader-btn">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                            <span>Kontak</span>
+                        </a>
+                    @endif
+                </div>
+
+                <!-- 4 Metric Stats Grid -->
+                <div class="opt1-stats-grid">
+                    <div class="opt1-stat-card">
+                        <div class="opt1-stat-icon" aria-hidden="true">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        </div>
+                        <div class="opt1-stat-content">
+                            <small>RUKUN TETANGGA</small>
+                            <b>{{ $dusun->jumlah_rt ?? 0 }} RT</b>
+                        </div>
+                    </div>
+                    <div class="opt1-stat-card">
+                        <div class="opt1-stat-icon" aria-hidden="true">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M3 21h18M3 10h18M3 7l9-4 9 4M4 10v11M20 10v11M8 14v4M12 14v4M16 14v4"/></svg>
+                        </div>
+                        <div class="opt1-stat-content">
+                            <small>RUKUN WARGA</small>
+                            <b>{{ $dusun->jumlah_rw ?? 0 }} RW</b>
+                        </div>
+                    </div>
+                    <div class="opt1-stat-card">
+                        <div class="opt1-stat-icon" aria-hidden="true">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14M2 20h20"/></svg>
+                        </div>
+                        <div class="opt1-stat-content">
+                            <small>FASILITAS UMUM</small>
+                            <b>{{ $fasilitas->count() }} Titik</b>
+                        </div>
+                    </div>
+                    <div class="opt1-stat-card">
+                        <div class="opt1-stat-icon" aria-hidden="true">
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/></svg>
+                        </div>
+                        <div class="opt1-stat-content">
+                            <small>UMKM AKTIF</small>
+                            <b>{{ $umkms->count() }} Usaha</b>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     {{-- PETA DUSUN --}}
     <section class="section-peta" id="peta-dusun" aria-labelledby="peta-dusun-heading">

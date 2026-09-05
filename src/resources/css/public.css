@@ -1733,30 +1733,66 @@
     letter-spacing: 0.03em;
 }
 
-/* Sliding Sheet Wrapper */
+/* ========================= DUSUN HERO FULL SCENIC VIEWPORT ========================= */
+.public-layout .page-dusun .dusun-hero-content {
+    position: relative;
+    z-index: 5;
+    margin-top: auto;
+    padding-bottom: 74px;
+}
+
+.public-layout .page-dusun .dusun-hero-eyebrow {
+    display: inline-block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    color: #ffd875;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.7);
+}
+
+.public-layout .page-dusun .dusun-hero-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: clamp(2rem, 4.5vw, 3.2rem);
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.12;
+    margin: 0 0 10px;
+    text-shadow: 0 3px 18px rgba(0, 0, 0, 0.7);
+}
+
+.public-layout .page-dusun .dusun-hero-desc {
+    font-size: clamp(0.82rem, 1.8vw, 1.02rem);
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.94);
+    max-width: 640px;
+    margin: 0;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.65);
+}
+
+/* ========================= SLIDING SHEET WRAPPER ========================= */
 .public-layout .page-dusun .dusun-sheet-wrapper {
     position: relative;
     z-index: 10;
-    margin-top: -65px;
+    margin-top: -55px;
     background: var(--public-cream, #F6F1E7);
-    border-radius: 32px 32px 0 0;
+    border-radius: 30px 30px 0 0;
     box-shadow: 0 -16px 40px rgba(0, 0, 0, 0.22);
     border-top: 1px solid rgba(255, 255, 255, 0.85);
 }
 
-/* Floating Sheet */
-.public-layout .page-dusun .dusun-floating-sheet {
-    position: relative;
-    padding: 16px 0 20px;
+.public-layout .page-dusun .dusun-sheet-top-strip {
+    padding-top: 12px;
 }
 
 .public-layout .page-dusun .dusun-sheet-handle-wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 12px;
     text-decoration: none;
     cursor: pointer;
+    margin-bottom: 4px;
 }
 
 .public-layout .page-dusun .dusun-sheet-handle {
@@ -1772,11 +1808,11 @@
 }
 
 .public-layout .page-dusun .dusun-hint-pulse {
-    margin-top: 6px;
+    margin-top: 5px;
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    font-size: 0.72rem;
+    font-size: 0.68rem;
     font-weight: 700;
     color: var(--public-moss, #215436);
     animation: dusunPulse 2.2s infinite ease-in-out;
@@ -1787,280 +1823,254 @@
     50% { transform: translateY(-3px); opacity: 1; color: #15452a; }
 }
 
-.public-layout .page-dusun .dusun-title-row {
+/* ========================= 1. NAVIGASI CEPAT DUSUN (GRID 4 + 3 SESUAI GAMBAR 1) ========================= */
+.public-layout .page-dusun .opt1-quicknav-section {
+    padding: 14px 0 20px;
+    border-bottom: 1px solid rgba(22, 56, 38, 0.08);
+}
+
+.public-layout .page-dusun .opt1-nav-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 6px;
-}
-
-.public-layout .page-dusun .dusun-hero-title {
-    font-family: 'Lora', Georgia, serif;
-    font-size: clamp(1.85rem, 4vw, 2.75rem);
-    font-weight: 700;
-    color: var(--public-olive, #173b26);
-    line-height: 1.15;
-    margin: 0;
-}
-
-.public-layout .page-dusun .dusun-hero-desc {
-    font-size: 0.86rem;
-    line-height: 1.55;
-    color: #515c52;
-    margin: 8px 0 16px;
-    max-width: 680px;
-}
-
-/* Metric Strip inside Sheet */
-.public-layout .page-dusun .dusun-fast-strip {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    background: #ffffff;
-    border: 1px solid #ded5c2;
-    border-radius: 14px;
-    padding: 10px 14px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
-    margin-top: 4px;
-}
-
-.public-layout .page-dusun .dusun-fast-item {
-    text-align: center;
-}
-
-.public-layout .page-dusun .dusun-fast-item span {
-    display: block;
-    font-size: 0.66rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    color: #788376;
-}
-
-.public-layout .page-dusun .dusun-fast-item strong {
-    display: block;
-    font-family: 'Lora', serif;
-    font-size: 1.05rem;
-    font-weight: 700;
-    color: var(--public-moss, #174229);
-    margin-top: 2px;
-}
-
-.public-layout .page-dusun .dusun-fast-div {
-    width: 1px;
-    height: 26px;
-    background: #e3dbcc;
-}
-
-/* ========================= QUICK ACTION HUB WITH DATA COUNTS ========================= */
-.public-layout .page-dusun .dusun-action-hub {
-    padding: 20px 0 24px;
-    background: var(--public-cream, #F6F1E7);
-    border-bottom: 1px solid rgba(22, 56, 38, 0.06);
-}
-
-.public-layout .page-dusun .dusun-hub-header {
-    margin-bottom: 12px;
-}
-
-.public-layout .page-dusun .dusun-hub-label {
-    font-size: 0.76rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.07em;
-    color: var(--public-moss, #1f5235);
-}
-
-.public-layout .page-dusun .dusun-hub-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
-
-.public-layout .page-dusun .dusun-hub-card {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #ffffff;
-    border: 1px solid #ded6c5;
-    border-radius: 14px;
-    padding: 12px 14px;
-    text-decoration: none;
-    color: #1e3626;
-    box-shadow: 0 2px 8px rgba(23, 56, 36, 0.03);
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    min-height: 48px;
-}
-
-.public-layout .page-dusun .dusun-hub-card:hover {
-    border-color: var(--public-moss, #2E5E3E);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(39, 107, 67, 0.12);
-}
-
-.public-layout .page-dusun .dusun-hub-card.highlight {
-    background: #f1f8f3;
-    border-color: #9cd8b2;
-}
-
-.public-layout .page-dusun .dusun-hub-card-wide {
-    grid-column: 1 / -1;
-}
-
-.public-layout .page-dusun .dusun-hub-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.public-layout .page-dusun .dusun-hub-icon {
-    width: 32px;
-    height: 32px;
-    border-radius: 9px;
-    background: var(--public-moss, #215436);
-    color: #ffffff;
-    display: grid;
-    place-items: center;
-    flex-shrink: 0;
-}
-
-.public-layout .page-dusun .dusun-hub-card.highlight .dusun-hub-icon {
-    background: #174229;
-}
-
-.public-layout .page-dusun .dusun-hub-text {
-    font-size: 0.84rem;
-    font-weight: 700;
-    color: #183323;
-    line-height: 1.2;
-}
-
-.public-layout .page-dusun .dusun-hub-count {
-    background: #edf3ec;
-    color: #1e5234;
-    font-size: 0.72rem;
-    font-weight: 800;
-    padding: 3px 8px;
-    border-radius: 99px;
-}
-
-.public-layout .page-dusun .dusun-hub-count.badge-active {
-    background: #fcf1d8;
-    color: #91640d;
-}
-
-/* ========================= PROFIL DUSUN BENTO CARD ========================= */
-.public-layout .page-dusun .dusun-profil-bento {
-    padding: 18px 0 26px;
-    background: var(--public-cream, #F6F1E7);
-    border-bottom: 1px solid rgba(22, 56, 38, 0.06);
-}
-
-.public-layout .page-dusun .dusun-bento-header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
     margin-bottom: 14px;
 }
 
-.public-layout .page-dusun .dusun-bento-mark {
-    width: 22px;
-    height: 3px;
-    background: var(--public-gold, #d8a90f);
-    border-radius: 99px;
+.public-layout .page-dusun .opt1-nav-heading {
+    font-size: 0.78rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--public-moss, #1f4f35);
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.public-layout .page-dusun .dusun-bento-header h2 {
-    font-family: 'Lora', serif;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: var(--public-moss, #173e2a);
-    margin: 0;
+.public-layout .page-dusun .opt1-nav-heading-dot {
+    width: 8px;
+    height: 8px;
+    background: #c68a27;
+    border-radius: 50%;
+    flex-shrink: 0;
 }
 
-.public-layout .page-dusun .dusun-dukuh-bento {
-    background: linear-gradient(135deg, #183d27 0%, #102d1c 100%);
+.public-layout .page-dusun .opt1-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+
+.public-layout .page-dusun .opt1-grid-sub {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    max-width: 440px;
+    margin: 10px auto 0;
+}
+
+.public-layout .page-dusun .opt1-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 10px 4px 8px;
+    border-radius: 14px;
+    text-decoration: none;
+    background: #faf7f2;
+    border: 1px solid #e7decb;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    color: #1e3626;
+    cursor: pointer;
+}
+
+.public-layout .page-dusun .opt1-card:hover,
+.public-layout .page-dusun .opt1-card:focus-visible {
+    background: #f0f7f2;
+    border-color: #2e7d52;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(46, 125, 82, 0.14);
+}
+
+.public-layout .page-dusun .opt1-iconbox {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #205436 0%, #143b25 100%);
     color: #ffffff;
-    border-radius: 18px;
-    padding: 18px 20px;
+    display: grid;
+    place-items: center;
+    margin-bottom: 6px;
+    box-shadow: 0 4px 10px rgba(20, 59, 37, 0.22);
+    transition: transform 0.2s;
+}
+
+.public-layout .page-dusun .opt1-iconbox svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.public-layout .page-dusun .opt1-card:hover .opt1-iconbox {
+    transform: scale(1.08);
+    background: linear-gradient(135deg, #2e7d52 0%, #1c5233 100%);
+}
+
+.public-layout .page-dusun .opt1-label {
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #1d3826;
+    line-height: 1.25;
+    white-space: nowrap;
+}
+
+/* ========================= 2. PROFIL & DATA WILAYAH (SESUAI GAMBAR 2) ========================= */
+.public-layout .page-dusun .opt1-profil-section {
+    padding: 22px 0 28px;
+    border-bottom: 1px solid rgba(22, 56, 38, 0.08);
+}
+
+.public-layout .page-dusun .opt1-profil-title {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1.45rem;
+    color: var(--public-olive, #143d26);
+    font-weight: 700;
+    margin: 0 0 16px;
+    line-height: 1.2;
+}
+
+.public-layout .page-dusun .opt1-leader-card {
+    background: #ffffff;
+    border: 1px solid #e2dac9;
+    border-radius: 16px;
+    padding: 14px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 14px;
-    box-shadow: 0 6px 20px rgba(16, 45, 28, 0.22);
-    flex-wrap: wrap;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(23, 56, 36, 0.04);
 }
 
-.public-layout .page-dusun .dusun-dukuh-left {
+.public-layout .page-dusun .opt1-leader-left {
     display: flex;
     align-items: center;
     gap: 14px;
 }
 
-.public-layout .page-dusun .dusun-dukuh-avatar {
-    width: 48px;
-    height: 48px;
+.public-layout .page-dusun .opt1-leader-avatar {
+    width: 46px;
+    height: 46px;
     border-radius: 50%;
-    background: rgba(255, 255, 255, 0.14);
-    border: 2px solid #e5b955;
+    background: #eaf3ed;
+    color: #1e5435;
+    border: 2px solid #2e7d52;
     display: grid;
     place-items: center;
     font-family: 'Lora', serif;
     font-weight: 700;
     font-size: 18px;
-    color: #fbf5e6;
     flex-shrink: 0;
 }
 
-.public-layout .page-dusun .dusun-dukuh-meta small {
+.public-layout .page-dusun .opt1-leader-info small {
     display: block;
-    font-size: 0.68rem;
-    font-weight: 700;
+    font-size: 0.64rem;
+    font-weight: 800;
     text-transform: uppercase;
-    color: #9be0b4;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
+    color: #798578;
 }
 
-.public-layout .page-dusun .dusun-dukuh-meta strong {
+.public-layout .page-dusun .opt1-leader-info strong {
     display: block;
     font-size: 1.05rem;
     font-weight: 700;
+    color: #173c26;
+    margin-top: 1px;
+}
+
+.public-layout .page-dusun .opt1-leader-btn {
+    background: #25d366;
     color: #ffffff;
-    margin: 2px 0 3px;
-}
-
-.public-layout .page-dusun .dusun-dukuh-badge {
-    display: inline-block;
-    font-size: 0.62rem;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 0.78rem;
     font-weight: 700;
-    padding: 2px 8px;
-    border-radius: 99px;
-    background: rgba(229, 185, 85, 0.25);
-    color: #f2cb73;
-    border: 1px solid rgba(229, 185, 85, 0.4);
-}
-
-.public-layout .page-dusun .dusun-dukuh-action {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: #e5b955;
-    color: #132d1d;
-    font-size: 0.8rem;
-    font-weight: 800;
-    padding: 9px 16px;
-    border-radius: 10px;
     text-decoration: none;
-    box-shadow: 0 4px 12px rgba(229, 185, 85, 0.35);
-    transition: all 0.2s ease;
+    box-shadow: 0 3px 10px rgba(37, 211, 102, 0.35);
     white-space: nowrap;
+    transition: transform 0.15s, box-shadow 0.2s;
 }
 
-.public-layout .page-dusun .dusun-dukuh-action:hover {
-    background: #f0c563;
-    transform: translateY(-1px);
+.public-layout .page-dusun .opt1-leader-btn:hover {
+    transform: scale(1.04);
+    box-shadow: 0 5px 14px rgba(37, 211, 102, 0.45);
+}
+
+.public-layout .page-dusun .opt1-leader-btn svg {
+    width: 15px;
+    height: 15px;
+    stroke: currentColor;
+    stroke-width: 2.2;
+}
+
+/* Metric Stats Grid (2x2) */
+.public-layout .page-dusun .opt1-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.public-layout .page-dusun .opt1-stat-card {
+    background: #ffffff;
+    border: 1px solid #e2dac9;
+    border-radius: 14px;
+    padding: 13px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.public-layout .page-dusun .opt1-stat-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: #edf5ef;
+    color: #215436;
+    display: grid;
+    place-items: center;
+    flex-shrink: 0;
+}
+
+.public-layout .page-dusun .opt1-stat-icon svg {
+    width: 20px;
+    height: 20px;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.public-layout .page-dusun .opt1-stat-content small {
+    display: block;
+    font-size: 0.62rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #798578;
+}
+
+.public-layout .page-dusun .opt1-stat-content b {
+    display: block;
+    font-family: 'Lora', serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #153e26;
+    margin-top: 1px;
 }
 
 @media (min-width: 1024px) {
@@ -4104,78 +4114,89 @@ html.js .public-layout [data-reveal].is-revealed {
         border-radius: 26px 26px 0 0;
     }
 
-    .public-layout .page-dusun .dusun-floating-sheet {
-        padding: 14px 0 18px;
-    }
-
     .public-layout .page-dusun .dusun-hero-title {
-        font-size: 1.65rem;
+        font-size: 1.85rem;
     }
 
     .public-layout .page-dusun .dusun-hero-desc {
-        font-size: 0.78rem;
-        line-height: 1.48;
-        margin: 6px 0 12px;
+        font-size: 0.82rem;
+        line-height: 1.5;
     }
 
-    .public-layout .page-dusun .dusun-fast-strip {
-        padding: 8px 10px;
+    .public-layout .page-dusun .opt1-grid {
+        gap: 8px;
+    }
+
+    .public-layout .page-dusun .opt1-grid-sub {
+        gap: 8px;
+        margin-top: 8px;
+        padding: 0 4%;
+    }
+
+    .public-layout .page-dusun .opt1-card {
+        padding: 8px 3px 6px;
         border-radius: 12px;
     }
 
-    .public-layout .page-dusun .dusun-fast-item span {
-        font-size: 0.58rem;
+    .public-layout .page-dusun .opt1-iconbox {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        margin-bottom: 5px;
     }
 
-    .public-layout .page-dusun .dusun-fast-item strong {
-        font-size: 0.92rem;
+    .public-layout .page-dusun .opt1-iconbox svg {
+        width: 17px;
+        height: 17px;
     }
 
-    .public-layout .page-dusun .dusun-fast-div {
-        height: 20px;
+    .public-layout .page-dusun .opt1-label {
+        font-size: 10.5px;
     }
 
-    .public-layout .page-dusun .dusun-hub-card {
-        padding: 10px 11px;
-        min-height: 44px;
-    }
-
-    .public-layout .page-dusun .dusun-hub-text {
-        font-size: 0.76rem;
-    }
-
-    .public-layout .page-dusun .dusun-hub-icon {
-        width: 28px;
-        height: 28px;
-        border-radius: 7px;
-    }
-
-    .public-layout .page-dusun .dusun-hub-count {
-        font-size: 0.65rem;
-        padding: 2px 6px;
-    }
-
-    .public-layout .page-dusun .dusun-dukuh-bento {
-        padding: 14px 16px;
+    .public-layout .page-dusun .opt1-leader-card {
+        padding: 12px 14px;
         border-radius: 14px;
-        gap: 10px;
     }
 
-    .public-layout .page-dusun .dusun-dukuh-avatar {
+    .public-layout .page-dusun .opt1-leader-avatar {
         width: 40px;
         height: 40px;
         font-size: 15px;
     }
 
-    .public-layout .page-dusun .dusun-dukuh-meta strong {
-        font-size: 0.94rem;
+    .public-layout .page-dusun .opt1-leader-info strong {
+        font-size: 0.95rem;
     }
 
-    .public-layout .page-dusun .dusun-dukuh-action {
-        width: 100%;
-        justify-content: center;
-        padding: 8px 14px;
-        font-size: 0.76rem;
+    .public-layout .page-dusun .opt1-leader-btn {
+        padding: 7px 12px;
+        font-size: 0.72rem;
+    }
+
+    .public-layout .page-dusun .opt1-stats-grid {
+        gap: 8px;
+    }
+
+    .public-layout .page-dusun .opt1-stat-card {
+        padding: 10px 12px;
+        border-radius: 12px;
+        gap: 10px;
+    }
+
+    .public-layout .page-dusun .opt1-stat-icon {
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
+    }
+
+    .public-layout .page-dusun .opt1-stat-icon svg {
+        width: 17px;
+        height: 17px;
+    }
+
+    .public-layout .page-dusun .opt1-stat-content b {
+        font-size: 1.05rem;
     }
 
     /* Legacy fallback */

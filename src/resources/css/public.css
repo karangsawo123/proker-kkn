@@ -1666,14 +1666,14 @@
     min-height: 480px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     overflow: hidden;
     background: var(--public-olive, #1c261e);
     isolation: isolate;
     z-index: 1;
 }
 
-.public-layout .page-dusun .dusun-hero-story .dusun-hero-bg {
+.public-layout .page-dusun .dusun-hero-bg {
     position: absolute;
     inset: 0;
     z-index: -2;
@@ -1682,14 +1682,14 @@
     transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.public-layout .page-dusun .dusun-hero-story .dusun-hero-overlay {
+.public-layout .page-dusun .dusun-hero-overlay {
     position: absolute;
     inset: 0;
     z-index: -1;
     background: linear-gradient(180deg, rgba(22, 40, 28, 0.40) 0%, rgba(22, 40, 28, 0.12) 35%, rgba(22, 40, 28, 0.88) 100%);
 }
 
-.public-layout .page-dusun .dusun-hero-story .dusun-hero-topbar {
+.public-layout .page-dusun .dusun-hero-topbar {
     position: relative;
     z-index: 5;
     padding-top: 20px;
@@ -1698,7 +1698,7 @@
     align-items: center;
 }
 
-.public-layout .page-dusun .dusun-hero-story .dusun-hero-back {
+.public-layout .page-dusun .dusun-hero-back {
     display: inline-flex;
     align-items: center;
     gap: 6px;
@@ -1714,12 +1714,12 @@
     transition: background 0.2s, transform 0.2s;
 }
 
-.public-layout .page-dusun .dusun-hero-story .dusun-hero-back:hover {
+.public-layout .page-dusun .dusun-hero-back:hover {
     background: #ffffff;
     transform: translateY(-1px);
 }
 
-.public-layout .page-dusun .dusun-hero-story .dusun-hero-chip {
+.public-layout .page-dusun .dusun-hero-chip {
     display: inline-flex;
     align-items: center;
     padding: 5px 12px;
@@ -1731,30 +1731,6 @@
     font-weight: 700;
     backdrop-filter: blur(8px);
     letter-spacing: 0.03em;
-}
-
-.public-layout .page-dusun .dusun-hero-center-badge {
-    position: relative;
-    z-index: 4;
-    text-align: center;
-    padding-bottom: 78px;
-}
-
-.public-layout .page-dusun .dusun-badge-potensi-hero {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(14, 38, 24, 0.78);
-    color: #fce29a;
-    border: 1px solid rgba(252, 226, 154, 0.45);
-    font-size: 0.74rem;
-    font-weight: 800;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 6px 16px;
-    border-radius: 99px;
-    backdrop-filter: blur(10px);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
 }
 
 /* Sliding Sheet Wrapper */
@@ -4133,15 +4109,6 @@ html.js .public-layout [data-reveal].is-revealed {
     .public-layout .page-dusun .dusun-hero-chip {
         padding: 4px 10px;
         font-size: 0.65rem;
-    }
-
-    .public-layout .page-dusun .dusun-hero-center-badge {
-        padding-bottom: 65px;
-    }
-
-    .public-layout .page-dusun .dusun-badge-potensi-hero {
-        font-size: 0.66rem;
-        padding: 4px 12px;
     }
 
     .public-layout .page-dusun .dusun-sheet-wrapper {

@@ -27,10 +27,6 @@
             </a>
             <span class="dusun-hero-chip">Desa Bendung</span>
         </div>
-
-        <div class="container dusun-hero-center-badge" data-reveal>
-            <span class="dusun-badge-potensi-hero">Sentra Pertanian & UMKM</span>
-        </div>
     </header>
 
     {{-- FLOATING OVERLAP SHEET (SLIDES UP OVER STICKY HERO ON SCROLL) --}}

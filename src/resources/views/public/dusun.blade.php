@@ -368,8 +368,8 @@
                                 @endif
                             </div>
                             <div class="facility-card-footer">
-                                <a href="{{ route('fasilitas.show', $f->id) }}" class="facility-card-link" aria-label="Lihat lokasi {{ $f->nama }}">
-                                    <span>Lihat Lokasi</span>
+                                <a href="{{ route('fasilitas.show', $f->id) }}" class="facility-card-link" aria-label="Lihat detail {{ $f->nama }}">
+                                    <span>Lihat Detail</span>
                                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M7 17 17 7M8 7h9v9"/></svg>
                                 </a>
                             </div>

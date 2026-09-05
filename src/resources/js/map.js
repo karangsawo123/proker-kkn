@@ -248,11 +248,27 @@ export function initMap(elementId) {
         zoomControl: true,
     });
 
-    // OSM tile — development only (DEV05-DEC-002)
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // ─── Base Tile Layers (Streets & Satellite) ──────────────────────────────
+    const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© <a href="https://www.openstreetmap.org/copyright" rel="noopener">OpenStreetMap</a>',
         maxZoom: 19,
-    }).addTo(map);
+    });
+
+    const satelliteImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and GIS User Community',
+        maxZoom: 19,
+    });
+
+    const satelliteLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '',
+        maxZoom: 19,
+    });
+
+    const satelliteLayer = L.layerGroup([satelliteImagery, satelliteLabels]);
+
+    // Initial default layer
+    streetLayer.addTo(map);
+    let isSatelliteActive = false;
 
     // Fallback message on tile error
     map.on('tileerror', () => {
@@ -266,6 +282,61 @@ export function initMap(elementId) {
             el.appendChild(div);
         }
     });
+
+    let currentVisibleMarkers = [];
+
+    // ─── Custom Floating Map Action Controls (Recenter & Basemap Switcher) ─────
+    const MapActionControls = L.Control.extend({
+        options: { position: 'topright' },
+        onAdd: function() {
+            const container = L.DomUtil.create('div', 'map-floating-actions');
+
+            // 1. Recenter Button
+            const btnRecenter = L.DomUtil.create('button', 'map-action-btn map-recenter-btn', container);
+            btnRecenter.type = 'button';
+            btnRecenter.title = 'Pusatkan Ulang Peta';
+            btnRecenter.setAttribute('aria-label', 'Pusatkan Ulang Peta');
+            btnRecenter.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>`;
+
+            // 2. Layer Toggle Button (Satellite / Streets)
+            const btnLayer = L.DomUtil.create('button', 'map-action-btn map-layer-btn', container);
+            btnLayer.type = 'button';
+            btnLayer.title = 'Ganti Mode Citra Satelit / Peta Standar';
+            btnLayer.setAttribute('aria-label', 'Ganti Mode Citra Satelit atau Peta Standar');
+            btnLayer.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>`;
+
+            L.DomEvent.disableClickPropagation(container);
+            L.DomEvent.disableScrollPropagation(container);
+
+            L.DomEvent.on(btnRecenter, 'click', (e) => {
+                L.DomEvent.stop(e);
+                const targetMarkers = (currentVisibleMarkers && currentVisibleMarkers.length > 0)
+                    ? currentVisibleMarkers 
+                    : allMarkers;
+                focusMapOnMarkers(map, targetMarkers, { isInitial: false, animate: true });
+            });
+
+            L.DomEvent.on(btnLayer, 'click', (e) => {
+                L.DomEvent.stop(e);
+                isSatelliteActive = !isSatelliteActive;
+                if (isSatelliteActive) {
+                    map.removeLayer(streetLayer);
+                    satelliteLayer.addTo(map);
+                    btnLayer.classList.add('active');
+                    btnLayer.title = 'Beralih ke Peta Standar (Jalan)';
+                } else {
+                    map.removeLayer(satelliteLayer);
+                    streetLayer.addTo(map);
+                    btnLayer.classList.remove('active');
+                    btnLayer.title = 'Beralih ke Citra Satelit';
+                }
+            });
+
+            return container;
+        }
+    });
+
+    new MapActionControls().addTo(map);
 
     // ─── Filters & Dual-Sync Explorer ──────────────────────────────────────────
     const filterDusunEl = document.getElementById(`${elementId}-filter-dusun`);
@@ -414,6 +485,8 @@ export function initMap(elementId) {
                 emptyNotice.style.display = matchCount === 0 ? 'block' : 'none';
             }
         }
+
+        currentVisibleMarkers = visibleMarkerData;
 
         // Adjust viewport data-driven
         focusMapOnMarkers(map, visibleMarkerData, { isInitial, animate });

@@ -745,6 +745,16 @@
             position: relative;
         }
 
+        .opt2-map-actions {
+            position: absolute;
+            right: 14px;
+            top: 14px;
+            z-index: 100;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
         /* Carousel Strip Under Map */
         .opt2-carousel-strip {
             display: grid;
@@ -1189,6 +1199,15 @@
 
                         <!-- Real Leaflet Map #2 -->
                         <div class="opt2-map-box">
+                            <!-- Floating Map Controls -->
+                            <div class="opt2-map-actions">
+                                <button class="opt1-action-btn" title="Pusatkan Ulang Peta" onclick="resetMap2View()">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/></svg>
+                                </button>
+                                <button class="opt1-action-btn" id="btn-layer-opt2" title="Ganti Mode Satelit / Standar" onclick="toggleMap2Layer(this)">
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
+                                </button>
+                            </div>
                             <div id="map-target-2" style="width:100%;height:100%;"></div>
                         </div>
 
@@ -1517,6 +1536,24 @@
                 if (layer instanceof L.TileLayer) map1.removeLayer(layer);
             });
             L.tileLayer(newLayer, { maxZoom: 19 }).addTo(map1);
+        }
+
+        let isSatellite2 = false;
+        function toggleMap2Layer(btn) {
+            isSatellite2 = !isSatellite2;
+            const newLayer = isSatellite2 ? tileSatellite : tileStreets;
+            map2.eachLayer(layer => {
+                if (layer instanceof L.TileLayer) map2.removeLayer(layer);
+            });
+            L.tileLayer(newLayer, { maxZoom: 19 }).addTo(map2);
+            if (btn) {
+                btn.classList.toggle('active', isSatellite2);
+                btn.title = isSatellite2 ? 'Beralih ke Peta Standar' : 'Ganti Mode Satelit / Standar';
+            }
+        }
+
+        function resetMap2View() {
+            if (map2) map2.setView([-7.4196, 112.4677], 16, { animate: true });
         }
 
         // ─── INITIALIZE MAP 2 (SPLIT & CAROUSEL) ───

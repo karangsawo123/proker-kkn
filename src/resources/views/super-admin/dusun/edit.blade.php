@@ -118,6 +118,40 @@
             </div>
 
             <div class="form-group">
+                <label for="foto_kepala_dusun" class="form-label">
+                    Foto Kepala Dusun <span class="optional-tag">(Opsional, Maks. 3MB, Format JPG/PNG/WebP)</span>
+                </label>
+                <div class="admin-avatar-upload-preview" style="display: flex; align-items: center; gap: 16px; margin-bottom: 10px;">
+                    <div style="width: 64px; height: 64px; border-radius: 50%; overflow: hidden; background: #e2e8f0; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #475569; font-size: 20px; border: 2px solid #cbd5e1; flex-shrink: 0;">
+                        @if($dusun->foto_kepala_dusun_path)
+                            <img src="{{ asset('storage/' . $dusun->foto_kepala_dusun_path) }}" alt="Foto Kepala Dusun" style="width: 100%; height: 100%; object-fit: cover;">
+                        @else
+                            {{ strtoupper(substr($dusun->nama_kepala_dusun, 0, 1)) }}
+                        @endif
+                    </div>
+                    <div>
+                        <span class="preview-text" style="font-size: 13px; color: #64748b; display: block;">
+                            @if($dusun->foto_kepala_dusun_path)
+                                Foto pimpinan saat ini tersimpan. Unggah berkas baru jika ingin memperbarui.
+                            @else
+                                Belum ada foto khusus. Avatar pimpinan saat ini menggunakan inisial huruf nama.
+                            @endif
+                        </span>
+                    </div>
+                </div>
+                <input
+                    type="file"
+                    name="foto_kepala_dusun"
+                    id="foto_kepala_dusun"
+                    accept="image/jpeg,image/png,image/webp"
+                    class="form-file @error('foto_kepala_dusun') is-invalid @enderror"
+                >
+                @error('foto_kepala_dusun')
+                    <p class="field-error">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div class="form-group">
                 <label for="banner" class="form-label">
                     Foto Banner Dusun <span class="optional-tag">(Opsional, Maks. 3MB, Format JPG/PNG/WebP)</span>
                 </label>

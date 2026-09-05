@@ -20,6 +20,7 @@ class ProfilDusunRequest extends FormRequest
             'jumlah_rt' => ['required', 'integer', 'min:0', 'max:65535'],
             'jumlah_rw' => ['required', 'integer', 'min:0', 'max:65535'],
             'banner' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:3072'],
+            'foto_kepala_dusun' => ['nullable', 'image', 'mimes:jpeg,jpg,png,webp', 'max:3072'],
         ];
     }
 
@@ -34,6 +35,9 @@ class ProfilDusunRequest extends FormRequest
             'banner.image' => 'Banner harus berupa berkas gambar.',
             'banner.mimes' => 'Format banner harus berupa JPG, PNG, atau WebP.',
             'banner.max' => 'Ukuran banner maksimal 3MB.',
+            'foto_kepala_dusun.image' => 'Foto Kepala Dusun harus berupa berkas gambar.',
+            'foto_kepala_dusun.mimes' => 'Format foto Kepala Dusun harus berupa JPG, PNG, atau WebP.',
+            'foto_kepala_dusun.max' => 'Ukuran foto Kepala Dusun maksimal 3MB.',
         ];
     }
 }

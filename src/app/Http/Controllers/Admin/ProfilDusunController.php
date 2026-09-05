@@ -26,11 +26,18 @@ class ProfilDusunController extends Controller
 
         $validated = $request->validated();
         $oldBanner = null;
+        $oldFoto = null;
 
         if ($request->hasFile('banner')) {
             $newBanner = $mediaService->storeImage($request->file('banner'), 'dusuns');
             $oldBanner = $dusun->banner_path;
             $dusun->banner_path = $newBanner;
+        }
+
+        if ($request->hasFile('foto_kepala_dusun')) {
+            $newFoto = $mediaService->storeImage($request->file('foto_kepala_dusun'), 'dusuns/kadus');
+            $oldFoto = $dusun->foto_kepala_dusun_path;
+            $dusun->foto_kepala_dusun_path = $newFoto;
         }
 
         $dusun->nama_dusun = $validated['nama_dusun'];
@@ -42,6 +49,10 @@ class ProfilDusunController extends Controller
 
         if ($oldBanner) {
             $mediaService->deleteImage($oldBanner);
+        }
+
+        if ($oldFoto) {
+            $mediaService->deleteImage($oldFoto);
         }
 
         return redirect()->route('admin-dusun.profil.edit')

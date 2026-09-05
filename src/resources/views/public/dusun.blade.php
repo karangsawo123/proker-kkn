@@ -117,7 +117,11 @@
                 <div class="opt1-leader-card">
                     <div class="opt1-leader-left">
                         <div class="opt1-leader-avatar" aria-hidden="true">
-                            {{ mb_substr($dusun->nama_kepala_dusun ?? $dusun->nama_dusun, 0, 1) }}
+                            @if(!empty($dusun->foto_kepala_dusun_path))
+                                <img src="{{ asset('storage/' . $dusun->foto_kepala_dusun_path) }}" alt="Kepala Dusun {{ $dusun->nama_dusun }}" class="opt1-leader-photo">
+                            @else
+                                {{ mb_substr($dusun->nama_kepala_dusun ?? $dusun->nama_dusun, 0, 1) }}
+                            @endif
                         </div>
                         <div class="opt1-leader-info">
                             <small>KEPALA DUSUN {{ Str::upper(str_replace(['Dusun ', 'dusun '], '', $dusun->nama_dusun)) }}</small>

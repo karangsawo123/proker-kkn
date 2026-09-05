@@ -17,13 +17,15 @@
     {{-- Public redesign typography --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@500;600;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700&family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
 
     {{-- app.css remains for legacy/shared styles; public.css is the public visual authority --}}
     @vite(['resources/css/app.css', 'resources/css/public.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
 <body class="public-layout">
+
+    <div id="scroll-progress" aria-hidden="true"></div>
 
     <a class="skip-link" href="#main-content">Lewati ke konten utama</a>
 
@@ -183,6 +185,9 @@
             </div>
         </div>
     </footer>
+
+    <!-- Floating Back to Top Button -->
+    <button id="btn-back-to-top" class="back-to-top-btn" aria-label="Kembali ke atas" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">↑</button>
 
     @stack('scripts')
 </body>

@@ -74,13 +74,13 @@
                     </a>
                     <a href="#kontak-pelayanan" class="opt1-card">
                         <div class="opt1-iconbox">
-                            <svg class="icon" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-4h6v4M8 6h.01M16 6h.01M12 6h.01M12 10h.01M12 14h.01M16 10h.01M16 14h.01M8 10h.01M8 14h.01"/></svg>
+                            <svg class="icon" viewBox="0 0 24 24"><rect width="16" height="20" x="4" y="2" rx="2"/><path d="M9 22v-3h6v3"/><rect x="7" y="5.5" width="3" height="2.5" rx="0.5"/><rect x="14" y="5.5" width="3" height="2.5" rx="0.5"/><rect x="7" y="10" width="3" height="2.5" rx="0.5"/><rect x="14" y="10" width="3" height="2.5" rx="0.5"/><rect x="7" y="14.5" width="3" height="2.5" rx="0.5"/><rect x="14" y="14.5" width="3" height="2.5" rx="0.5"/></svg>
                         </div>
                         <span class="opt1-label">Pelayanan</span>
                     </a>
                     <a href="#agenda" class="opt1-card">
                         <div class="opt1-iconbox">
-                            <svg class="icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                            <svg class="icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
                         </div>
                         <span class="opt1-label">Agenda</span>
                     </a>
@@ -88,13 +88,13 @@
                 <div class="opt1-grid-sub">
                     <a href="#umkm" class="opt1-card">
                         <div class="opt1-iconbox">
-                            <svg class="icon" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg>
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                         </div>
                         <span class="opt1-label">UMKM</span>
                     </a>
                     <a href="#fasilitas" class="opt1-card">
                         <div class="opt1-iconbox">
-                            <svg class="icon" viewBox="0 0 24 24"><path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14M2 20h20M14 12v.01M10 12v.01M14 16v.01M10 16v.01"/></svg>
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M5 21V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14M2 21h20"/><path d="M9 21v-7a3 3 0 0 1 6 0v7"/></svg>
                         </div>
                         <span class="opt1-label">Fasilitas</span>
                     </a>
@@ -111,6 +111,7 @@
         {{-- 2. PROFIL & DATA WILAYAH --}}
         <section class="opt1-profil-section" id="profil-dusun" aria-labelledby="profil-heading">
             <div class="container">
+                <span class="opt1-section-badge">SELAYANG PANDANG</span>
                 <h2 class="opt1-profil-title" id="profil-heading">Profil & Data Wilayah</h2>
 
                 <!-- Leader Card -->
@@ -134,7 +135,7 @@
                 <div class="opt1-stats-grid">
                     <div class="opt1-stat-card">
                         <div class="opt1-stat-icon" aria-hidden="true">
-                            <svg class="icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
                         </div>
                         <div class="opt1-stat-content">
                             <small>RUKUN TETANGGA</small>
@@ -152,7 +153,7 @@
                     </div>
                     <div class="opt1-stat-card">
                         <div class="opt1-stat-icon" aria-hidden="true">
-                            <svg class="icon" viewBox="0 0 24 24"><path d="M18 20V6a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v14M2 20h20"/></svg>
+                            <svg class="icon" viewBox="0 0 24 24"><path d="M5 21V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v14M2 21h20"/><path d="M9 21v-7a3 3 0 0 1 6 0v7"/></svg>
                         </div>
                         <div class="opt1-stat-content">
                             <small>FASILITAS UMUM</small>
@@ -161,7 +162,7 @@
                     </div>
                     <div class="opt1-stat-card">
                         <div class="opt1-stat-icon" aria-hidden="true">
-                            <svg class="icon" viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/></svg>
+                            <svg class="icon" viewBox="0 0 24 24"><rect width="16" height="13" x="4" y="8" rx="2.5"/><path d="M8 8V6a4 4 0 0 1 8 0v2"/></svg>
                         </div>
                         <div class="opt1-stat-content">
                             <small>UMKM AKTIF</small>

@@ -26,18 +26,25 @@ class HomeController extends Controller
         // Pilihan Dusun: ACTIVE only (DEV-04-DEC-001 Public Visibility Principle)
         $dusuns = Dusun::publicActive()->orderBy('nama_dusun')->get();
 
-        // Pengumuman Desa terbaru (3 items, DESA scope, active, not soft-deleted)
+        // Pengumuman Desa terbaru (DESA scope, active, not soft-deleted)
         $pengumumans = Pengumuman::desaScope()
             ->activeAnnouncements()
             ->latest('created_at')
-            ->take(3)
+            ->take(5)
             ->get();
 
-        // Agenda Desa terbaru (3 items, DESA scope, not soft-deleted)
+        // Agenda Desa terbaru (DESA scope, not soft-deleted)
         $agendas = AgendaKegiatan::desaScope()
             ->orderBy('tanggal_mulai', 'desc')
-            ->take(3)
+            ->take(5)
             ->get();
+
+        $pengumumanCount = Pengumuman::desaScope()
+            ->activeAnnouncements()
+            ->count();
+
+        $agendaCount = AgendaKegiatan::desaScope()
+            ->count();
 
         // ── Peta Desa map marker data ────────────────────────────────────────
         // Markers: Fasilitas + UMKM (with coords) + KontakPelayanan (with coords)
@@ -115,6 +122,8 @@ class HomeController extends Controller
             'dusuns' => $dusuns,
             'pengumumans' => $pengumumans,
             'agendas' => $agendas,
+            'pengumumanCount' => $pengumumanCount,
+            'agendaCount' => $agendaCount,
             'dusunFilterOptions' => $dusunFilterOptions,
             'categoryOptions' => $categoryOptions,
             'mapConfigJson' => Js::from($mapConfig),

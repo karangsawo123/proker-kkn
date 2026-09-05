@@ -624,6 +624,7 @@
 }
 
 .public-layout .page-home .dock-icon-box {
+    position: relative;
     width: 44px;
     height: 44px;
     border-radius: 12px;
@@ -635,6 +636,36 @@
     font-size: 20px;
     margin-bottom: 8px;
     transition: all 0.2s ease;
+}
+
+.public-layout .page-home .dock-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #e11d48;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 7px rgba(225, 29, 72, 0.45);
+    z-index: 3;
+    pointer-events: none;
+    letter-spacing: -0.2px;
+    font-variant-numeric: tabular-nums;
+    font-family: inherit;
+    animation: opt1-badge-pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.public-layout .page-home .dock-item:hover .dock-badge {
+    border-color: #f0f7f2;
 }
 
 .public-layout .page-home .dock-item:hover .dock-icon-box {

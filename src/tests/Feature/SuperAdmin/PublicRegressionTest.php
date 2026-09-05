@@ -176,6 +176,8 @@ class PublicRegressionTest extends TestCase
         $response->assertStatus(200);
         $response->assertSee('Pesta Rakyat Desa Bendung');
         $response->assertSee('Pengumuman Resmi Lurah');
+        $response->assertSee('<span class="dock-badge" aria-label="1 agenda">1</span>', false);
+        $response->assertSee('<span class="dock-badge" aria-label="1 pengumuman">1</span>', false);
     }
 
     public function test_132_public_map_displays_newly_created_fasilitas_and_umkm_accurately(): void

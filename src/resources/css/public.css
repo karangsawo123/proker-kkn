@@ -2545,93 +2545,6 @@
     height: 15px;
 }
 
-/* ========================= DUSUN HERO ========================= */
-.public-layout .page-dusun .dusun-hero {
-    position: relative;
-    min-height: 300px;
-    isolation: isolate;
-    display: flex;
-    align-items: flex-end;
-    overflow: hidden;
-    background: var(--public-olive);
-}
-
-.public-layout .page-dusun .dusun-hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -2;
-    background:
-        var(--dusun-hero-image, linear-gradient(135deg, #61785e, #2E5E3E)) center 52% / cover no-repeat;
-}
-
-.public-layout .page-dusun .dusun-hero::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    background:
-        linear-gradient(90deg, rgba(31, 36, 29, .95) 0%, rgba(31, 36, 29, .76) 38%, rgba(31, 36, 29, .20) 72%, rgba(31, 36, 29, .06) 100%),
-        linear-gradient(0deg, rgba(31, 36, 29, .28), transparent 55%);
-}
-
-.public-layout .page-dusun .dusun-hero .container {
-    min-height: 300px;
-    position: relative;
-    display: flex;
-    align-items: flex-end;
-    padding-bottom: 32px;
-}
-
-.public-layout .page-dusun .dusun-hero-lockup {
-    max-width: 600px;
-    color: var(--public-cream);
-}
-
-.public-layout .page-dusun .dusun-hero-back {
-    position: absolute;
-    top: 18px;
-    left: 0;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    padding: 6px 9px;
-    border: 1px solid rgba(250, 247, 242, .44);
-    border-radius: 7px;
-    background: rgba(43, 47, 35, .48);
-    color: var(--public-cream);
-    backdrop-filter: blur(8px);
-    font-size: .52rem;
-    font-weight: 700;
-}
-
-.public-layout .page-dusun .dusun-hero-title {
-    margin: 0;
-    color: var(--public-cream);
-    font-size: clamp(2.7rem, 4.5vw, 4.5rem);
-    font-weight: 600;
-    line-height: .99;
-    letter-spacing: -.04em;
-}
-
-.public-layout .page-dusun .dusun-hero-title::after {
-    content: '';
-    display: block;
-    width: 45px;
-    height: 3px;
-    margin-top: 13px;
-    border-radius: 999px;
-    background: var(--public-terracotta);
-}
-
-.public-layout .page-dusun .dusun-hero-desc {
-    max-width: 510px;
-    margin: 11px 0 0;
-    color: rgba(250, 247, 242, .93);
-    font-size: .8rem;
-    line-height: 1.55;
-}
-
 /* ========================= DUSUN HERO (VISUAL STORYTELLING & STICKY REVEAL SHEET) ========================= */
 .public-layout .page-dusun {
     position: relative;
@@ -2674,13 +2587,18 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
 }
 
 .public-layout .page-dusun .dusun-hero-back {
+    position: relative;
+    top: auto;
+    left: auto;
     display: inline-flex;
     align-items: center;
     gap: 6px;
     padding: 7px 14px;
+    border: none;
     border-radius: 99px;
     background: rgba(255, 255, 255, 0.90);
     color: var(--public-olive, #173823);
@@ -2690,6 +2608,8 @@
     box-shadow: 0 4px 14px rgba(0, 0, 0, 0.20);
     backdrop-filter: blur(8px);
     transition: background 0.2s, transform 0.2s;
+    margin: 0;
+    flex-shrink: 0;
 }
 
 .public-layout .page-dusun .dusun-hero-back:hover {
@@ -2698,6 +2618,7 @@
 }
 
 .public-layout .page-dusun .dusun-hero-chip {
+    position: relative;
     display: inline-flex;
     align-items: center;
     padding: 5px 12px;
@@ -2709,6 +2630,9 @@
     font-weight: 700;
     backdrop-filter: blur(8px);
     letter-spacing: 0.03em;
+    margin: 0;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 /* ========================= DUSUN HERO FULL SCENIC VIEWPORT ========================= */
@@ -5098,6 +5022,7 @@ html.js .public-layout [data-reveal].is-revealed {
 
     .public-layout .page-dusun .dusun-hero-topbar {
         padding-top: 14px;
+        gap: 8px;
     }
 
     .public-layout .page-dusun .dusun-hero-back {
@@ -5198,11 +5123,6 @@ html.js .public-layout [data-reveal].is-revealed {
 
     .public-layout .page-dusun .opt1-stat-content b {
         font-size: 1.05rem;
-    }
-
-    /* Legacy fallback */
-    .public-layout .page-dusun .dusun-hero {
-        min-height: 245px;
     }
 
     /* Dusun sections */

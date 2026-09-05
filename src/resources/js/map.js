@@ -88,53 +88,78 @@ function parseCoordinate(lat, lng) {
 
 // ─── Popup builder (DOM-based, XSS-safe) ─────────────────────────────────────
 
+function escapeHtml(str) {
+    if (!str) return '';
+    const div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+}
+
 function buildPopup(marker) {
     const wrap = document.createElement('div');
-    wrap.style.cssText = 'min-width:180px;max-width:240px;font-family:inherit;';
+    wrap.className = 'portal-popup-card';
+    wrap.style.cssText = 'min-width:215px;max-width:265px;font-family:inherit;padding:2px;';
 
-    // Optional image
+    // 1. Image or Fallback Media Wrap
+    const mediaWrap = document.createElement('div');
+    mediaWrap.className = 'portal-popup-media';
+    mediaWrap.style.cssText = 'position:relative;width:100%;height:125px;border-radius:10px;overflow:hidden;margin-bottom:9px;background:#e9f0e8;box-shadow:inset 0 0 0 1px rgba(0,0,0,0.06);';
+
+    // Badge float
+    const badge = document.createElement('span');
+    badge.className = 'portal-popup-badge';
+    badge.textContent = marker.category || 'LOKASI';
+    badge.style.cssText = 'position:absolute;top:7px;left:7px;z-index:3;padding:3px 8px;border-radius:6px;font-size:0.68rem;font-weight:800;background:rgba(16,38,24,0.88);color:#ffffff;backdrop-filter:blur(4px);letter-spacing:0.02em;box-shadow:0 2px 6px rgba(0,0,0,0.22);';
+    mediaWrap.appendChild(badge);
+
+    // Fallback banner element (shows if photo is missing or fails to load)
+    const fallbackBanner = document.createElement('div');
+    fallbackBanner.style.cssText = `position:absolute;inset:0;display:${marker.photo_url ? 'none' : 'flex'};flex-direction:column;align-items:center;justify-content:center;background:linear-gradient(135deg,#173d28,#256b4c);color:#ffffff;gap:4px;`;
+    fallbackBanner.innerHTML = `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="opacity:0.9;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span style="font-size:0.70rem;font-weight:700;opacity:0.95;">${escapeHtml(marker.name)}</span>`;
+    mediaWrap.appendChild(fallbackBanner);
+
     if (marker.photo_url) {
         const img = document.createElement('img');
         img.src = marker.photo_url;
-        img.alt = '';
-        img.style.cssText = 'width:100%;border-radius:8px;margin-bottom:8px;display:block;object-fit:cover;height:100px;';
-        wrap.appendChild(img);
+        img.alt = marker.name || '';
+        img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;';
+        img.onerror = () => {
+            img.style.display = 'none';
+            fallbackBanner.style.display = 'flex';
+        };
+        mediaWrap.appendChild(img);
     }
 
-    // Name
+    wrap.appendChild(mediaWrap);
+
+    // 2. Name
     const name = document.createElement('strong');
     name.textContent = marker.name;
-    name.style.cssText = 'display:block;font-size:0.9rem;color:#2b2f23;margin-bottom:4px;';
+    name.style.cssText = 'display:block;font-size:0.95rem;font-weight:800;color:#173823;line-height:1.3;margin-bottom:3px;';
     wrap.appendChild(name);
 
-    // Category
-    const cat = document.createElement('span');
-    cat.textContent = marker.category;
-    cat.style.cssText = 'display:inline-block;font-size:0.75rem;background:#f1e7d3;border-radius:4px;padding:2px 8px;margin-bottom:6px;color:#2b2f23;';
-    wrap.appendChild(cat);
-
-    // Address (optional)
+    // 3. Address (optional)
     if (marker.address) {
         const addr = document.createElement('p');
-        addr.textContent = marker.address;
-        addr.style.cssText = 'font-size:0.8rem;color:#7a8f6b;margin:0 0 8px;';
+        addr.style.cssText = 'display:flex;align-items:flex-start;gap:5px;font-size:0.76rem;color:#55685c;line-height:1.4;margin:0 0 8px;';
+        addr.innerHTML = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px;color:#256b4c;"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>${escapeHtml(marker.address)}</span>`;
         wrap.appendChild(addr);
     }
 
-    // Action row
+    // 4. Action row
     const actions = document.createElement('div');
-    actions.style.cssText = 'display:flex;gap:6px;flex-wrap:wrap;margin-top:6px;';
+    actions.style.cssText = 'display:flex;gap:6px;align-items:center;margin-top:7px;padding-top:7px;border-top:1px solid rgba(46,94,62,0.1);';
 
-    // Detail / context link
     if (marker.detail_url) {
         const detailLink = document.createElement('a');
         detailLink.href = marker.detail_url;
         detailLink.textContent = 'Lihat Detail';
-        detailLink.style.cssText = 'font-size:0.8rem;font-weight:600;color:#2e5e3e;text-decoration:underline;';
+        detailLink.style.cssText = 'display:inline-flex;align-items:center;font-size:0.76rem;font-weight:700;color:#ffffff;background:#256b4c;padding:5px 10px;border-radius:6px;text-decoration:none;transition:background 0.15s;';
+        detailLink.onmouseover = () => { detailLink.style.background = '#173d28'; };
+        detailLink.onmouseout = () => { detailLink.style.background = '#256b4c'; };
         actions.appendChild(detailLink);
     }
 
-    // Directions (conditional on valid coordinates)
     const coords = parseCoordinate(marker.lat, marker.lng);
     if (coords) {
         const [lat, lng] = coords;
@@ -143,8 +168,8 @@ function buildPopup(marker) {
         dirLink.href = mapsUrl;
         dirLink.target = '_blank';
         dirLink.rel = 'noopener noreferrer';
-        dirLink.textContent = 'Petunjuk Arah';
-        dirLink.style.cssText = 'font-size:0.8rem;font-weight:600;color:#2e5e3e;text-decoration:underline;';
+        dirLink.textContent = 'Petunjuk Arah ↗';
+        dirLink.style.cssText = 'display:inline-flex;align-items:center;font-size:0.75rem;font-weight:700;color:#1c523a;background:#f4f8f4;padding:5px 9px;border-radius:6px;text-decoration:none;border:1px solid rgba(46,94,62,0.18);';
         actions.appendChild(dirLink);
     }
 
@@ -419,8 +444,10 @@ export function initMap(elementId) {
 
             // Rich interactive popup on click
             lMarker.bindPopup(() => buildPopup(marker), {
-                maxWidth: 260,
+                maxWidth: 275,
+                minWidth: 220,
                 className: 'portal-popup',
+                autoPan: false,
             });
 
             // Dual-sync: clicking pin in map centers & highlights corresponding card in carousel
@@ -434,6 +461,12 @@ export function initMap(elementId) {
                         card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
                     }
                 }
+                const zoomLevel = Math.max(map.getZoom(), 16);
+                const mapHeight = map.getSize().y || 340;
+                const yShift = Math.round(mapHeight * 0.28);
+                const projected = map.project(lMarker.getLatLng(), zoomLevel);
+                const popupCenterLatLng = map.unproject(projected.subtract([0, yShift]), zoomLevel);
+                map.panTo(popupCenterLatLng, { animate: true, duration: 0.4 });
             });
 
             lMarker.addTo(map);
@@ -512,8 +545,39 @@ export function initMap(elementId) {
             });
 
             if (targetMarker) {
-                map.flyTo(targetMarker.getLatLng(), 17, { animate: true });
+                // If marker doesn't have photo_url, try to borrow from card image in DOM
+                if (!targetMarker._markerData.photo_url) {
+                    const cardImg = card.querySelector('img.opt2-card-img');
+                    if (cardImg && cardImg.src) {
+                        targetMarker._markerData.photo_url = cardImg.src;
+                    }
+                }
+
+                // 1. Scroll map into viewport smoothly so user clearly sees the focused marker & photo
+                const mapContainer = el.closest('.opt2-map-box') || el;
+                if (mapContainer) {
+                    const rect = mapContainer.getBoundingClientRect();
+                    if (rect.top < 70 || rect.bottom > window.innerHeight) {
+                        mapContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
+
+                // 2. Open popup immediately
                 targetMarker.openPopup();
+
+                // 3. Project coordinate and center comfortably so popup & photo are fully in view
+                const markerLatLng = targetMarker.getLatLng();
+                const zoomLevel = 17;
+                const mapHeight = map.getSize().y || 340;
+                const yShift = Math.round(mapHeight * 0.32);
+                const projected = map.project(markerLatLng, zoomLevel);
+                const offsetPoint = projected.subtract([0, yShift]);
+                const popupCenterLatLng = map.unproject(offsetPoint, zoomLevel);
+
+                map.flyTo(popupCenterLatLng, zoomLevel, {
+                    animate: true,
+                    duration: 0.5,
+                });
             }
         });
     }

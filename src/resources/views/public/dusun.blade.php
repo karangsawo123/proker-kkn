@@ -318,10 +318,10 @@
                                     <div>
                                         <h3 class="opt2-card-title">{{ $f->nama }}</h3>
                                         @if($f->alamat)
-                                            <a href="{{ route('fasilitas.show', $f->id) }}" class="opt2-card-addr" aria-label="Lihat lokasi {{ $f->nama }}">
+                                            <p class="opt2-card-addr">
                                                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
                                                 <span>{{ $f->alamat }}</span>
-                                            </a>
+                                            </p>
                                         @endif
                                     </div>
                                     <div class="opt2-card-footer">

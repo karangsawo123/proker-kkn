@@ -434,14 +434,6 @@ export function initMap(elementId) {
 
             lMarker._markerData = marker;
 
-            // Permanent label displaying location name above the pin without requiring a click
-            lMarker.bindTooltip(marker.name, {
-                permanent: true,
-                direction: 'top',
-                offset: [0, -38],
-                className: 'portal-map-label',
-            });
-
             // Rich interactive popup on click
             lMarker.bindPopup(() => buildPopup(marker), {
                 maxWidth: 275,

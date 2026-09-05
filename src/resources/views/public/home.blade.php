@@ -292,7 +292,7 @@
                         <select id="map-desa-filter-cat" class="filter-select" aria-label="Filter berdasarkan Kategori">
                             <option value="semua">Semua Kategori</option>
                             @foreach($categoryOptions as $cat)
-                                <option value="{{ e($cat) }}">{{ $cat }}</option>
+                                <option value="{{ $cat }}">{{ $cat }}</option>
                             @endforeach
                         </select>
                     </div>

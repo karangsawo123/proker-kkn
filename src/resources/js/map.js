@@ -273,6 +273,13 @@ export function initMap(elementId) {
 
     let activeMarkers = [];
 
+    function normalizeCategory(str) {
+        if (!str) return '';
+        const txt = document.createElement('textarea');
+        txt.innerHTML = String(str);
+        return txt.value.trim().toLowerCase();
+    }
+
     function renderMarkers(renderOptions = {}) {
         const isInitial = renderOptions.isInitial ?? false;
         const animate = renderOptions.animate ?? !isInitial;
@@ -283,12 +290,16 @@ export function initMap(elementId) {
 
         const selectedDusun = filterDusunEl ? filterDusunEl.value : 'semua';
         const selectedCat = filterCatEl ? filterCatEl.value : 'semua';
+        const selectedCatNorm = normalizeCategory(selectedCat);
 
         const visibleMarkerData = [];
 
         allMarkers.forEach(marker => {
             if (selectedDusun !== 'semua' && String(marker.dusun_id) !== String(selectedDusun)) return;
-            if (selectedCat !== 'semua' && marker.category !== selectedCat) return;
+            if (selectedCat !== 'semua') {
+                const markerCat = String(marker.category ?? '');
+                if (markerCat !== selectedCat && normalizeCategory(markerCat) !== selectedCatNorm) return;
+            }
 
             const coords = parseCoordinate(marker.lat, marker.lng);
             if (!coords) return;

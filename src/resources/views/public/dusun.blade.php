@@ -190,7 +190,7 @@
                         <select id="map-dusun-filter-cat" aria-label="Filter berdasarkan kategori">
                             <option value="semua">Semua Kategori</option>
                             @foreach($categoryOptions as $cat)
-                                <option value="{{ e($cat) }}">{{ $cat }}</option>
+                                <option value="{{ $cat }}">{{ $cat }}</option>
                             @endforeach
                         </select>
                     </div>

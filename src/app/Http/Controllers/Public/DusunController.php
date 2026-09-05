@@ -58,6 +58,7 @@ class DusunController extends Controller
             ->filter(fn ($f) => $f->latitude !== null && $f->longitude !== null)
             ->toBase()
             ->map(fn ($f) => [
+                'id' => 'fasilitas-'.$f->id,
                 'lat' => (float) $f->latitude,
                 'lng' => (float) $f->longitude,
                 'name' => $f->nama,
@@ -73,6 +74,7 @@ class DusunController extends Controller
             ->filter(fn ($u) => $u->latitude !== null && $u->longitude !== null)
             ->toBase()
             ->map(fn ($u) => [
+                'id' => 'umkm-'.$u->id,
                 'lat' => (float) $u->latitude,
                 'lng' => (float) $u->longitude,
                 'name' => $u->nama_umkm,
@@ -88,6 +90,7 @@ class DusunController extends Controller
             ->filter(fn ($k) => $k->latitude !== null && $k->longitude !== null)
             ->toBase()
             ->map(fn ($k) => [
+                'id' => 'kontak-'.$k->id,
                 'lat' => (float) $k->latitude,
                 'lng' => (float) $k->longitude,
                 'name' => $k->nama,

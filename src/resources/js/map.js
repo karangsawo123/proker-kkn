@@ -267,9 +267,12 @@ export function initMap(elementId) {
         }
     });
 
-    // ─── Filters ───────────────────────────────────────────────────────────────
+    // ─── Filters & Dual-Sync Explorer ──────────────────────────────────────────
     const filterDusunEl = document.getElementById(`${elementId}-filter-dusun`);
     const filterCatEl = document.getElementById(`${elementId}-filter-cat`);
+    const searchEl = document.getElementById(`${elementId}-search`);
+    const carouselEl = document.getElementById(`${elementId}-carousel`);
+    const chipButtons = document.querySelectorAll(`[data-map-filter-for="${elementId}"]`);
 
     let activeMarkers = [];
 
@@ -291,14 +294,36 @@ export function initMap(elementId) {
         const selectedDusun = filterDusunEl ? filterDusunEl.value : 'semua';
         const selectedCat = filterCatEl ? filterCatEl.value : 'semua';
         const selectedCatNorm = normalizeCategory(selectedCat);
+        const searchQuery = searchEl ? searchEl.value.trim().toLowerCase() : '';
 
         const visibleMarkerData = [];
 
         allMarkers.forEach(marker => {
             if (selectedDusun !== 'semua' && String(marker.dusun_id) !== String(selectedDusun)) return;
+            
+            const markerCat = String(marker.category ?? '');
+            const markerCatNorm = normalizeCategory(markerCat);
+            const markerName = String(marker.name ?? '').toLowerCase();
+
             if (selectedCat !== 'semua') {
-                const markerCat = String(marker.category ?? '');
-                if (markerCat !== selectedCat && normalizeCategory(markerCat) !== selectedCatNorm) return;
+                let catMatches = false;
+                if (selectedCatNorm === 'umkm') {
+                    catMatches = marker.marker_type === 'UMKM' || markerCatNorm.includes('umkm');
+                } else if (selectedCatNorm === 'pelayanan') {
+                    catMatches = marker.marker_type === 'PELAYANAN' || markerCatNorm.includes('pelayanan');
+                } else if (selectedCatNorm === 'fasilitas') {
+                    catMatches = marker.marker_type === 'DEFAULT' || (!markerCatNorm.includes('umkm') && !markerCatNorm.includes('pelayanan'));
+                } else {
+                    catMatches = (markerCat === selectedCat || markerCatNorm === selectedCatNorm);
+                }
+                if (!catMatches) return;
+            }
+
+            if (searchQuery) {
+                const matchSearch = markerName.includes(searchQuery) || 
+                                    markerCatNorm.includes(searchQuery) ||
+                                    String(marker.address ?? '').toLowerCase().includes(searchQuery);
+                if (!matchSearch) return;
             }
 
             const coords = parseCoordinate(marker.lat, marker.lng);
@@ -310,6 +335,8 @@ export function initMap(elementId) {
                 icon: makeIcon(marker.marker_type),
                 title: marker.name,
             });
+
+            lMarker._markerData = marker;
 
             // Permanent label displaying location name above the pin without requiring a click
             lMarker.bindTooltip(marker.name, {
@@ -325,15 +352,100 @@ export function initMap(elementId) {
                 className: 'portal-popup',
             });
 
+            // Dual-sync: clicking pin in map centers & highlights corresponding card in carousel
+            lMarker.on('click', () => {
+                if (carouselEl) {
+                    const card = carouselEl.querySelector(`[data-card-id="${marker.id}"]`) ||
+                                 carouselEl.querySelector(`[data-card-name="${CSS.escape(marker.name)}"]`);
+                    if (card) {
+                        carouselEl.querySelectorAll('.opt2-card').forEach(c => c.classList.remove('selected'));
+                        card.classList.add('selected');
+                        card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                    }
+                }
+            });
+
             lMarker.addTo(map);
             activeMarkers.push(lMarker);
             visibleMarkerData.push(marker);
         });
 
+        // Sync carousel cards visibility and empty states
+        if (carouselEl) {
+            let matchCount = 0;
+            carouselEl.querySelectorAll('.opt2-card').forEach(card => {
+                const cardCat = (card.getAttribute('data-card-category') || '').trim();
+                const cardCatNorm = cardCat.toLowerCase();
+                const cardName = (card.getAttribute('data-card-name') || '').toLowerCase();
+                const cardType = (card.getAttribute('data-card-type') || '').toUpperCase();
+                const cardDusun = card.getAttribute('data-card-dusun') || '';
+
+                let matchDusun = selectedDusun === 'semua' || String(cardDusun) === String(selectedDusun);
+                let matchCat = selectedCat === 'semua';
+
+                if (!matchCat) {
+                    if (selectedCatNorm === 'umkm') {
+                        matchCat = cardType === 'UMKM' || cardCatNorm.includes('umkm');
+                    } else if (selectedCatNorm === 'pelayanan') {
+                        matchCat = cardType === 'PELAYANAN' || cardCatNorm.includes('pelayanan');
+                    } else if (selectedCatNorm === 'fasilitas') {
+                        matchCat = cardType === 'FASILITAS' || (!cardCatNorm.includes('umkm') && !cardCatNorm.includes('pelayanan'));
+                    } else {
+                        matchCat = (cardCat === selectedCat || cardCatNorm === selectedCatNorm);
+                    }
+                }
+
+                let matchQuery = !searchQuery || 
+                                 cardName.includes(searchQuery) || 
+                                 cardCatNorm.includes(searchQuery) ||
+                                 (card.getAttribute('data-card-address') || '').toLowerCase().includes(searchQuery);
+
+                if (matchDusun && matchCat && matchQuery) {
+                    card.style.display = '';
+                    matchCount++;
+                } else {
+                    card.style.display = 'none';
+                    card.classList.remove('selected');
+                }
+            });
+
+            const emptyNotice = carouselEl.parentElement.querySelector('.explorer-empty-notice');
+            if (emptyNotice) {
+                emptyNotice.style.display = matchCount === 0 ? 'block' : 'none';
+            }
+        }
+
         // Adjust viewport data-driven
         focusMapOnMarkers(map, visibleMarkerData, { isInitial, animate });
     }
 
+    // Two-way sync: clicking card in carousel flies to marker in map
+    if (carouselEl && !carouselEl._hasClickInit) {
+        carouselEl._hasClickInit = true;
+        carouselEl.addEventListener('click', (e) => {
+            const card = e.target.closest('.opt2-card');
+            // Allow clicking normal link buttons without triggering flyTo override
+            if (!card || e.target.closest('a') || e.target.closest('button')) return;
+
+            const cardId = card.getAttribute('data-card-id');
+            const cardName = card.getAttribute('data-card-name');
+
+            carouselEl.querySelectorAll('.opt2-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+
+            const targetMarker = activeMarkers.find(m => {
+                const d = m._markerData;
+                return d && (d.id === cardId || d.name === cardName);
+            });
+
+            if (targetMarker) {
+                map.flyTo(targetMarker.getLatLng(), 17, { animate: true });
+                targetMarker.openPopup();
+            }
+        });
+    }
+
+    // Filter selects
     if (filterDusunEl) {
         filterDusunEl.addEventListener('change', () => {
             renderMarkers({ isInitial: false, animate: true });
@@ -342,9 +454,50 @@ export function initMap(elementId) {
 
     if (filterCatEl) {
         filterCatEl.addEventListener('change', () => {
+            // Sync chip buttons if any
+            const val = filterCatEl.value.toLowerCase();
+            chipButtons.forEach(btn => {
+                const btnCat = (btn.getAttribute('data-category') || '').toLowerCase();
+                btn.classList.toggle('active', btnCat === val);
+            });
             renderMarkers({ isInitial: false, animate: true });
         });
     }
+
+    // Filter chips
+    chipButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+            chipButtons.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const cat = btn.getAttribute('data-category') || 'semua';
+            if (filterCatEl) {
+                filterCatEl.value = cat;
+            }
+            renderMarkers({ isInitial: false, animate: true });
+        });
+    });
+
+    // Search input
+    if (searchEl) {
+        searchEl.addEventListener('input', () => {
+            renderMarkers({ isInitial: false, animate: false });
+        });
+    }
+
+    // Jump filter triggers (e.g. from Hero quick navigation)
+    document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('[data-jump-filter]');
+        if (trigger) {
+            const targetCat = trigger.getAttribute('data-jump-filter');
+            const targetBtn = document.querySelector(`[data-map-filter-for="${elementId}"][data-category="${targetCat}"]`);
+            if (targetBtn) {
+                targetBtn.click();
+            } else if (filterCatEl) {
+                filterCatEl.value = targetCat;
+                renderMarkers({ isInitial: false, animate: true });
+            }
+        }
+    });
 
     renderMarkers({ isInitial: true, animate: false });
 

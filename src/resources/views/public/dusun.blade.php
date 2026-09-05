@@ -131,6 +131,18 @@
                     </div>
                 </div>
 
+                @if($dusun->deskripsi_singkat)
+                    <div class="opt1-story-card">
+                        <div class="opt1-story-quote" aria-hidden="true">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 7 2 9 3 10Z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 7 2 9 3 10Z"/></svg>
+                        </div>
+                        <div class="opt1-story-body">
+                            <span class="opt1-story-label">Seputar Wilayah & Sejarah Dusun</span>
+                            <p class="opt1-story-text">{{ $dusun->deskripsi_singkat }}</p>
+                        </div>
+                    </div>
+                @endif
+
                 <!-- 4 Metric Stats Grid -->
                 <div class="opt1-stats-grid">
                     <div class="opt1-stat-card">

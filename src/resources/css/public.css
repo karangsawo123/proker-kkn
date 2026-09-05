@@ -788,9 +788,15 @@
 .public-layout .page-home .dusun-desc {
     font-size: 11.5px;
     color: var(--text-secondary);
-    line-height: 1.4;
+    line-height: 1.45;
     margin-bottom: 14px;
     text-align: left !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 48px;
 }
 
 .public-layout .page-home .dusun-card-foot {
@@ -2942,6 +2948,46 @@
     height: 15px;
     stroke: currentColor;
     stroke-width: 2.2;
+}
+
+.public-layout .page-dusun .opt1-story-card {
+    background: #ffffff;
+    border: 1px solid #e2dac9;
+    border-left: 4px solid var(--forest-600, #256b4c);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(23, 56, 36, 0.04);
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.public-layout .page-dusun .opt1-story-quote {
+    color: var(--forest-600, #256b4c);
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.public-layout .page-dusun .opt1-story-body {
+    flex: 1;
+}
+
+.public-layout .page-dusun .opt1-story-label {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: #798578;
+    margin-bottom: 4px;
+}
+
+.public-layout .page-dusun .opt1-story-text {
+    font-size: 0.88rem;
+    line-height: 1.65;
+    color: var(--text-primary, #192720);
+    margin: 0;
 }
 
 /* Metric Stats Grid (2x2) */

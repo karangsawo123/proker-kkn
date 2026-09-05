@@ -43,12 +43,14 @@ class DusunController extends Controller
             ->where('dusun_id', $dusun->id)
             ->orderBy('tanggal_mulai', 'desc')
             ->with('agendaMedias')
+            ->take(5)
             ->get();
 
         $pengumumans = Pengumuman::dusunScope()
             ->where('dusun_id', $dusun->id)
             ->activeAnnouncements()
             ->latest('created_at')
+            ->take(5)
             ->get();
 
         // ── Peta Dusun map marker data ───────────────────────────────────────

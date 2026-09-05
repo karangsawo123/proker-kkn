@@ -3537,7 +3537,7 @@
     background: var(--public-surface, #ffffff);
     box-shadow: 0 4px 16px rgba(20, 61, 43, 0.07);
     scroll-snap-align: start;
-    cursor: pointer;
+    cursor: default;
     will-change: transform, box-shadow;
     transition: transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.25), box-shadow 0.3s cubic-bezier(0.2, 0.9, 0.3, 1.25), border-color 0.25s ease;
     z-index: 1;
@@ -3627,13 +3627,28 @@
 }
 
 .public-layout .page-dusun .facility-card-addr {
-    display: flex;
+    display: inline-flex;
     align-items: flex-start;
     gap: 8px;
     margin: 9px 0 0;
     color: var(--text-secondary, #55685c);
     font-size: 0.82rem;
     line-height: 1.45;
+    text-decoration: none;
+    cursor: pointer;
+    border-radius: 6px;
+    padding: 2px 4px;
+    margin-left: -4px;
+    transition: color 0.18s ease, background-color 0.18s ease;
+}
+
+.public-layout .page-dusun .facility-card-addr:hover {
+    color: var(--forest-600, #256b4c);
+    background: rgba(46, 94, 62, 0.06);
+}
+
+.public-layout .page-dusun .facility-card-addr:hover span {
+    text-decoration: underline;
 }
 
 .public-layout .page-dusun .facility-card-addr svg {
@@ -3642,6 +3657,11 @@
     height: 15px;
     margin-top: 2px;
     color: var(--forest-600, #256b4c);
+    transition: transform 0.18s ease;
+}
+
+.public-layout .page-dusun .facility-card-addr:hover svg {
+    transform: scale(1.18);
 }
 
 .public-layout .page-dusun .facility-card-footer {
@@ -3660,13 +3680,7 @@
     font-weight: 800;
     text-decoration: none;
     transition: color 150ms ease;
-}
-
-.public-layout .page-dusun .facility-card-link::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: 2;
+    cursor: pointer;
 }
 
 .public-layout .page-dusun .facility-card-link svg {

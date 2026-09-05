@@ -53,6 +53,15 @@ class DusunController extends Controller
             ->take(5)
             ->get();
 
+        $agendaCount = AgendaKegiatan::dusunScope()
+            ->where('dusun_id', $dusun->id)
+            ->count();
+
+        $pengumumanCount = Pengumuman::dusunScope()
+            ->where('dusun_id', $dusun->id)
+            ->activeAnnouncements()
+            ->count();
+
         // ── Peta Dusun map marker data ───────────────────────────────────────
         $fasilitasMarkers = $fasilitas
             ->filter(fn ($f) => $f->latitude !== null && $f->longitude !== null)
@@ -115,6 +124,8 @@ class DusunController extends Controller
             'fasilitas' => $fasilitas,
             'agendas' => $agendas,
             'pengumumans' => $pengumumans,
+            'agendaCount' => $agendaCount,
+            'pengumumanCount' => $pengumumanCount,
             'categoryOptions' => $categoryOptions,
             'mapConfigJson' => Js::from($mapConfig),
             'mapMarkersJson' => Js::from($markers->toArray()),

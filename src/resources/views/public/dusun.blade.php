@@ -80,6 +80,9 @@
                     <a href="#agenda" class="opt1-card">
                         <div class="opt1-iconbox">
                             <svg class="icon" viewBox="0 0 24 24"><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M16 2v4M8 2v4M3 10h18M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>
+                            @if(($agendaCount ?? $agendas->count()) > 0)
+                                <span class="opt1-badge" aria-label="{{ $agendaCount ?? $agendas->count() }} agenda">{{ $agendaCount ?? $agendas->count() }}</span>
+                            @endif
                         </div>
                         <span class="opt1-label">Agenda</span>
                     </a>
@@ -100,6 +103,9 @@
                     <a href="#pengumuman" class="opt1-card">
                         <div class="opt1-iconbox">
                             <svg class="icon" viewBox="0 0 24 24"><path d="m3 11 18-5v12L3 14v-3zM11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+                            @if(($pengumumanCount ?? $pengumumans->count()) > 0)
+                                <span class="opt1-badge" aria-label="{{ $pengumumanCount ?? $pengumumans->count() }} pengumuman">{{ $pengumumanCount ?? $pengumumans->count() }}</span>
+                            @endif
                         </div>
                         <span class="opt1-label">Pengumuman</span>
                     </a>

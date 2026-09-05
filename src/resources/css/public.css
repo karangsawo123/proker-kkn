@@ -2783,6 +2783,7 @@
 }
 
 .public-layout .page-dusun .opt1-iconbox {
+    position: relative;
     width: 44px;
     height: 44px;
     border-radius: 12px;
@@ -2793,6 +2794,42 @@
     margin-bottom: 7px;
     box-shadow: 0 4px 10px rgba(22, 61, 39, 0.22);
     transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
+}
+
+.public-layout .page-dusun .opt1-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    border-radius: 999px;
+    background: #e11d48;
+    color: #ffffff;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid #faf7f2;
+    box-shadow: 0 2px 7px rgba(225, 29, 72, 0.45);
+    z-index: 3;
+    pointer-events: none;
+    letter-spacing: -0.2px;
+    font-variant-numeric: tabular-nums;
+    font-family: inherit;
+    animation: opt1-badge-pop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes opt1-badge-pop {
+    0% { transform: scale(0); opacity: 0; }
+    70% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.public-layout .page-dusun .opt1-card:hover .opt1-badge {
+    border-color: #f0f7f2;
 }
 
 .public-layout .page-dusun .opt1-iconbox svg {
@@ -5395,6 +5432,16 @@ html.js .public-layout [data-reveal].is-revealed {
         height: 36px;
         border-radius: 10px;
         margin-bottom: 5px;
+    }
+
+    .public-layout .page-dusun .opt1-badge {
+        min-width: 17px;
+        height: 17px;
+        font-size: 10px;
+        top: -4px;
+        right: -4px;
+        padding: 0 4px;
+        border-width: 1.5px;
     }
 
     .public-layout .page-dusun .opt1-iconbox svg {

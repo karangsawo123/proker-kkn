@@ -2,9 +2,11 @@
 
 namespace Tests\Feature\Public;
 
+use App\Models\AgendaKegiatan;
 use App\Models\Desa;
 use App\Models\Dusun;
 use App\Models\KontakPelayanan;
+use App\Models\Pengumuman;
 use App\Models\Umkm;
 use Carbon\CarbonImmutable;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -180,5 +182,63 @@ class DusunPageTest extends TestCase
         $response->assertSee('Belum ada fasilitas yang terdaftar.');
         $response->assertSee('Belum ada agenda atau kegiatan.');
         $response->assertSee('Belum ada pengumuman aktif.');
+        $response->assertDontSee('opt1-badge');
+    }
+
+    /**
+     * TC13: Real database counts for agenda and pengumuman render notification badges.
+     */
+    public function test_agenda_and_pengumuman_notification_badges_reflect_real_database_counts(): void
+    {
+        $now = CarbonImmutable::now();
+
+        // 2 Agendas for active dusun
+        AgendaKegiatan::query()->forceCreate([
+            'desa_id' => $this->desa->id,
+            'dusun_id' => $this->activeDusun->id,
+            'scope_level' => 'DUSUN',
+            'judul' => 'Rapat Pemuda Dusun Krajan',
+            'deskripsi_singkat' => 'Rapat karang taruna dusun.',
+            'lokasi_text' => 'Balai Dusun Krajan',
+            'jam' => '19:30:00',
+            'tanggal_mulai' => $now->addDays(2),
+            'tanggal_selesai' => $now->addDays(2),
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        AgendaKegiatan::query()->forceCreate([
+            'desa_id' => $this->desa->id,
+            'dusun_id' => $this->activeDusun->id,
+            'scope_level' => 'DUSUN',
+            'judul' => 'Kerja Bakti Minggu Pagi',
+            'deskripsi_singkat' => 'Kerja bakti pembersihan lingkungan.',
+            'lokasi_text' => 'Lingkungan RW 01',
+            'jam' => '07:00:00',
+            'tanggal_mulai' => $now->addDays(4),
+            'tanggal_selesai' => $now->addDays(4),
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        // 1 Active Announcement for active dusun
+        Pengumuman::query()->forceCreate([
+            'desa_id' => $this->desa->id,
+            'dusun_id' => $this->activeDusun->id,
+            'scope_level' => 'DUSUN',
+            'judul' => 'Pengumuman Kerja Bakti Bersama',
+            'isi' => 'Harap hadir tepat waktu.',
+            'tanggal_kedaluwarsa' => $now->addDays(7),
+            'created_at' => $now,
+            'updated_at' => $now,
+        ]);
+
+        $response = $this->get(route('dusun.show', $this->activeDusun->id));
+
+        $response->assertOk();
+        // Badge 2 for Agenda
+        $response->assertSee('<span class="opt1-badge" aria-label="2 agenda">2</span>', false);
+        // Badge 1 for Pengumuman
+        $response->assertSee('<span class="opt1-badge" aria-label="1 pengumuman">1</span>', false);
     }
 }

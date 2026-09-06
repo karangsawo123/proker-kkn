@@ -57,6 +57,13 @@ export function initAiAssistant() {
             inputUmkmUsp: document.getElementById('aiUmkmUsp'),
             inputUmkmLocation: document.getElementById('aiUmkmLocation'),
             inputUmkmOrder: document.getElementById('aiUmkmOrder'),
+            // Profile Desa / Dusun Inputs
+            formProfileSection: document.getElementById('aiProfileFormSection'),
+            inputProfileEntityName: document.getElementById('aiProfileEntityName'),
+            inputProfileGeographic: document.getElementById('aiProfileGeographic'),
+            inputProfileLivelihood: document.getElementById('aiProfileLivelihood'),
+            inputProfileCulture: document.getElementById('aiProfileCulture'),
+            inputProfileVision: document.getElementById('aiProfileVision'),
         };
     }
 
@@ -72,13 +79,20 @@ export function initAiAssistant() {
                 if (currentFeature === 'umkm_draft') {
                     if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
                     if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'block';
+                    if (elements.formProfileSection) elements.formProfileSection.style.display = 'none';
+                } else if (currentFeature === 'desa_draft' || currentFeature === 'dusun_draft') {
+                    if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
+                    if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
+                    if (elements.formProfileSection) elements.formProfileSection.style.display = 'block';
                 } else {
                     if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'block';
                     if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
+                    if (elements.formProfileSection) elements.formProfileSection.style.display = 'none';
                 }
             } else {
                 if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
                 if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
+                if (elements.formProfileSection) elements.formProfileSection.style.display = 'none';
                 if (elements.notesGroup) elements.notesGroup.style.display = 'block';
             }
 
@@ -90,6 +104,7 @@ export function initAiAssistant() {
             if (elements.inputTypeWrapper) elements.inputTypeWrapper.style.display = 'none';
             if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
             if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
+            if (elements.formProfileSection) elements.formProfileSection.style.display = 'none';
             if (elements.lengthGroup) elements.lengthGroup.style.display = 'none';
             if (elements.existingTextGroup) elements.existingTextGroup.style.display = 'block';
             if (elements.notesGroup) elements.notesGroup.style.display = 'block';
@@ -144,6 +159,11 @@ export function initAiAssistant() {
             elements.inputUmkmName.value = targetTitleElement.value;
         } else if ((currentFeature === 'pengumuman_draft' || currentFeature === 'agenda_draft') && elements.input5wWhat && !elements.input5wWhat.value.trim() && targetTitleElement?.value) {
             elements.input5wWhat.value = targetTitleElement.value;
+        } else if ((currentFeature === 'desa_draft' || currentFeature === 'dusun_draft') && elements.inputProfileEntityName) {
+            const entityName = triggerBtn.dataset.entityName || (targetTitleElement?.value ?? '');
+            if (entityName) {
+                elements.inputProfileEntityName.value = entityName;
+            }
         }
 
         resetModal(elements);
@@ -156,6 +176,8 @@ export function initAiAssistant() {
                 if (currentInputType === 'structured') {
                     if (currentFeature === 'umkm_draft') {
                         elements.inputUmkmName?.focus();
+                    } else if (currentFeature === 'desa_draft' || currentFeature === 'dusun_draft') {
+                        elements.inputProfileGeographic?.focus();
                     } else {
                         elements.input5wWhat?.focus();
                     }
@@ -284,6 +306,26 @@ export function initAiAssistant() {
                         usp_advantage: uspAdvantage,
                         location: location,
                         ordering_info: orderingInfo,
+                    };
+                } else if (currentFeature === 'desa_draft' || currentFeature === 'dusun_draft') {
+                    const entityName = elements.inputProfileEntityName?.value.trim() || '';
+                    const geographic = elements.inputProfileGeographic?.value.trim() || '';
+                    const livelihood = elements.inputProfileLivelihood?.value.trim() || '';
+                    const culture = elements.inputProfileCulture?.value.trim() || '';
+                    const vision = elements.inputProfileVision?.value.trim() || '';
+
+                    if (!entityName && !geographic && !livelihood && !culture && !vision) {
+                        showError(elements, 'Silakan isi minimal salah satu poin karakteristik, potensi, atau nama wilayah.');
+                        elements.inputProfileGeographic?.focus();
+                        return;
+                    }
+
+                    structuredInput = {
+                        entity_name: entityName,
+                        geographic: geographic,
+                        livelihood: livelihood,
+                        culture: culture,
+                        vision: vision,
                     };
                 } else {
                     const who = elements.input5wWho?.value.trim() || '';

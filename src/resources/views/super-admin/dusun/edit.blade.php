@@ -102,9 +102,14 @@
             </div>
 
             <div class="form-group">
-                <label for="deskripsi_singkat" class="form-label">
-                    Deskripsi / Profil Singkat Dusun <span class="required-mark">*</span>
-                </label>
+                <div class="form-label-row">
+                    <label for="deskripsi_singkat" class="form-label">
+                        Deskripsi / Profil Singkat Dusun <span class="required-mark">*</span>
+                    </label>
+                    <button type="button" class="btn-ai-assist" data-ai-feature="dusun_draft" data-target-text="deskripsi_singkat" data-entity-name="{{ $dusun->nama_dusun }}">
+                        <span class="ai-sparkle-icon">✨</span> Bantuan Tulis AI
+                    </button>
+                </div>
                 <textarea
                     name="deskripsi_singkat"
                     id="deskripsi_singkat"

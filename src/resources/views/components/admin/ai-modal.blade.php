@@ -125,6 +125,42 @@
                     </div>
                 </div>
 
+                <!-- Structured Profile Form (for Desa & Dusun) -->
+                <div class="ai-structured-form" id="aiProfileFormSection" style="display: none;">
+                    <div class="ai-form-grid">
+                        <div class="form-group span-2">
+                            <label for="aiProfileEntityName" class="form-label text-xs">
+                                <strong>Nama Desa / Dusun</strong>
+                            </label>
+                            <input type="text" id="aiProfileEntityName" class="form-input form-input-sm" placeholder="Contoh: Desa Bendung / Dusun Bendung I">
+                        </div>
+                        <div class="form-group">
+                            <label for="aiProfileGeographic" class="form-label text-xs">
+                                <strong>Karakteristik Wilayah / Lingkungan Alam</strong>
+                            </label>
+                            <input type="text" id="aiProfileGeographic" class="form-input form-input-sm" placeholder="Contoh: Hamparan persawahan subur, perbukitan asri, irigasi lancar">
+                        </div>
+                        <div class="form-group">
+                            <label for="aiProfileLivelihood" class="form-label text-xs">
+                                <strong>Potensi Utama & Mata Pencaharian</strong>
+                            </label>
+                            <input type="text" id="aiProfileLivelihood" class="form-input form-input-sm" placeholder="Contoh: Mayoritas bertani padi & jagung, pengrajin anyaman, sentra UMKM">
+                        </div>
+                        <div class="form-group">
+                            <label for="aiProfileCulture" class="form-label text-xs">
+                                <strong>Kehidupan Warga & Kerukunan</strong>
+                            </label>
+                            <input type="text" id="aiProfileCulture" class="form-input form-input-sm" placeholder="Contoh: Gotong royong kental, tradisi sedekah bumi, lingkungan aman dan asri">
+                        </div>
+                        <div class="form-group">
+                            <label for="aiProfileVision" class="form-label text-xs">
+                                <strong>Ciri Khas & Semangat Wilayah</strong>
+                            </label>
+                            <input type="text" id="aiProfileVision" class="form-input form-input-sm" placeholder="Contoh: Menuju wilayah mandiri pangan, ramah warga, dan berdaya saing">
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Free Notes Input Group -->
                 <div class="form-group" id="aiNotesGroup" style="display: none;">
                     <label for="aiNotesInput" class="form-label">Catatan / Poin Fakta Mentah <span class="required-mark">*</span></label>

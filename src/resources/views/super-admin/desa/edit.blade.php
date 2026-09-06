@@ -114,9 +114,14 @@
             </div>
 
             <div class="form-group">
-                <label for="deskripsi_singkat" class="form-label">
-                    Deskripsi / Selayang Pandang Desa <span class="required-mark">*</span>
-                </label>
+                <div class="form-label-row">
+                    <label for="deskripsi_singkat" class="form-label">
+                        Deskripsi / Selayang Pandang Desa <span class="required-mark">*</span>
+                    </label>
+                    <button type="button" class="btn-ai-assist" data-ai-feature="desa_draft" data-target-text="deskripsi_singkat" data-entity-name="{{ $desa->nama_desa }}">
+                        <span class="ai-sparkle-icon">✨</span> Bantuan Tulis AI
+                    </button>
+                </div>
                 <textarea
                     name="deskripsi_singkat"
                     id="deskripsi_singkat"

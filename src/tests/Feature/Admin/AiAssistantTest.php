@@ -487,4 +487,90 @@ class AiAssistantTest extends TestCase
             ],
         ]);
     }
+
+    public function test_can_generate_desa_profile_draft(): void
+    {
+        Http::fake([
+            'https://generativelanguage.googleapis.com/*' => Http::response([
+                'candidates' => [
+                    [
+                        'content' => [
+                            'parts' => [
+                                [
+                                    'text' => json_encode([
+                                        'deskripsi' => 'Desa Bendung adalah desa yang subur dan asri dengan hamparan persawahan hijau serta masyarakat yang mengedepankan semangat gotong royong.',
+                                    ]),
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->actingAs($this->superAdmin)
+            ->postJson(route('admin.ai.generate-draft'), [
+                'feature' => 'desa_draft',
+                'mode' => 'draft',
+                'draft_length' => 'standar',
+                'structured_input' => [
+                    'entity_name' => 'Desa Bendung',
+                    'geographic' => 'Hamparan persawahan subur, irigasi lancar',
+                    'livelihood' => 'Mayoritas petani padi dan jagung',
+                    'culture' => 'Gotong royong kuat, tradisi sedekah bumi',
+                    'vision' => 'Mandiri pangan dan berdaya saing',
+                ],
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'data' => [
+                'deskripsi' => 'Desa Bendung adalah desa yang subur dan asri dengan hamparan persawahan hijau serta masyarakat yang mengedepankan semangat gotong royong.',
+            ],
+        ]);
+    }
+
+    public function test_can_generate_dusun_profile_draft(): void
+    {
+        Http::fake([
+            'https://generativelanguage.googleapis.com/*' => Http::response([
+                'candidates' => [
+                    [
+                        'content' => [
+                            'parts' => [
+                                [
+                                    'text' => json_encode([
+                                        'deskripsi' => 'Dusun Bendung I dikenal sebagai pusat kegiatan warga yang guyub dengan potensi kerajinan lokal dan areal pertanian yang produktif.',
+                                    ]),
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->actingAs($this->adminDusun)
+            ->postJson(route('admin.ai.generate-draft'), [
+                'feature' => 'dusun_draft',
+                'mode' => 'draft',
+                'draft_length' => 'ringkas',
+                'structured_input' => [
+                    'entity_name' => 'Dusun Bendung I',
+                    'geographic' => 'Terletak di jantung desa dekat balai dusun',
+                    'livelihood' => 'Pengrajin anyaman dan petani',
+                    'culture' => 'Rukun dan aktif kegiatan kepemudaan',
+                    'vision' => 'Dusun kreatif dan mandiri',
+                ],
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'data' => [
+                'deskripsi' => 'Dusun Bendung I dikenal sebagai pusat kegiatan warga yang guyub dengan potensi kerajinan lokal dan areal pertanian yang produktif.',
+            ],
+        ]);
+    }
 }

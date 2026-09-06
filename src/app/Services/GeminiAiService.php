@@ -294,6 +294,41 @@ INSTRUCTION;
                 if (! empty($structuredInput['ordering_info'])) {
                     $prompt .= "- Cara Pesan / Kontak / Rentang Harga: {$structuredInput['ordering_info']}\n";
                 }
+            } elseif ($feature === 'desa_draft') {
+                $prompt .= "Rincian Profil Selayang Pandang Desa:\n";
+                if (! empty($structuredInput['entity_name'])) {
+                    $prompt .= "- Nama Desa: {$structuredInput['entity_name']}\n";
+                }
+                if (! empty($structuredInput['geographic'])) {
+                    $prompt .= "- Karakteristik Geografis / Alam: {$structuredInput['geographic']}\n";
+                }
+                if (! empty($structuredInput['livelihood'])) {
+                    $prompt .= "- Potensi Unggulan & Mata Pencaharian: {$structuredInput['livelihood']}\n";
+                }
+                if (! empty($structuredInput['culture'])) {
+                    $prompt .= "- Suasana Sosial & Tradisi Budaya: {$structuredInput['culture']}\n";
+                }
+                if (! empty($structuredInput['vision'])) {
+                    $prompt .= "- Ciri Khas / Harapan Desa: {$structuredInput['vision']}\n";
+                }
+                $prompt .= "\n";
+            } elseif ($feature === 'dusun_draft') {
+                $prompt .= "Rincian Profil / Selayang Pandang Dusun:\n";
+                if (! empty($structuredInput['entity_name'])) {
+                    $prompt .= "- Nama Dusun: {$structuredInput['entity_name']}\n";
+                }
+                if (! empty($structuredInput['geographic'])) {
+                    $prompt .= "- Wilayah & Letak Geografis: {$structuredInput['geographic']}\n";
+                }
+                if (! empty($structuredInput['livelihood'])) {
+                    $prompt .= "- Potensi Wilayah & Kegiatan Ekonomi: {$structuredInput['livelihood']}\n";
+                }
+                if (! empty($structuredInput['culture'])) {
+                    $prompt .= "- Kehidupan Warga & Kerukunan: {$structuredInput['culture']}\n";
+                }
+                if (! empty($structuredInput['vision'])) {
+                    $prompt .= "- Keunikan & Karakter Dusun: {$structuredInput['vision']}\n";
+                }
                 $prompt .= "\n";
             }
         }
@@ -317,6 +352,14 @@ INSTRUCTION;
 
             case 'umkm_draft':
                 $prompt .= 'Susun draf deskripsi profil UMKM/usaha warga desa yang menarik dan informatif. Kembalikan HANYA JSON: {"deskripsi": "Paragraf deskripsi UMKM..."}';
+                break;
+
+            case 'desa_draft':
+                $prompt .= 'Susun draf deskripsi / selayang pandang resmi desa yang berbobot, inspiratif, dan santun untuk portal publik desa. Kembalikan HANYA JSON: {"deskripsi": "Paragraf selayang pandang deskripsi desa..."}';
+                break;
+
+            case 'dusun_draft':
+                $prompt .= 'Susun draf deskripsi singkat profil dusun yang menarik, hangat, dan informatif untuk portal publik dusun. Kembalikan HANYA JSON: {"deskripsi": "Paragraf profil ringkas dusun..."}';
                 break;
 
             case 'improve_text':
@@ -403,7 +446,7 @@ INSTRUCTION;
                     'judul' => $extractedJudul ?: 'Agenda Kegiatan',
                     'deskripsi' => $extractedIsi ?: '',
                 ],
-                'umkm_draft' => [
+                'umkm_draft', 'desa_draft', 'dusun_draft' => [
                     'deskripsi' => $extractedIsi ?: ($extractedJudul ?: $cleanText),
                 ],
                 default => [
@@ -427,7 +470,7 @@ INSTRUCTION;
                 'judul' => ltrim($firstLine, '#* -'),
                 'deskripsi' => $fallbackBody,
             ],
-            'umkm_draft' => [
+            'umkm_draft', 'desa_draft', 'dusun_draft' => [
                 'deskripsi' => $cleanText,
             ],
             default => [
@@ -450,8 +493,8 @@ INSTRUCTION;
                 'judul' => (string) ($data['judul'] ?? $data['nama_kegiatan'] ?? 'Agenda Kegiatan'),
                 'deskripsi' => (string) ($data['deskripsi'] ?? $data['isi'] ?? $fallback),
             ],
-            'umkm_draft' => [
-                'deskripsi' => (string) ($data['deskripsi'] ?? $data['isi'] ?? $data['deskripsi_usaha'] ?? $fallback),
+            'umkm_draft', 'desa_draft', 'dusun_draft' => [
+                'deskripsi' => (string) ($data['deskripsi'] ?? $data['isi'] ?? $data['deskripsi_usaha'] ?? $data['teks_hasil'] ?? $fallback),
             ],
             default => [
                 'teks_hasil' => (string) ($data['teks_hasil'] ?? $data['hasil'] ?? $data['isi'] ?? $fallback),

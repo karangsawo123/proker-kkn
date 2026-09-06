@@ -98,12 +98,10 @@
             
             {{-- CURVED FOREST TRANSITION BANNER (OPSI B) --}}
             <div class="dusun-forest-banner">
-                <div class="dusun-banner-top">
-                    <span class="dusun-banner-badge">🏛️ Wilayah Administratif</span>
+                <div class="dusun-banner-title-row">
+                    <h2 class="dusun-banner-title" id="dusun-heading">Pilihan Dusun</h2>
                     <span class="dusun-banner-count">📍 {{ $dusuns->count() }} Padukuhan</span>
                 </div>
-                
-                <h2 class="dusun-banner-title" id="dusun-heading">Pilihan Dusun</h2>
                 <p class="dusun-banner-desc">Jelajahi keasrian alam, sentra pertanian, dan potensi UMKM di setiap dusun {{ $desa?->nama_desa ?? 'Desa Bendung' }}.</p>
                 
                 <div class="dusun-banner-foot">

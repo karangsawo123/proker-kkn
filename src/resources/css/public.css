@@ -769,20 +769,20 @@
     border-left: 1px solid rgba(201, 147, 51, 0.28);
     border-right: 1px solid rgba(201, 147, 51, 0.28);
     border-bottom: 1px solid rgba(201, 147, 51, 0.22);
-    border-radius: 20px 20px 10px 10px;
-    padding: 20px 18px 18px;
+    border-radius: 18px 18px 10px 10px;
+    padding: 14px 18px 12px;
     margin-top: 4px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     color: #ffffff;
     box-shadow: 
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
-        0 12px 30px rgba(10, 26, 17, 0.22);
+        0 10px 24px rgba(10, 26, 17, 0.2);
 }
 
 @media (min-width: 768px) {
     .public-layout .page-home .dusun-forest-banner {
-        padding: 26px 32px 24px;
-        border-radius: 22px 22px 12px 12px;
+        padding: 18px 28px 16px;
+        border-radius: 20px 20px 12px 12px;
     }
 }
 
@@ -801,29 +801,23 @@
     z-index: 2;
 }
 
-.public-layout .page-home .dusun-banner-top {
+.public-layout .page-home .dusun-banner-title-row {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 10px;
+    gap: 10px;
     flex-wrap: wrap;
-    gap: 8px;
+    margin-bottom: 4px;
 }
 
-.public-layout .page-home .dusun-banner-badge {
-    background: rgba(201, 147, 51, 0.18);
-    color: #f7d58b;
-    border: 1px solid rgba(201, 147, 51, 0.45);
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    padding: 3px 10px;
-    border-radius: 999px;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+.public-layout .page-home .dusun-banner-title {
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 3vw, 25px);
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 0;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .public-layout .page-home .dusun-banner-count {
@@ -832,30 +826,19 @@
     color: #dbeae0;
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.14);
-    padding: 3px 10px;
+    padding: 2.5px 9px;
     border-radius: 999px;
     display: inline-flex;
     align-items: center;
     gap: 4px;
 }
 
-.public-layout .page-home .dusun-banner-title {
-    font-family: var(--font-serif);
-    font-size: clamp(22px, 3.5vw, 28px);
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 6px;
-    letter-spacing: -0.01em;
-    line-height: 1.25;
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
-}
-
 .public-layout .page-home .dusun-banner-desc {
-    font-size: 13px;
+    font-size: 12.5px;
     color: #c9ded2;
-    line-height: 1.5;
-    margin-bottom: 14px;
-    max-width: 640px;
+    line-height: 1.45;
+    margin-bottom: 10px;
+    max-width: 700px;
 }
 
 .public-layout .page-home .dusun-banner-foot {
@@ -863,9 +846,9 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
+    gap: 10px;
     border-top: 1px solid rgba(255, 255, 255, 0.12);
-    padding-top: 12px;
+    padding-top: 10px;
 }
 
 .public-layout .page-home .dusun-banner-lead {

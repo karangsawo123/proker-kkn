@@ -75,7 +75,7 @@
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Judul Kegiatan</th>
+                            <th style="min-width: 280px;">Judul & Deskripsi Kegiatan</th>
                             <th>Cakupan & Wilayah</th>
                             <th>Tanggal & Waktu</th>
                             <th>Status Pelaksanaan</th>
@@ -101,37 +101,47 @@
                                 };
                             @endphp
                             <tr class="{{ $agenda->trashed() ? 'row-trashed' : '' }}">
-                                <td>
-                                    <strong class="item-title">{{ $agenda->judul }}</strong>
-                                    <div class="item-subtitle">{{ Str::limit($agenda->deskripsi_singkat, 45) }}</div>
+                                <td class="table-lead-col" data-label="Informasi">
+                                    <div class="entity-info-block">
+                                        <div class="entity-row entity-title-row">
+                                            <span class="entity-tag entity-tag-agenda">KEGIATAN</span>
+                                            <strong class="item-title entity-title-text">{{ $agenda->judul }}</strong>
+                                        </div>
+                                        <div class="entity-row entity-content-row">
+                                            <span class="entity-tag entity-tag-isi">DESKRIPSI</span>
+                                            <div class="entity-content-box agenda-box">
+                                                <span class="entity-content-text">{{ Str::limit($agenda->deskripsi_singkat, 85) }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td>
+                                <td data-label="Cakupan">
                                     @if($agenda->scope_level === 'DESA')
                                         <span class="badge badge-primary">🌐 Tingkat Desa</span>
                                     @else
                                         <span class="badge badge-neutral">🏘️ {{ $agenda->dusun->nama_dusun ?? 'Dusun' }}</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td data-label="Jadwal">
                                     <div>{{ $agenda->tanggal_mulai->translatedFormat('d M Y') }}</div>
                                     @if($agenda->tanggal_selesai && $agenda->tanggal_selesai->ne($agenda->tanggal_mulai))
                                         <div class="text-muted text-xs">s/d {{ $agenda->tanggal_selesai->translatedFormat('d M Y') }}</div>
                                     @endif
                                 </td>
-                                <td>
+                                <td data-label="Pelaksanaan">
                                     <span class="badge {{ $lifecycleBadgeClass }}">{{ $lifecycleLabel }}</span>
                                     @if($agenda->manual_status_override)
                                         <div class="text-muted text-xs">(Manual Override)</div>
                                     @endif
                                 </td>
-                                <td>
+                                <td data-label="Status Rekod">
                                     @if($agenda->trashed())
                                         <span class="badge badge-danger">🗑️ Soft Deleted</span>
                                     @else
                                         <span class="badge badge-success">✓ Aktif</span>
                                     @endif
                                 </td>
-                                <td class="text-right">
+                                <td class="text-right" data-label="Aksi">
                                     <div class="action-buttons">
                                         @if($agenda->trashed())
                                             <button

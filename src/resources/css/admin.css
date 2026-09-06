@@ -835,6 +835,96 @@
     font-size: 0.8rem;
 }
 
+/* Entity Table Lead Info Block (Pengumuman & Agenda) */
+.admin-body .table-lead-col {
+    min-width: 280px;
+    vertical-align: top;
+}
+
+.admin-body .entity-info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    text-align: left;
+    max-width: 540px;
+}
+
+.admin-body .entity-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.admin-body .entity-title-row {
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.admin-body .entity-tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    flex-shrink: 0;
+    line-height: 1.35;
+    margin-top: 2px;
+}
+
+.admin-body .entity-tag-judul {
+    background: #eef7f0;
+    color: #1b4d2e;
+    border: 1px solid #c3e2cc;
+}
+
+.admin-body .entity-tag-agenda {
+    background: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.admin-body .entity-tag-isi {
+    background: #f3f4f6;
+    color: #4b5563;
+    border: 1px solid #e5e7eb;
+}
+
+.admin-body .entity-title-text {
+    color: var(--admin-text);
+    font-size: 0.95rem;
+    font-weight: 800;
+    line-height: 1.4;
+    word-break: break-word;
+}
+
+.admin-body .entity-content-box {
+    flex: 1;
+    min-width: 0;
+    background: rgba(246, 248, 246, 0.85);
+    border: 1px solid rgba(76, 91, 72, 0.12);
+    border-left: 3px solid var(--admin-primary);
+    border-radius: 0 6px 6px 0;
+    padding: 6px 10px;
+    font-size: 0.83rem;
+    color: #4b5563;
+    line-height: 1.45;
+    word-break: break-word;
+}
+
+.admin-body .entity-content-box.agenda-box {
+    border-left-color: #3b82f6;
+    background: rgba(240, 244, 255, 0.65);
+}
+
+.admin-body .entity-content-text {
+    display: block;
+    color: #374151;
+}
+
 .admin-body .wa-link {
     display: inline-flex;
     align-items: center;
@@ -1537,6 +1627,23 @@
 
     .admin-body .admin-table td.table-thumb-col::before {
         display: none;
+    }
+
+    .admin-body .admin-table td.table-lead-col {
+        display: block !important;
+        width: 100%;
+        padding: 14px 14px 12px;
+        background: #ffffff;
+        border-bottom: 2px solid rgba(76, 91, 72, 0.12);
+    }
+
+    .admin-body .admin-table td.table-lead-col::before {
+        display: none !important;
+    }
+
+    .admin-body .admin-table td.table-lead-col .entity-info-block {
+        max-width: 100%;
+        gap: 10px;
     }
 
     .admin-body .action-buttons {

@@ -75,7 +75,7 @@
                 <table class="admin-table">
                     <thead>
                         <tr>
-                            <th>Judul Pengumuman</th>
+                            <th style="min-width: 280px;">Judul & Isi Pengumuman</th>
                             <th>Cakupan Wilayah</th>
                             <th>Tanggal Terbit</th>
                             <th>Masa Aktif Publik</th>
@@ -89,21 +89,31 @@
                                 $isExpired = $pengumuman->tanggal_kedaluwarsa->isPast();
                             @endphp
                             <tr class="{{ $pengumuman->trashed() ? 'row-trashed' : '' }}">
-                                <td>
-                                    <strong class="item-title">{{ $pengumuman->judul }}</strong>
-                                    <div class="item-subtitle">{{ Str::limit(strip_tags($pengumuman->isi), 45) }}</div>
+                                <td class="table-lead-col" data-label="Informasi">
+                                    <div class="entity-info-block">
+                                        <div class="entity-row entity-title-row">
+                                            <span class="entity-tag entity-tag-judul">JUDUL</span>
+                                            <strong class="item-title entity-title-text">{{ $pengumuman->judul }}</strong>
+                                        </div>
+                                        <div class="entity-row entity-content-row">
+                                            <span class="entity-tag entity-tag-isi">ISI</span>
+                                            <div class="entity-content-box">
+                                                <span class="entity-content-text">{{ Str::limit(strip_tags($pengumuman->isi), 85) }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </td>
-                                <td>
+                                <td data-label="Cakupan">
                                     @if($pengumuman->scope_level === 'DESA')
                                         <span class="badge badge-primary">🌐 Tingkat Desa</span>
                                     @else
                                         <span class="badge badge-neutral">🏘️ {{ $pengumuman->dusun->nama_dusun ?? 'Dusun' }}</span>
                                     @endif
                                 </td>
-                                <td>
+                                <td data-label="Tgl Terbit">
                                     {{ $pengumuman->created_at->translatedFormat('d M Y') }}
                                 </td>
-                                <td>
+                                <td data-label="Masa Aktif">
                                     @if($isExpired)
                                         <span class="badge badge-neutral">📁 Arsip (Kedaluwarsa)</span>
                                     @else
@@ -111,14 +121,14 @@
                                     @endif
                                     <div class="text-muted text-xs">s/d {{ $pengumuman->tanggal_kedaluwarsa->translatedFormat('d M Y') }}</div>
                                 </td>
-                                <td>
+                                <td data-label="Status Rekod">
                                     @if($pengumuman->trashed())
                                         <span class="badge badge-danger">🗑️ Soft Deleted</span>
                                     @else
                                         <span class="badge badge-success">✓ Aktif</span>
                                     @endif
                                 </td>
-                                <td class="text-right">
+                                <td class="text-right" data-label="Aksi">
                                     <div class="action-buttons">
                                         @if($pengumuman->trashed())
                                             <button

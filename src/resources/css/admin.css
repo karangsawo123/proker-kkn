@@ -2877,26 +2877,28 @@
 .ai-modal-backdrop {
     position: fixed;
     inset: 0;
-    z-index: 100;
+    z-index: 100000; /* Must be higher than Leaflet map panes (400-1000) and headers */
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 16px;
-    background: rgba(18, 30, 20, 0.55);
-    backdrop-filter: blur(4px);
+    background: rgba(18, 30, 20, 0.65);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
 }
 
 .ai-modal-dialog {
     position: relative;
     width: min(100%, 640px);
-    max-height: 90vh;
+    max-height: calc(100vh - 32px);
+    max-height: calc(100dvh - 32px);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    border-radius: 12px;
+    border-radius: 14px;
     background: #FFFFFF;
     border: 1px solid #D5DEC8;
-    box-shadow: 0 24px 70px rgba(18, 30, 20, 0.28);
+    box-shadow: 0 24px 70px rgba(18, 30, 20, 0.35);
     animation: aiModalFadeIn 180ms ease;
 }
 
@@ -2909,9 +2911,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 16px 20px;
+    padding: 14px 20px;
     border-bottom: 1px solid #E8EFE5;
     background: #F9FBF8;
+    flex-shrink: 0; /* Pinned at top */
 }
 
 .ai-modal-header-brand {
@@ -2928,6 +2931,7 @@
     border-radius: 9px;
     background: rgba(46, 94, 62, 0.12);
     font-size: 1.15rem;
+    flex-shrink: 0;
 }
 
 .ai-modal-title {
@@ -2955,6 +2959,7 @@
     color: #556B5A;
     cursor: pointer;
     transition: background 150ms ease;
+    flex-shrink: 0;
 }
 
 .ai-modal-close:hover {
@@ -2963,9 +2968,12 @@
 }
 
 .ai-modal-body {
-    padding: 20px;
+    padding: 18px 20px;
     overflow-y: auto;
     flex: 1 1 auto;
+    min-height: 0; /* Critical for flex child scrolling */
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
 }
 
 .ai-mode-pills {
@@ -3002,8 +3010,8 @@
     display: flex;
     align-items: flex-start;
     gap: 8px;
-    padding: 10px 12px;
-    margin-bottom: 16px;
+    padding: 8px 12px;
+    margin-bottom: 14px;
     border-radius: 7px;
     background: #F2F7F2;
     border-left: 3px solid #2E5E3E;
@@ -3062,12 +3070,6 @@
     grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-bottom: 12px;
-}
-
-@media (max-width: 540px) {
-    .ai-form-grid {
-        grid-template-columns: 1fr;
-    }
 }
 
 .ai-form-grid .span-2 {
@@ -3215,9 +3217,15 @@
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    padding: 14px 20px;
+    padding: 12px 20px;
     border-top: 1px solid #E8EFE5;
     background: #F9FBF8;
+    flex-shrink: 0; /* Pinned at bottom, always visible */
+}
+
+.ai-footer-left {
+    display: flex;
+    align-items: center;
 }
 
 .ai-footer-right {
@@ -3245,5 +3253,116 @@
 @keyframes aiFieldFlash {
     0% { background-color: rgba(46, 94, 62, 0.25); border-color: #2E5E3E; }
     100% { background-color: inherit; border-color: inherit; }
+}
+
+/* RESPONSIVE & MOBILE ENHANCEMENTS */
+@media (max-width: 640px) {
+    .ai-modal-backdrop {
+        padding: 8px;
+        align-items: center;
+    }
+
+    .ai-modal-dialog {
+        width: 100%;
+        max-height: calc(100vh - 16px);
+        max-height: calc(100dvh - 16px);
+        border-radius: 12px;
+    }
+
+    .ai-modal-header {
+        padding: 12px 14px;
+    }
+
+    .ai-sparkle-badge {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+        border-radius: 8px;
+    }
+
+    .ai-modal-title {
+        font-size: 0.95rem;
+    }
+
+    .ai-modal-subtitle {
+        font-size: 0.72rem;
+    }
+
+    .ai-modal-body {
+        padding: 14px;
+    }
+
+    .ai-mode-pills {
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        gap: 6px;
+        margin-bottom: 12px;
+    }
+
+    .ai-mode-pills::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ai-mode-pill {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 5px 10px;
+        font-size: 0.75rem;
+    }
+
+    .ai-safety-notice {
+        padding: 8px 10px;
+        font-size: 0.73rem;
+        margin-bottom: 12px;
+    }
+
+    .ai-type-btn {
+        padding: 6px 8px;
+        font-size: 0.75rem;
+        gap: 4px;
+    }
+
+    .ai-form-grid {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    .form-input-sm {
+        padding: 8px 10px;
+        font-size: 0.82rem;
+    }
+
+    .ai-length-group {
+        margin-top: 10px;
+        margin-bottom: 12px;
+        padding-top: 8px;
+    }
+
+    .ai-length-pill {
+        padding: 5px 6px;
+        font-size: 0.72rem;
+    }
+
+    .ai-preview-content {
+        max-height: 180px;
+    }
+
+    .ai-modal-footer {
+        padding: 10px 14px;
+        gap: 8px;
+    }
+
+    .ai-modal-footer .btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+    }
+
+    .ai-footer-right {
+        gap: 6px;
+    }
 }
 

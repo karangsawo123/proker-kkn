@@ -71,10 +71,65 @@ document.addEventListener('DOMContentLoaded', () => {
         scrollWheelZoom: false
     }).setView(defaultCenter, 14);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // ─── Base Tile Layers (Streets & Satellite) ──────────────────
+    const streetLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; OpenStreetMap contributors'
-    }).addTo(map);
+    });
+
+    const satelliteImagery = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics, and GIS User Community',
+        maxZoom: 19,
+    });
+
+    const satelliteLabels = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}', {
+        attribution: '',
+        maxZoom: 19,
+    });
+
+    const satelliteLayer = L.layerGroup([satelliteImagery, satelliteLabels]);
+
+    // Default: Citra Satelit (selaras dengan tampilan peta desa & dusun)
+    satelliteLayer.addTo(map);
+    let isSatelliteActive = true;
+
+    // Basemap Switcher Control
+    const BasemapSwitcherControl = L.Control.extend({
+        options: { position: 'topright' },
+        onAdd: function() {
+            const container = L.DomUtil.create('div', 'map-floating-actions');
+            const btn = L.DomUtil.create('button', 'map-action-btn map-layer-btn active', container);
+            btn.type = 'button';
+            btn.title = 'Beralih ke Peta Standar (Jalan)';
+            btn.setAttribute('aria-label', 'Beralih antara Citra Satelit dan Peta Standar');
+            btn.innerHTML = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg><span class="map-layer-text">Satelit</span>`;
+
+            L.DomEvent.disableClickPropagation(container);
+            L.DomEvent.disableScrollPropagation(container);
+
+            L.DomEvent.on(btn, 'click', (e) => {
+                L.DomEvent.stop(e);
+                isSatelliteActive = !isSatelliteActive;
+                const textSpan = btn.querySelector('.map-layer-text');
+                if (isSatelliteActive) {
+                    map.removeLayer(streetLayer);
+                    satelliteLayer.addTo(map);
+                    btn.classList.add('active');
+                    if (textSpan) textSpan.textContent = 'Satelit';
+                    btn.title = 'Beralih ke Peta Standar (Jalan)';
+                } else {
+                    map.removeLayer(satelliteLayer);
+                    streetLayer.addTo(map);
+                    btn.classList.remove('active');
+                    if (textSpan) textSpan.textContent = 'Jalan';
+                    btn.title = 'Beralih ke Citra Satelit';
+                }
+            });
+
+            return container;
+        }
+    });
+    new BasemapSwitcherControl().addTo(map);
 
     const markerGroup = L.featureGroup();
 

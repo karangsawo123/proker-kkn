@@ -107,7 +107,7 @@
                 <p class="dusun-banner-desc">Jelajahi keasrian alam, sentra pertanian, dan potensi UMKM di setiap dusun {{ $desa?->nama_desa ?? 'Desa Bendung' }}.</p>
                 
                 <div class="dusun-banner-foot">
-                    <span class="dusun-banner-lead">Pilih salah satu dusun di bawah:</span>
+                    <span class="dusun-banner-lead">Pilih salah satu dusun di bawah <span class="dusun-lead-arrow" aria-hidden="true">↓</span></span>
                     <a href="#peta-desa" class="dusun-banner-map-btn">
                         <span>Lihat di Peta Sebaran</span>
                         <span>→</span>

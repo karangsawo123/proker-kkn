@@ -687,17 +687,23 @@
     padding: 40px 0;
 }
 
-.public-layout .page-home .section-head {
+.public-layout .page-home .section-head,
+.public-layout .page-dusun .section-head {
     display: flex;
     flex-direction: column;
-    margin-bottom: 24px;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
 @media (min-width: 640px) {
-    .public-layout .page-home .section-head {
+    .public-layout .page-home .section-head,
+    .public-layout .page-dusun .section-head {
         flex-direction: row;
         align-items: flex-end;
         justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 24px;
     }
 }
 

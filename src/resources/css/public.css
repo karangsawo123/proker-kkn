@@ -740,6 +740,119 @@
     color: var(--forest-900);
 }
 
+/* --- DUSUN SECTION: CURVED FOREST TRANSITION BANNER (OPSI B) --- */
+.public-layout .page-home .dusun-forest-banner {
+    position: relative;
+    background: linear-gradient(180deg, #173b28 0%, #10291c 100%);
+    border-radius: 24px;
+    padding: 24px 20px;
+    margin-top: 4px;
+    margin-bottom: 22px;
+    color: #ffffff;
+    box-shadow: 0 12px 32px rgba(13, 34, 23, 0.22);
+    overflow: hidden;
+}
+
+.public-layout .page-home .dusun-forest-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 160px;
+    height: 160px;
+    background: radial-gradient(circle, rgba(201, 147, 51, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.public-layout .page-home .dusun-banner-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.public-layout .page-home .dusun-banner-badge {
+    background: rgba(201, 147, 51, 0.22);
+    color: #f7d58b;
+    border: 1px solid rgba(201, 147, 51, 0.4);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 11px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.public-layout .page-home .dusun-banner-count {
+    font-size: 12px;
+    font-weight: 700;
+    color: #dbeae0;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.public-layout .page-home .dusun-banner-title {
+    font-family: var(--font-serif);
+    font-size: clamp(22px, 3.5vw, 28px);
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+}
+
+.public-layout .page-home .dusun-banner-desc {
+    font-size: 13px;
+    color: #c9ded2;
+    line-height: 1.5;
+    margin-bottom: 16px;
+    max-width: 640px;
+}
+
+.public-layout .page-home .dusun-banner-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-top: 14px;
+}
+
+.public-layout .page-home .dusun-banner-lead {
+    font-size: 12.5px;
+    color: #dbeae0;
+    font-weight: 500;
+}
+
+.public-layout .page-home .dusun-banner-map-btn {
+    background: #ffffff;
+    color: #10291c !important;
+    font-size: 12px;
+    font-weight: 800;
+    padding: 7px 18px;
+    border-radius: 999px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+    transition: all 0.2s ease;
+}
+
+.public-layout .page-home .dusun-banner-map-btn:hover {
+    background: var(--gold-400);
+    color: #0d2015 !important;
+    transform: translateX(2px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
 /* --- PILIHAN DUSUN (6 KARTU BERKARAKTER WILAYAH) --- */
 .public-layout .page-home .dusun-grid {
     display: grid;
@@ -840,7 +953,7 @@
     font-weight: 700;
     color: var(--forest-700);
     padding-top: 10px;
-    border-top: 1px dashed var(--cream-border);
+    border-top: 1px solid #efe8da;
 }
 
 .public-layout .page-home .dusun-card-foot span {

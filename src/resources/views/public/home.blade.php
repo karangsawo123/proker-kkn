@@ -96,13 +96,23 @@
     <section class="section-wrapper" id="dusun" aria-labelledby="dusun-heading">
         <div class="container">
             
-            <div class="section-head">
-                <div>
-                    <span class="section-eyebrow">Wilayah Administratif</span>
-                    <h2 class="section-title" id="dusun-heading">Pilihan Dusun</h2>
-                    <p class="section-subtitle">Pilih salah satu dari padukuhan untuk melihat profil dan potensi wilayah</p>
+            {{-- CURVED FOREST TRANSITION BANNER (OPSI B) --}}
+            <div class="dusun-forest-banner">
+                <div class="dusun-banner-top">
+                    <span class="dusun-banner-badge">🏛️ Wilayah Administratif</span>
+                    <span class="dusun-banner-count">📍 {{ $dusuns->count() }} Padukuhan</span>
                 </div>
-                <a href="#peta-desa" class="section-action-link">Lihat Peta Sebaran Dusun →</a>
+                
+                <h2 class="dusun-banner-title" id="dusun-heading">Pilihan Dusun</h2>
+                <p class="dusun-banner-desc">Jelajahi keasrian alam, sentra pertanian, dan potensi UMKM di setiap dusun {{ $desa?->nama_desa ?? 'Desa Bendung' }}.</p>
+                
+                <div class="dusun-banner-foot">
+                    <span class="dusun-banner-lead">Pilih salah satu dusun di bawah:</span>
+                    <a href="#peta-desa" class="dusun-banner-map-btn">
+                        <span>Lihat di Peta Sebaran</span>
+                        <span>→</span>
+                    </a>
+                </div>
             </div>
 
             @if($dusuns->isEmpty())

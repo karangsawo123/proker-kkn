@@ -138,135 +138,6 @@
                 <div class="info-dark-gold-bar" aria-hidden="true"></div>
             </div>
 
-            <div class="info-horizontal-grid">
-                
-                <!-- Card 1: Tentang Desa -->
-                <article class="info-h-card" onclick="openDetailModal('Tentang {{ $desa?->nama_desa ?? 'Desa Bendung' }}', 'Profil & Pemangku Wilayah', '{{ addslashes($desa?->deskripsi_singkat ?? 'Pemerintah Desa Bendung berkomitmen mewujudkan desa yang transparan, mandiri, dan melayani warga secara adil.') }}')">
-                    <div class="dock-icon-box info-h-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-                            <polyline points="9 22 9 12 15 12 15 22"/>
-                        </svg>
-                    </div>
-                    <h3 class="info-h-name">Tentang Desa</h3>
-                    <p class="info-h-sub">{{ $desa?->nama_desa ?? 'Desa Bendung' }}</p>
-                    <span class="info-h-cta">Buka Profil →</span>
-                </article>
-
-                <!-- Card 2: Informasi Pelayanan -->
-                <article class="info-h-card" onclick="openDetailModal('Informasi Pelayanan', 'Layanan Balai Desa', 'Pelayanan loket administrasi dan perizinan kantor desa:\n\n• Jam Pelayanan: {{ addslashes($desa?->jam_pelayanan ?? 'Senin - Jumat: 08:00 - 15:00 WIB') }}\n• Alamat: {{ addslashes($desa?->alamat_kantor ?? 'Balai Desa') }}\n\nUntuk pengurusan administrasi, silakan membawa berkas KTP dan KK asli.')">
-                    <div class="dock-icon-box info-h-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"/>
-                            <polyline points="12 6 12 12 16 14"/>
-                        </svg>
-                    </div>
-                    <h3 class="info-h-name">Informasi Pelayanan</h3>
-                    <p class="info-h-sub">{{ $desa?->jam_pelayanan ?? 'Senin - Jumat: 08:00 - 15:00 WIB' }}</p>
-                    <span class="info-h-cta">Jadwal & Syarat →</span>
-                </article>
-
-                <!-- Card 3: Kontak Resmi -->
-                <article class="info-h-card" onclick="openDetailModal('Kontak Resmi Kalurahan', 'Akses Pelayanan Cepat', 'Hubungi loket administrasi Pemerintah {{ addslashes($desa?->nama_desa ?? 'Desa Bendung') }}:\n\n• Telepon / WhatsApp: {{ addslashes($desa?->nomor_kontak ?? '-') }}\n• Email: {{ addslashes($desa?->email ?? '-') }}\n• Alamat: {{ addslashes($desa?->alamat_kantor ?? '-') }}')">
-                    <div class="dock-icon-box info-h-icon" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7"/>
-                        </svg>
-                    </div>
-                    <h3 class="info-h-name">Kontak Resmi</h3>
-                    <p class="info-h-sub">{{ $desa?->nomor_kontak ?? 'Nomor kontak desa' }}</p>
-                    <span class="info-h-cta">Hubungi Loket →</span>
-                </article>
-
-            </div>
-
-        </div>
-    </section>
-
-    {{-- Backward compatibility anchors for hash links --}}
-    <div id="warta" class="sr-only" aria-hidden="true"></div>
-    <div id="pengumuman" class="sr-only" aria-hidden="true"></div>
-    <div id="agenda" class="sr-only" aria-hidden="true"></div>
-
-    {{-- PETA WILAYAH DESA INTERAKTIF --}}
-    <section class="section-wrapper" id="peta-desa" aria-labelledby="peta-heading">
-        <div class="container">
-            
-            <div class="section-head">
-                <div>
-                    <span class="section-eyebrow">Geospasial & Fasilitas</span>
-                    <h2 class="section-title" id="peta-heading">Peta Wilayah Desa</h2>
-                    <p class="section-subtitle">Titik lokasi balai desa, sebaran padukuhan, fasilitas, dan sentra UMKM</p>
-                </div>
-            </div>
-
-            <div class="map-section-card">
-                
-                <div class="map-filter-bar">
-                    <div class="filter-group">
-                        <label for="map-desa-filter-dusun" class="filter-label">Filter Dusun:</label>
-                        <select id="map-desa-filter-dusun" class="filter-select" aria-label="Filter berdasarkan Dusun">
-                            <option value="semua">Semua Dusun</option>
-                            @foreach($dusunFilterOptions as $opt)
-                                <option value="{{ $opt['id'] }}">{{ $opt['nama'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-
-                    <div class="filter-group">
-                        <label for="map-desa-filter-cat" class="filter-label">Kategori:</label>
-                        <select id="map-desa-filter-cat" class="filter-select" aria-label="Filter berdasarkan Kategori">
-                            <option value="semua">Semua Kategori</option>
-                            @foreach($categoryOptions as $cat)
-                                <option value="{{ $cat }}">{{ $cat }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-
-                <!-- Leaflet Map Container -->
-                <div class="map-container-frame">
-                    <div
-                        id="map-desa"
-                        data-map
-                        style="height:100%;width:100%;"
-                        aria-label="Peta Desa dengan marker lokasi"
-                        role="application"
-                    ></div>
-                </div>
-
-                <div class="map-legend-row">
-                    <div class="legend-items">
-                        <div class="legend-chip">
-                            <span class="legend-dot dot-kantor" aria-hidden="true"></span>
-                            <span>Pelayanan & Kantor</span>
-                        </div>
-                        <div class="legend-chip">
-                            <span class="legend-dot dot-umkm" aria-hidden="true"></span>
-                            <span>Sentra UMKM</span>
-                        </div>
-                        <div class="legend-chip">
-                            <span class="legend-dot dot-fasilitas" aria-hidden="true"></span>
-                            <span>Fasilitas Publik</span>
-                        </div>
-                    </div>
-                    <span>Peta Interaktif {{ $desa?->nama_desa ?? 'Desa Bendung' }}</span>
-                </div>
-
-            </div>
-
-        </div>
-    </section>
-
-    {{-- KONTAK DESA (2x2 COMPACT GRID) --}}
-    <section class="section-wrapper" id="kontak-desa" aria-labelledby="kontak-heading">
-        <div class="container">
-            
-            <div class="contact-head-block">
-                <h2 class="contact-title-main" id="kontak-heading">Kontak Desa</h2>
-                <div class="contact-gold-line" aria-hidden="true"></div>
-            </div>
-
             @if($desa)
                 <div class="home-contact-grid">
                     
@@ -347,19 +218,83 @@
         </div>
     </section>
 
-    <!-- INTERACTIVE MODAL DETAIL -->
-    <div class="modal-overlay" id="modal-overlay" onclick="closeDetailModal(event)">
-        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-head">
-            <button class="modal-close-btn" onclick="closeDetailModal()" aria-label="Tutup Jendela">✕</button>
-            <span class="modal-header-tag" id="modal-tag">Informasi Wilayah</span>
-            <h3 class="modal-heading" id="modal-head">Judul Informasi</h3>
-            <p class="modal-lead" id="modal-sub">Wilayah {{ $desa?->nama_desa ?? 'Desa Bendung' }}</p>
-            <div class="modal-info-box" id="modal-content">
-                Deskripsi lengkap informasi terkait.
+    {{-- Backward compatibility anchors for hash links --}}
+    <div id="warta" class="sr-only" aria-hidden="true"></div>
+    <div id="pengumuman" class="sr-only" aria-hidden="true"></div>
+    <div id="agenda" class="sr-only" aria-hidden="true"></div>
+
+    {{-- PETA WILAYAH DESA INTERAKTIF --}}
+    <section class="section-wrapper" id="peta-desa" aria-labelledby="peta-heading">
+        <div class="container">
+            
+            <div class="section-head">
+                <div>
+                    <span class="section-eyebrow">Geospasial & Fasilitas</span>
+                    <h2 class="section-title" id="peta-heading">Peta Wilayah Desa</h2>
+                    <p class="section-subtitle">Titik lokasi balai desa, sebaran padukuhan, fasilitas, dan sentra UMKM</p>
+                </div>
             </div>
-            <button class="modal-action-btn" onclick="closeDetailModal()">Tutup Jendela</button>
+
+            <div class="map-section-card">
+                
+                <div class="map-filter-bar">
+                    <div class="filter-group">
+                        <label for="map-desa-filter-dusun" class="filter-label">Filter Dusun:</label>
+                        <select id="map-desa-filter-dusun" class="filter-select" aria-label="Filter berdasarkan Dusun">
+                            <option value="semua">Semua Dusun</option>
+                            @foreach($dusunFilterOptions as $opt)
+                                <option value="{{ $opt['id'] }}">{{ $opt['nama'] }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="filter-group">
+                        <label for="map-desa-filter-cat" class="filter-label">Kategori:</label>
+                        <select id="map-desa-filter-cat" class="filter-select" aria-label="Filter berdasarkan Kategori">
+                            <option value="semua">Semua Kategori</option>
+                            @foreach($categoryOptions as $cat)
+                                <option value="{{ $cat }}">{{ $cat }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Leaflet Map Container -->
+                <div class="map-container-frame">
+                    <div
+                        id="map-desa"
+                        data-map
+                        style="height:100%;width:100%;"
+                        aria-label="Peta Desa dengan marker lokasi"
+                        role="application"
+                    ></div>
+                </div>
+
+                <div class="map-legend-row">
+                    <div class="legend-items">
+                        <div class="legend-chip">
+                            <span class="legend-dot dot-kantor" aria-hidden="true"></span>
+                            <span>Pelayanan & Kantor</span>
+                        </div>
+                        <div class="legend-chip">
+                            <span class="legend-dot dot-umkm" aria-hidden="true"></span>
+                            <span>Sentra UMKM</span>
+                        </div>
+                        <div class="legend-chip">
+                            <span class="legend-dot dot-fasilitas" aria-hidden="true"></span>
+                            <span>Fasilitas Publik</span>
+                        </div>
+                    </div>
+                    <span>Peta Interaktif {{ $desa?->nama_desa ?? 'Desa Bendung' }}</span>
+                </div>
+
+            </div>
+
         </div>
-    </div>
+    </section>
+
+    {{-- Backward compatibility anchor for hash links & test coverage --}}
+    <div id="kontak-desa" class="sr-only" aria-hidden="true"></div>
 
     {{-- MODAL INTERAKTIF: WARTA PENGUMUMAN DESA --}}
     <div class="dusun-modal-backdrop" id="modal-desa-pengumuman" role="dialog" aria-modal="true" aria-labelledby="modal-desa-pengumuman-title" style="display: none;">

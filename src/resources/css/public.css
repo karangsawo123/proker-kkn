@@ -746,6 +746,19 @@
     padding-bottom: 36px;
 }
 
+/* Wider container specifically for the Dusun section to give it expansive presence */
+.public-layout .page-home #dusun .container {
+    width: calc(100% - 12px);
+    max-width: 1260px;
+}
+
+@media (min-width: 768px) {
+    .public-layout .page-home #dusun .container {
+        width: calc(100% - 24px);
+        max-width: 1280px;
+    }
+}
+
 .public-layout .page-home .dusun-forest-banner {
     position: relative;
     background: 
@@ -757,13 +770,20 @@
     border-right: 1px solid rgba(201, 147, 51, 0.28);
     border-bottom: 1px solid rgba(201, 147, 51, 0.22);
     border-radius: 20px 20px 10px 10px;
-    padding: 22px 20px 20px;
+    padding: 20px 18px 18px;
     margin-top: 4px;
     margin-bottom: 12px;
     color: #ffffff;
     box-shadow: 
         inset 0 1px 0 rgba(255, 255, 255, 0.15),
         0 12px 30px rgba(10, 26, 17, 0.22);
+}
+
+@media (min-width: 768px) {
+    .public-layout .page-home .dusun-forest-banner {
+        padding: 26px 32px 24px;
+        border-radius: 22px 22px 12px 12px;
+    }
 }
 
 /* Grounding notch connector that points from banner down into dusun-grid */

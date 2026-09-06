@@ -22,6 +22,11 @@ class GeminiAiService
 
     private int $maxTokens;
 
+    /**
+     * @var array<string> Ordered list of fallback models for auto-failover on rate limits
+     */
+    private array $fallbackModels;
+
     public function __construct()
     {
         $this->enabled = (bool) config('ai.enabled', true);
@@ -32,6 +37,24 @@ class GeminiAiService
         $this->apiKey = trim((string) config('ai.api_key'), " \t\n\r\0\x0B\"'");
         $this->timeout = (int) config('ai.timeout_seconds', 20);
         $this->maxTokens = (int) config('ai.max_output_tokens', 2048);
+
+        $rawFallbacks = config('ai.fallback_models');
+        if (is_array($rawFallbacks) && ! empty($rawFallbacks)) {
+            $this->fallbackModels = array_values($rawFallbacks);
+        } else {
+            // Smart defaults based on provider and primary model
+            if ($this->provider === 'groq') {
+                $this->fallbackModels = match ($this->model) {
+                    'openai/gpt-oss-120b' => ['groq/compound-mini', 'openai/gpt-oss-20b'],
+                    'groq/compound-mini' => ['openai/gpt-oss-120b', 'openai/gpt-oss-20b'],
+                    default => ['groq/compound-mini', 'openai/gpt-oss-20b'],
+                };
+            } elseif ($this->provider === 'gemini') {
+                $this->fallbackModels = ['gemini-2.5-flash', 'gemini-flash-latest'];
+            } else {
+                $this->fallbackModels = [];
+            }
+        }
     }
 
     private function normalizeModelName(string $rawModel): string
@@ -101,121 +124,161 @@ class GeminiAiService
         $systemInstruction = $this->buildSystemInstruction($feature, $mode);
         $userPrompt = $this->buildUserPrompt($feature, $mode, $notes, $existingText, $structuredInput, $draftLength);
 
-        if ($this->provider === 'gemini') {
-            $endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{$this->model}:generateContent?key={$this->apiKey}";
-            $payload = [
-                'contents' => [
-                    [
-                        'role' => 'user',
-                        'parts' => [
-                            ['text' => $userPrompt],
+        $modelsToTry = array_values(array_unique(array_merge([$this->model], $this->fallbackModels)));
+        $totalModels = count($modelsToTry);
+        $attempt = 0;
+        $lastException = null;
+
+        foreach ($modelsToTry as $currentModel) {
+            $attempt++;
+
+            if ($this->provider === 'gemini') {
+                $endpoint = "https://generativelanguage.googleapis.com/v1beta/models/{$currentModel}:generateContent?key={$this->apiKey}";
+                $payload = [
+                    'contents' => [
+                        [
+                            'role' => 'user',
+                            'parts' => [
+                                ['text' => $userPrompt],
+                            ],
                         ],
                     ],
-                ],
-                'systemInstruction' => [
-                    'parts' => [
-                        ['text' => $systemInstruction],
+                    'systemInstruction' => [
+                        'parts' => [
+                            ['text' => $systemInstruction],
+                        ],
                     ],
-                ],
-                'generationConfig' => [
-                    'responseMimeType' => 'application/json',
+                    'generationConfig' => [
+                        'responseMimeType' => 'application/json',
+                        'temperature' => 0.3,
+                        'maxOutputTokens' => $this->maxTokens,
+                    ],
+                ];
+                $headers = [
+                    'x-goog-api-key' => $this->apiKey,
+                    'Content-Type' => 'application/json',
+                ];
+            } else {
+                // OpenAI-Compatible Providers (Groq, OpenRouter, etc.)
+                $endpoint = $this->resolveOpenAiEndpoint();
+                $payload = [
+                    'model' => $currentModel,
+                    'messages' => [
+                        ['role' => 'system', 'content' => $systemInstruction],
+                        ['role' => 'user', 'content' => $userPrompt],
+                    ],
                     'temperature' => 0.3,
-                    'maxOutputTokens' => $this->maxTokens,
-                ],
-            ];
-            $headers = [
-                'x-goog-api-key' => $this->apiKey,
-                'Content-Type' => 'application/json',
-            ];
-        } else {
-            // OpenAI-Compatible Providers (9Router, OpenRouter, Groq, DeepSeek, etc.)
-            $endpoint = $this->resolveOpenAiEndpoint();
-            $payload = [
-                'model' => $this->model,
-                'messages' => [
-                    ['role' => 'system', 'content' => $systemInstruction],
-                    ['role' => 'user', 'content' => $userPrompt],
-                ],
-                'temperature' => 0.3,
-                'max_tokens' => $this->maxTokens,
-            ];
-            $headers = [
-                'Authorization' => 'Bearer '.$this->apiKey,
-                'HTTP-Referer' => 'https://bendung.online',
-                'X-Title' => 'Portal Informasi Desa Bendung',
-                'Content-Type' => 'application/json',
-            ];
-        }
+                    'max_tokens' => $this->maxTokens,
+                ];
+                $headers = [
+                    'Authorization' => 'Bearer '.$this->apiKey,
+                    'HTTP-Referer' => 'https://bendung.online',
+                    'X-Title' => 'Portal Informasi Desa Bendung',
+                    'Content-Type' => 'application/json',
+                ];
+            }
 
-        $startTime = microtime(true);
+            $startTime = microtime(true);
 
-        try {
-            $response = Http::timeout($this->timeout)
-                ->withHeaders($headers)
-                ->post($endpoint, $payload);
-            $latencyMs = round((microtime(true) - $startTime) * 1000);
+            try {
+                $response = Http::timeout($this->timeout)
+                    ->withHeaders($headers)
+                    ->post($endpoint, $payload);
+                $latencyMs = round((microtime(true) - $startTime) * 1000);
 
-            if (! $response->successful()) {
-                $status = $response->status();
-                $googleError = $response->json('error.message') ?? (string) $response->body();
+                if (! $response->successful()) {
+                    $status = $response->status();
+                    $googleError = $response->json('error.message') ?? (string) $response->body();
 
-                Log::warning('[AI_ASSISTANT] API request failed', [
-                    'provider' => $this->provider,
-                    'status' => $status,
+                    Log::warning('[AI_ASSISTANT] Model request failed', [
+                        'provider' => $this->provider,
+                        'model' => $currentModel,
+                        'attempt' => $attempt,
+                        'status' => $status,
+                        'feature' => $feature,
+                        'error' => $googleError,
+                        'latency_ms' => $latencyMs,
+                    ]);
+
+                    // If rate limited (429) or transient server error (500, 502, 503) and fallback models available:
+                    if (in_array($status, [429, 500, 502, 503]) && $attempt < $totalModels) {
+                        $nextModel = $modelsToTry[$attempt];
+                        Log::info("[AI_ASSISTANT] Auto-failover: Model '{$currentModel}' encountered HTTP {$status}, seamlessly switching to fallback model '{$nextModel}'");
+                        continue;
+                    }
+
+                    if ($status === 429) {
+                        throw new Exception('Batas kuota layanan AI tercapai. Silakan coba beberapa saat lagi.');
+                    }
+
+                    if ($status === 400 && str_contains(strtolower($googleError), 'api key')) {
+                        throw new Exception('Kunci API AI tidak valid. Pastikan API Key di file .env sudah benar.');
+                    }
+
+                    if ($status === 404) {
+                        if ($attempt < $totalModels) {
+                            $nextModel = $modelsToTry[$attempt];
+                            Log::info("[AI_ASSISTANT] Auto-failover: Model '{$currentModel}' 404 not found, switching to fallback model '{$nextModel}'");
+                            continue;
+                        }
+                        throw new Exception("Model AI '{$currentModel}' tidak ditemukan pada provider. Pastikan AI_MODEL di file .env sudah sesuai.");
+                    }
+
+                    if ($status === 403) {
+                        throw new Exception('Akses API AI ditolak (403). Pastikan akun provider AI Anda aktif.');
+                    }
+
+                    $previewError = mb_strimwidth($googleError, 0, 160, '...');
+                    throw new Exception("Gagal menghubungi penyedia AI ({$status}): {$previewError}");
+                }
+
+                $responseData = $response->json();
+
+                if ($this->provider === 'gemini') {
+                    $rawText = $responseData['candidates'][0]['content']['parts'][0]['text'] ?? null;
+                } else {
+                    $rawText = $responseData['choices'][0]['message']['content'] ?? null;
+                }
+
+                if (empty($rawText)) {
+                    if ($attempt < $totalModels) {
+                        $nextModel = $modelsToTry[$attempt];
+                        Log::info("[AI_ASSISTANT] Empty response from '{$currentModel}', switching to '{$nextModel}'");
+                        continue;
+                    }
+                    throw new Exception('Penyedia AI tidak mengembalikan konten yang valid.');
+                }
+
+                $parsedData = $this->parseResponseContent($rawText, $feature);
+
+                Log::info('[AI_ASSISTANT] Draft generated successfully', [
                     'feature' => $feature,
-                    'google_error' => $googleError,
+                    'mode' => $mode,
+                    'model_used' => $currentModel,
+                    'attempt' => $attempt,
                     'latency_ms' => $latencyMs,
                 ]);
 
-                if ($status === 429) {
-                    throw new Exception('Batas kuota layanan AI tercapai. Silakan coba beberapa saat lagi.');
+                return $parsedData;
+            } catch (Exception $e) {
+                // If retryable and more models in chain, continue
+                if ($attempt < $totalModels && (str_contains($e->getMessage(), 'Batas kuota') || str_contains($e->getMessage(), '429') || str_contains($e->getMessage(), 'timeout'))) {
+                    $nextModel = $modelsToTry[$attempt];
+                    Log::info("[AI_ASSISTANT] Auto-failover exception on '{$currentModel}', switching to '{$nextModel}': ".$e->getMessage());
+                    continue;
                 }
 
-                if ($status === 400 && str_contains(strtolower($googleError), 'api key')) {
-                    throw new Exception('Kunci API AI tidak valid. Pastikan API Key di file .env sudah benar.');
-                }
-
-                if ($status === 404) {
-                    throw new Exception("Model AI '{$this->model}' tidak ditemukan pada provider. Pastikan AI_MODEL di file .env sudah sesuai.");
-                }
-
-                if ($status === 403) {
-                    throw new Exception('Akses API AI ditolak (403). Pastikan akun provider AI Anda aktif.');
-                }
-
-                $previewError = mb_strimwidth($googleError, 0, 160, '...');
-                throw new Exception("Gagal menghubungi penyedia AI ({$status}): {$previewError}");
+                $lastException = $e;
+                Log::error('[AI_ASSISTANT] Exception occurred', [
+                    'feature' => $feature,
+                    'model' => $currentModel,
+                    'attempt' => $attempt,
+                    'error' => $e->getMessage(),
+                ]);
             }
-
-            $responseData = $response->json();
-
-            if ($this->provider === 'gemini') {
-                $rawText = $responseData['candidates'][0]['content']['parts'][0]['text'] ?? null;
-            } else {
-                $rawText = $responseData['choices'][0]['message']['content'] ?? null;
-            }
-
-            if (empty($rawText)) {
-                throw new Exception('Penyedia AI tidak mengembalikan konten yang valid.');
-            }
-
-            $parsedData = $this->parseResponseContent($rawText, $feature);
-
-            Log::info('[AI_ASSISTANT] Draft generated successfully', [
-                'feature' => $feature,
-                'mode' => $mode,
-                'latency_ms' => $latencyMs,
-            ]);
-
-            return $parsedData;
-        } catch (Exception $e) {
-            Log::error('[AI_ASSISTANT] Exception occurred', [
-                'feature' => $feature,
-                'error' => $e->getMessage(),
-            ]);
-
-            throw $e;
         }
+
+        throw ($lastException ?: new Exception('Gagal menghasilkan draf AI. Silakan coba beberapa saat lagi.'));
     }
 
     /**

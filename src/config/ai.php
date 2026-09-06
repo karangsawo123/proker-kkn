@@ -38,4 +38,17 @@ return [
     'timeout_seconds' => (int) env('AI_TIMEOUT_SECONDS', 20),
     'max_output_tokens' => (int) env('AI_MAX_OUTPUT_TOKENS', 2048),
     'rate_limit_per_minute' => (int) env('AI_RATE_LIMIT_PER_MINUTE', 15),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fallback Models (Auto-Failover on Rate Limit / 429)
+    |--------------------------------------------------------------------------
+    |
+    | When primary model encounters rate limit or temporary provider overload,
+    | the service automatically tries the fallback models before returning an error.
+    |
+    */
+    'fallback_models' => env('AI_FALLBACK_MODELS')
+        ? array_filter(array_map('trim', explode(',', env('AI_FALLBACK_MODELS'))))
+        : null,
 ];

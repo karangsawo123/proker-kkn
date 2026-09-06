@@ -617,5 +617,64 @@ class AiAssistantTest extends TestCase
             ],
         ]);
     }
+
+    public function test_auto_failover_when_primary_model_encounters_rate_limit(): void
+    {
+        config([
+            'ai.provider' => 'groq',
+            'ai.model' => 'openai/gpt-oss-120b',
+            'ai.api_key' => 'dummy-key',
+            'ai.fallback_models' => ['groq/compound-mini'],
+        ]);
+
+        $attempt = 0;
+        Http::fake([
+            'https://api.groq.com/openai/v1/chat/completions' => function ($request) use (&$attempt) {
+                $attempt++;
+                $data = json_decode($request->body(), true);
+
+                if ($attempt === 1) {
+                    $this->assertEquals('openai/gpt-oss-120b', $data['model']);
+
+                    return Http::response([
+                        'error' => ['message' => 'Rate limit reached on TPM'],
+                    ], 429);
+                }
+
+                $this->assertEquals('groq/compound-mini', $data['model']);
+
+                return Http::response([
+                    'choices' => [
+                        [
+                            'message' => [
+                                'content' => json_encode([
+                                    'judul' => 'Pengumuman Darurat',
+                                    'isi' => 'Konten berhasil di-generate via fallback model.',
+                                ]),
+                            ],
+                        ],
+                    ],
+                ], 200);
+            },
+        ]);
+
+        $response = $this->actingAs($this->superAdmin)
+            ->postJson(route('admin.ai.generate-draft'), [
+                'feature' => 'pengumuman_draft',
+                'mode' => 'draft',
+                'notes' => 'Kerja bakti pembersihan saluran air',
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'data' => [
+                'judul' => 'Pengumuman Darurat',
+                'isi' => 'Konten berhasil di-generate via fallback model.',
+            ],
+        ]);
+        $this->assertEquals(2, $attempt);
+    }
 }
+
 

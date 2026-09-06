@@ -124,7 +124,6 @@
                                 <span class="dusun-num-badge">{{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}</span>
                             </div>
                             <h3 class="dusun-name">{{ $dusun->nama_dusun }}</h3>
-                            <p class="dusun-desc">{{ $dusun->deskripsi_singkat ?? 'Pusat kegiatan masyarakat dan potensi wilayah.' }}</p>
                             <div class="dusun-card-foot">
                                 <span>Lihat Profil Dusun</span>
                                 <span aria-hidden="true">→</span>

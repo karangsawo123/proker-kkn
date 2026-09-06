@@ -2226,6 +2226,10 @@ ol {
     opacity: 1;
 }
 
+.admin-sidebar-public-wrap {
+    margin: 4px 14px 12px;
+}
+
 .admin-sidebar-footer {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     padding: 0.875rem 1rem;
@@ -3405,6 +3409,13 @@ ol {
         transform: translateX(-100%);
         width: 280px;
         box-shadow: none;
+        height: 100vh;
+        height: 100dvh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        overscroll-behavior-y: contain;
+        z-index: 1000;
     }
 
     .admin-sidebar.open {

@@ -59,6 +59,18 @@
                 </div>
             @endif
 
+            <!-- Quick Action: Akses Website Publik (Di bagian atas agar langsung terlihat di HP) -->
+            <div class="admin-sidebar-public-wrap">
+                <a href="{{ route('home') }}" target="_blank" class="admin-public-link" rel="noopener">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                        <polyline points="15 3 21 3 21 9"/>
+                        <line x1="10" y1="14" x2="21" y2="3"/>
+                    </svg>
+                    <span>Lihat Website Publik</span>
+                </a>
+            </div>
+
             <!-- Navigation Links -->
             <nav class="admin-nav">
                 <a href="{{ route('admin-dusun.dashboard') }}" class="admin-nav-item {{ request()->routeIs('admin-dusun.dashboard') ? 'active' : '' }}">
@@ -115,17 +127,6 @@
                     <span class="nav-text">Kelola Pengumuman</span>
                 </a>
             </nav>
-
-            <div class="admin-sidebar-footer">
-                <a href="{{ route('home') }}" target="_blank" class="admin-public-link" rel="noopener">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                        <polyline points="15 3 21 3 21 9"/>
-                        <line x1="10" y1="14" x2="21" y2="3"/>
-                    </svg>
-                    Lihat Website Publik
-                </a>
-            </div>
         </aside>
 
         <!-- Main Content Area -->

@@ -234,11 +234,8 @@
     white-space: nowrap;
 }
 
-.admin-body .admin-sidebar-footer {
-    position: sticky;
-    bottom: 0;
-    padding: 12px 14px 16px;
-    background: linear-gradient(180deg, rgba(22, 48, 31, 0), var(--admin-sidebar) 22%);
+.admin-body .admin-sidebar-public-wrap {
+    margin: 4px 14px 12px;
 }
 
 .admin-body .admin-public-link {
@@ -247,14 +244,28 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 9px 10px;
+    padding: 10px 12px;
     border-radius: 8px;
     color: #F1E7D3;
     text-decoration: none;
     font-size: 0.82rem;
     font-weight: 700;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.09);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease, transform 0.15s ease, box-shadow 0.18s ease;
+}
+
+.admin-body .admin-public-link:hover {
+    background: rgba(255, 255, 255, 0.16);
+    color: #FFFFFF;
+    border-color: rgba(255, 255, 255, 0.28);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+.admin-body .admin-sidebar-footer {
+    padding: 12px 14px 16px;
 }
 
 .admin-body .admin-main {
@@ -1545,6 +1556,13 @@
         inset: 0 auto 0 0;
         transform: translateX(-102%);
         transition: transform 180ms ease;
+        height: 100vh;
+        height: 100dvh;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        touch-action: pan-y;
+        overscroll-behavior-y: contain;
+        z-index: 1000;
     }
 
     .admin-body .admin-sidebar.open {

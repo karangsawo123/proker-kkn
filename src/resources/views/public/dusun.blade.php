@@ -253,7 +253,7 @@
 
                 <!-- Synchronized Two-Way Card Carousel Strip -->
                 <div class="opt2-carousel-wrap">
-                    <div class="opt2-carousel-strip snap-strip" id="map-dusun-carousel" role="region" tabindex="0" aria-label="Daftar lokasi dusun, geser untuk melihat">
+                    <div class="opt2-carousel-strip" id="map-dusun-carousel" role="region" tabindex="0" aria-label="Daftar lokasi dusun, geser untuk melihat">
                         {{-- 1. UMKM Cards --}}
                         @foreach($umkms as $u)
                             <article 

@@ -310,7 +310,7 @@
 
                 <!-- Synchronized Two-Way Card Carousel Strip -->
                 <div class="opt2-carousel-wrap">
-                    <div class="opt2-carousel-strip snap-strip" id="map-desa-carousel" role="region" tabindex="0" aria-label="Daftar lokasi desa, geser untuk melihat">
+                    <div class="opt2-carousel-strip" id="map-desa-carousel" role="region" tabindex="0" aria-label="Daftar lokasi desa, geser untuk melihat">
                         {{-- 1. UMKM Cards --}}
                         @foreach($petaUmkms as $u)
                             <article 

@@ -6276,7 +6276,7 @@ html.js .public-layout [data-reveal]:not(.is-revealed) {
    29.8 Snap Strips — shared horizontal scroll mechanics (CSS only)
    -------------------------------------------------------------------------- */
 
-.public-layout .page-dusun .snap-strip {
+.public-layout .page-dusun .snap-strip:not(.opt2-carousel-strip) {
     display: flex;
     gap: 16px;
     overflow-x: auto;
@@ -6287,22 +6287,22 @@ html.js .public-layout [data-reveal]:not(.is-revealed) {
     -webkit-overflow-scrolling: touch;
 }
 
-.public-layout .page-dusun .snap-strip::-webkit-scrollbar {
+.public-layout .page-dusun .snap-strip:not(.opt2-carousel-strip)::-webkit-scrollbar {
     height: 5px;
 }
 
-.public-layout .page-dusun .snap-strip::-webkit-scrollbar-thumb {
+.public-layout .page-dusun .snap-strip:not(.opt2-carousel-strip)::-webkit-scrollbar-thumb {
     background: var(--g-line-strong);
     border-radius: 3px;
 }
 
-.public-layout .page-dusun .snap-strip::-webkit-scrollbar-track {
+.public-layout .page-dusun .snap-strip:not(.opt2-carousel-strip)::-webkit-scrollbar-track {
     background: transparent;
 }
 
 /* Edge-bleed on small screens so the next card peeks from the viewport edge */
 @media (max-width: 47.99rem) {
-    .public-layout .page-dusun .snap-strip {
+    .public-layout .page-dusun .snap-strip:not(.opt2-carousel-strip) {
         margin-inline: -16px;
         padding-inline: 16px;
         scroll-padding-left: 16px;
@@ -6310,24 +6310,24 @@ html.js .public-layout [data-reveal]:not(.is-revealed) {
 }
 
 @media (min-width: 48rem) and (max-width: 59.99rem) {
-    .public-layout .page-dusun .snap-strip {
+    .public-layout .page-dusun .snap-strip:not(.opt2-carousel-strip) {
         margin-inline: -24px;
         padding-inline: 24px;
         scroll-padding-left: 24px;
     }
 }
 
-.public-layout .page-dusun .snap-strip:focus-visible {
+.public-layout .page-dusun .snap-strip:not(.opt2-carousel-strip):focus-visible {
     outline: 3px solid var(--g-clay);
     outline-offset: 3px;
 }
 
-.public-layout .page-dusun .section-kontak .snap-strip:focus-visible {
+.public-layout .page-dusun .section-kontak .snap-strip:not(.opt2-carousel-strip):focus-visible {
     outline-color: var(--g-clay-bright);
 }
 
 @media (prefers-reduced-motion: reduce) {
-    .public-layout .page-dusun .snap-strip {
+    .public-layout .page-dusun .snap-strip:not(.opt2-carousel-strip) {
         scroll-behavior: auto;
     }
 

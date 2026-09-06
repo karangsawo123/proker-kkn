@@ -4400,20 +4400,28 @@ body.dusun-modal-open {
     width: 100%;
 }
 
-.public-layout .opt2-carousel-strip {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(265px, 295px);
+.public-layout .opt2-carousel-strip,
+.public-layout .page-dusun .opt2-carousel-strip,
+.public-layout .page-home .opt2-carousel-strip {
+    display: grid !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: minmax(270px, 300px) !important;
     gap: 14px;
     overflow-x: auto;
     padding: 10px 4px 24px;
     scroll-snap-type: x mandatory;
     scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
 }
 
 /* Unified Explorer Card */
 .public-layout .opt2-card {
     scroll-snap-align: start;
+    min-width: 270px;
+    width: 280px;
+    max-width: 320px;
+    flex: 0 0 280px;
+    box-sizing: border-box;
     background: var(--public-surface, #ffffff);
     border: 1.5px solid rgba(46, 94, 62, 0.14);
     border-radius: 16px;
@@ -4479,6 +4487,10 @@ body.dusun-modal-open {
     position: absolute;
     top: 10px;
     left: 10px;
+    max-width: calc(100% - 20px);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 0.68rem;
     font-weight: 800;
     letter-spacing: 0.02em;
@@ -4521,6 +4533,8 @@ body.dusun-modal-open {
     color: var(--public-olive, #173823);
     line-height: 1.32;
     transition: color 0.18s ease;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .public-layout .opt2-card:hover .opt2-card-title {
@@ -4536,6 +4550,8 @@ body.dusun-modal-open {
     font-size: 0.76rem;
     line-height: 1.4;
     text-decoration: none;
+    word-break: break-word;
+    overflow-wrap: break-word;
 }
 
 .public-layout .opt2-card-addr svg {
@@ -6291,13 +6307,21 @@ html.js .public-layout [data-reveal].is-revealed {
         height: 16px;
     }
 
-    .public-layout .page-dusun .opt2-carousel-strip {
-        grid-auto-columns: minmax(235px, 260px);
+    .public-layout .page-dusun .opt2-carousel-strip,
+    .public-layout .page-home .opt2-carousel-strip,
+    .public-layout .opt2-carousel-strip {
+        grid-auto-columns: minmax(235px, 260px) !important;
         gap: 10px;
         padding: 8px 2px 20px;
     }
 
-    .public-layout .page-dusun .opt2-card {
+    .public-layout .page-dusun .opt2-card,
+    .public-layout .page-home .opt2-card,
+    .public-layout .opt2-card {
+        min-width: 235px;
+        width: 250px;
+        max-width: 270px;
+        flex: 0 0 250px;
         border-radius: 14px;
     }
 

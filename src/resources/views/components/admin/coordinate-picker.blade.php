@@ -166,8 +166,8 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!raw || typeof raw !== 'string') return null;
             let text = raw.trim();
 
-            // 1. DMS Format: e.g. 7Â°23'56.0"S 112Â°26'32.5"E or 7Â°23'56"S, 112Â°26'32"E
-            const dmsRegex = /(\d+(?:\.\d+)?)\s*Â°\s*(\d+(?:\.\d+)?)\s*['\u2032]?\s*(\d+(?:\.\d+)?)\s*["\u2033]?\s*([NSEWnsew])/g;
+            // 1. DMS Format: e.g. 7°23'56.0"S 112°26'32.5"E or 7°23'56"S, 112°26'32"E
+            const dmsRegex = /(\d+(?:\.\d+)?)\s*°\s*(\d+(?:\.\d+)?)\s*['′]?\s*(\d+(?:\.\d+)?)\s*["″]?\s*([NSEWnsew])/g;
             const dmsMatches = [...text.matchAll(dmsRegex)];
             if (dmsMatches.length >= 2) {
                 let lat = null, lng = null;
@@ -188,21 +188,39 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 2. Google Maps URL or query string patterns
             // Matches @-7.123,110.123 or ?q=-7.123,110.123 or destination=-7.123,110.123 or ll=-7.123,110.123
-            const urlMatch = text.match(/(?:@|[?&](?:q|destination|ll)=|\/dir\/\/)(-?\d{1,2}\.\d+)[,\s]+(-?\d{1,3}\.\d+)/i);
+            const urlMatch = text.match(/(?:@|[?&](?:q|destination|ll)=|\/dir\/\/)(-?\d{1,2}\.\d+)[,\s]+(-?\d{1,3}\.\d+)/);
             if (urlMatch) {
-                return { lat: parseFloat(urlMatch[1]), lng: parseFloat(urlMatch[2]), type: 'Google Maps Link' };
+                const lat = parseFloat(urlMatch[1]);
+                const lng = parseFloat(urlMatch[2]);
+                if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                    return { lat, lng, type: 'Link Google Maps' };
+                }
             }
 
-            // 3. Simple Decimal coordinates: -7.123456, 110.123456 or -7.123456 110.123456
-            const decMatch = text.match(/(-?\d{1,2}\.\d+)[,\s]+(-?\d{1,3}\.\d+)/);
+            // Protobuf URL pattern: !3d-7.12345!4d112.12345
+            const protoMatch = text.match(/!3d(-?\d{1,2}\.\d+)!4d(-?\d{1,3}\.\d+)/);
+            if (protoMatch) {
+                const lat = parseFloat(protoMatch[1]);
+                const lng = parseFloat(protoMatch[2]);
+                if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                    return { lat, lng, type: 'Link Google Maps' };
+                }
+            }
+
+            // 3. Simple Decimal Format: e.g. -7.400772, 112.452033 or -7.400772 112.452033
+            const decMatch = text.match(/^(-?\d{1,2}\.\d+)[,\s/]+(-?\d{1,3}\.\d+)$/);
             if (decMatch) {
-                return { lat: parseFloat(decMatch[1]), lng: parseFloat(decMatch[2]), type: 'Koordinat Desimal' };
+                const lat = parseFloat(decMatch[1]);
+                const lng = parseFloat(decMatch[2]);
+                if (!isNaN(lat) && !isNaN(lng) && lat >= -90 && lat <= 90 && lng >= -180 && lng <= 180) {
+                    return { lat, lng, type: 'Koordinat Desimal' };
+                }
             }
 
             return null;
         }
 
-        function executeSmartParse() {
+        async function executeSmartParse() {
             if (!smartInput) return;
             const val = smartInput.value.trim();
             if (!val) {
@@ -210,19 +228,68 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
+            // 1. Instant local client-side parse (DMS, direct coords in URL, decimal)
             const parsed = parseSmartLocation(val);
             if (parsed) {
                 setMarker(parsed.lat, parsed.lng, 17);
                 if (feedback) {
-                    feedback.innerHTML = `<span style="color: #059669; font-weight: 600;">âœ… Berhasil mengenali format ${parsed.type}: Lat ${parsed.lat.toFixed(6)}, Lng ${parsed.lng.toFixed(6)}</span>`;
+                    feedback.innerHTML = `<span style="color: #059669; font-weight: 600;">✅ Berhasil mengenali format ${parsed.type}: Lat ${parsed.lat.toFixed(6)}, Lng ${parsed.lng.toFixed(6)}</span>`;
                 }
                 smartInput.style.borderColor = '#10b981';
-            } else {
-                if (feedback) {
-                    feedback.innerHTML = `<span style="color: #dc2626; font-weight: 500;">âš ï¸ Format tidak dikenali. Contoh yang didukung: <code>7Â°23'56.0"S 112Â°26'32.5"E</code> atau <code>-7.3988, 112.4423</code> atau link Maps.</span>`;
-                }
-                smartInput.style.borderColor = '#ef4444';
+                return;
             }
+
+            // 2. If it is a Google Maps link or shortlink (maps.app.goo.gl, goo.gl, etc.), resolve via backend
+            if (val.includes('maps.app.goo.gl') || val.includes('goo.gl/maps') || val.includes('google.com/maps') || val.startsWith('http://') || val.startsWith('https://')) {
+                if (feedback) {
+                    feedback.innerHTML = `<span style="color: #2563eb; font-weight: 500;">⏳ Sedang mengurai titik lokasi dari link Google Maps...</span>`;
+                }
+                smartInput.style.borderColor = '#3b82f6';
+                if (applySmartBtn) applySmartBtn.disabled = true;
+
+                try {
+                    const token = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') ||
+                                  document.querySelector('input[name="_token"]')?.value || '';
+                    
+                    const response = await fetch('{{ route('admin.resolve-coordinate') }}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': token,
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({ url: val }),
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok && data.success) {
+                        setMarker(data.lat, data.lng, 17);
+                        if (feedback) {
+                            const placeNote = data.place ? ` — <em>${data.place}</em>` : '';
+                            feedback.innerHTML = `<span style="color: #059669; font-weight: 600;">✅ Berhasil mengenali ${data.type || 'Google Maps Sharelink'}${placeNote}: Lat ${parseFloat(data.lat).toFixed(6)}, Lng ${parseFloat(data.lng).toFixed(6)}</span>`;
+                        }
+                        smartInput.style.borderColor = '#10b981';
+                        return;
+                    } else {
+                        throw new Error(data.message || 'Tautan tidak memuat koordinat yang valid.');
+                    }
+                } catch (err) {
+                    if (feedback) {
+                        feedback.innerHTML = `<span style="color: #dc2626; font-weight: 500;">⚠️ ${err.message || 'Gagal mengurai tautan Google Maps.'}</span>`;
+                    }
+                    smartInput.style.borderColor = '#ef4444';
+                } finally {
+                    if (applySmartBtn) applySmartBtn.disabled = false;
+                }
+                return;
+            }
+
+            // 3. Fallback for unrecognized format
+            if (feedback) {
+                feedback.innerHTML = `<span style="color: #dc2626; font-weight: 500;">⚠️ Format tidak dikenali. Contoh yang didukung: link sharelok WA/HP (<code>https://maps.app.goo.gl/...</code>), koordinat desimal (<code>-7.3988, 112.4423</code>), atau format derajat (DMS).</span>`;
+            }
+            smartInput.style.borderColor = '#ef4444';
         }
 
         if (applySmartBtn) {

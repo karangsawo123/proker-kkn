@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AgendaKegiatanController as AdminAgendaController;
 use App\Http\Controllers\Admin\AiAssistantController;
+use App\Http\Controllers\Admin\CoordinateResolverController;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\FasilitasController as AdminFasilitasController;
 use App\Http\Controllers\Admin\KontakPelayananController as AdminKontakController;
@@ -77,6 +78,11 @@ Route::middleware(['auth', 'admin.active'])->group(function (): void {
     Route::post('/admin/ai/generate-draft', [AiAssistantController::class, 'generate'])
         ->middleware('throttle:60,1')
         ->name('admin.ai.generate-draft');
+
+    // Google Maps Link Coordinate Resolver Endpoint — Shared between Admin Dusun and Super Admin
+    Route::post('/admin/resolve-coordinate', [CoordinateResolverController::class, 'resolve'])
+        ->middleware('throttle:60,1')
+        ->name('admin.resolve-coordinate');
 
     // ════════════════════════════════════════════════════════════════════════════
     // ADMIN DUSUN MANAGEMENT ROUTES — DEV-06 (UX-SCR-011 through UX-SCR-017)

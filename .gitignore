@@ -8,7 +8,6 @@ opencode.json
 /src/.env
 /src/.env.backup
 /src/.env.production
-/src/public/build
 /src/public/hot
 /src/public/storage
 /src/storage/*.key

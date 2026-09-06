@@ -39,6 +39,11 @@ const ICON_CONFIGS = {
         title: 'Pelayanan Publik',
         svg: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="21" x2="21" y2="21"/><line x1="3" y1="10" x2="21" y2="10"/><polyline points="5 6 12 3 19 6"/><line x1="4" y1="10" x2="4" y2="21"/><line x1="20" y1="10" x2="20" y2="21"/><line x1="8" y1="14" x2="8" y2="17"/><line x1="12" y1="14" x2="12" y2="17"/><line x1="16" y1="14" x2="16" y2="17"/></svg>`,
     },
+    FASILITAS: {
+        color: '#A16207',
+        title: 'Fasilitas & Titik',
+        svg: `<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>`,
+    },
     DEFAULT: {
         color: '#A16207',
         title: 'Fasilitas & Titik',
@@ -371,6 +376,7 @@ export function initMap(elementId) {
     const chipButtons = document.querySelectorAll(`[data-map-filter-for="${elementId}"]`);
 
     let activeMarkers = [];
+    let currentCategory = 'semua';
 
     function normalizeCategory(str) {
         if (!str) return '';
@@ -388,7 +394,9 @@ export function initMap(elementId) {
         activeMarkers = [];
 
         const selectedDusun = filterDusunEl ? filterDusunEl.value : 'semua';
-        const selectedCat = filterCatEl ? filterCatEl.value : 'semua';
+        const selectedCat = (currentCategory && currentCategory !== 'semua')
+            ? currentCategory
+            : (filterCatEl && filterCatEl.value ? filterCatEl.value : 'semua');
         const selectedCatNorm = normalizeCategory(selectedCat);
         const searchQuery = searchEl ? searchEl.value.trim().toLowerCase() : '';
 
@@ -400,17 +408,18 @@ export function initMap(elementId) {
             const markerCat = String(marker.category ?? '');
             const markerCatNorm = normalizeCategory(markerCat);
             const markerName = String(marker.name ?? '').toLowerCase();
+            const markerType = String(marker.marker_type ?? '').toUpperCase();
 
-            if (selectedCat !== 'semua') {
+            if (selectedCatNorm && selectedCatNorm !== 'semua') {
                 let catMatches = false;
                 if (selectedCatNorm === 'umkm') {
-                    catMatches = marker.marker_type === 'UMKM' || markerCatNorm.includes('umkm');
+                    catMatches = markerType === 'UMKM' || markerCatNorm.includes('umkm');
                 } else if (selectedCatNorm === 'pelayanan') {
-                    catMatches = marker.marker_type === 'PELAYANAN' || markerCatNorm.includes('pelayanan');
+                    catMatches = markerType === 'PELAYANAN' || markerCatNorm.includes('pelayanan');
                 } else if (selectedCatNorm === 'fasilitas') {
-                    catMatches = marker.marker_type === 'DEFAULT' || (!markerCatNorm.includes('umkm') && !markerCatNorm.includes('pelayanan'));
+                    catMatches = markerType === 'FASILITAS' || markerType === 'DEFAULT' || (!markerCatNorm.includes('umkm') && !markerCatNorm.includes('pelayanan') && markerType !== 'UMKM' && markerType !== 'PELAYANAN');
                 } else {
-                    catMatches = (markerCat === selectedCat || markerCatNorm === selectedCatNorm);
+                    catMatches = (markerCat === selectedCat || markerCatNorm === selectedCatNorm || markerCatNorm.includes(selectedCatNorm));
                 }
                 if (!catMatches) return;
             }
@@ -477,7 +486,7 @@ export function initMap(elementId) {
                 const cardDusun = card.getAttribute('data-card-dusun') || '';
 
                 let matchDusun = selectedDusun === 'semua' || String(cardDusun) === String(selectedDusun);
-                let matchCat = selectedCat === 'semua';
+                let matchCat = !selectedCatNorm || selectedCatNorm === 'semua';
 
                 if (!matchCat) {
                     if (selectedCatNorm === 'umkm') {
@@ -485,9 +494,9 @@ export function initMap(elementId) {
                     } else if (selectedCatNorm === 'pelayanan') {
                         matchCat = cardType === 'PELAYANAN' || cardCatNorm.includes('pelayanan');
                     } else if (selectedCatNorm === 'fasilitas') {
-                        matchCat = cardType === 'FASILITAS' || (!cardCatNorm.includes('umkm') && !cardCatNorm.includes('pelayanan'));
+                        matchCat = cardType === 'FASILITAS' || (!cardCatNorm.includes('umkm') && !cardCatNorm.includes('pelayanan') && cardType !== 'UMKM' && cardType !== 'PELAYANAN');
                     } else {
-                        matchCat = (cardCat === selectedCat || cardCatNorm === selectedCatNorm);
+                        matchCat = (cardCat === selectedCat || cardCatNorm === selectedCatNorm || cardCatNorm.includes(selectedCatNorm));
                     }
                 }
 
@@ -583,8 +592,9 @@ export function initMap(elementId) {
 
     if (filterCatEl) {
         filterCatEl.addEventListener('change', () => {
+            currentCategory = filterCatEl.value || 'semua';
             // Sync chip buttons if any
-            const val = filterCatEl.value.toLowerCase();
+            const val = currentCategory.toLowerCase();
             chipButtons.forEach(btn => {
                 const btnCat = (btn.getAttribute('data-category') || '').toLowerCase();
                 btn.classList.toggle('active', btnCat === val);
@@ -599,8 +609,12 @@ export function initMap(elementId) {
             chipButtons.forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
             const cat = btn.getAttribute('data-category') || 'semua';
+            currentCategory = cat;
             if (filterCatEl) {
-                filterCatEl.value = cat;
+                const matchedOption = Array.from(filterCatEl.options).find(o => o.value.toLowerCase() === cat.toLowerCase());
+                if (matchedOption) {
+                    filterCatEl.value = matchedOption.value;
+                }
             }
             renderMarkers({ isInitial: false, animate: true });
         });

@@ -72,7 +72,7 @@ class HomeController extends Controller
             'name' => $f->nama,
             'category' => $f->kategoriFasilitas?->nama_kategori ?? 'Fasilitas',
             'address' => $f->alamat,
-            'marker_type' => 'DEFAULT',
+            'marker_type' => 'FASILITAS',
             'dusun_id' => $f->dusun_id,
             'detail_url' => route('fasilitas.show', $f->id),
             'photo_url' => $f->foto_path ? asset('storage/'.$f->foto_path) : null,

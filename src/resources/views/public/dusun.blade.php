@@ -211,6 +211,9 @@
                     {{-- Hidden synchronized select to maintain 100% test compatibility (PetaTest) --}}
                     <select id="map-dusun-filter-cat" class="sr-only" aria-label="Filter berdasarkan kategori">
                         <option value="semua">Semua Kategori</option>
+                        <option value="UMKM">UMKM</option>
+                        <option value="FASILITAS">Fasilitas</option>
+                        <option value="PELAYANAN">Pelayanan</option>
                         @foreach($categoryOptions as $cat)
                             <option value="{{ $cat }}">{{ $cat }}</option>
                         @endforeach

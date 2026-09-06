@@ -573,4 +573,49 @@ class AiAssistantTest extends TestCase
             ],
         ]);
     }
+
+    public function test_can_generate_fasilitas_draft(): void
+    {
+        Http::fake([
+            'https://generativelanguage.googleapis.com/*' => Http::response([
+                'candidates' => [
+                    [
+                        'content' => [
+                            'parts' => [
+                                [
+                                    'text' => json_encode([
+                                        'deskripsi' => 'Balai Dusun Bendung I merupakan sarana pertemuan serbaguna untuk musyawarah warga dengan kapasitas hingga 150 orang serta dilengkapi area parkir yang luas.',
+                                    ]),
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ], 200),
+        ]);
+
+        $response = $this->actingAs($this->superAdmin)
+            ->postJson(route('admin.ai.generate-draft'), [
+                'feature' => 'fasilitas_draft',
+                'mode' => 'draft',
+                'draft_length' => 'standar',
+                'structured_input' => [
+                    'facility_name' => 'Balai Dusun Bendung I',
+                    'facility_category' => 'Balai Pertemuan & Pos',
+                    'main_function' => 'Musyawarah warga, arisan, dan kegiatan sosial',
+                    'operational_hours' => 'Setiap hari 08.00 - 21.00 WIB',
+                    'amenities_capacity' => 'Kapasitas ±150 orang, parkir luas, toilet',
+                    'access_rules' => 'Konfirmasi ke kepala dusun, jaga kebersihan',
+                ],
+            ]);
+
+        $response->assertStatus(200);
+        $response->assertJson([
+            'success' => true,
+            'data' => [
+                'deskripsi' => 'Balai Dusun Bendung I merupakan sarana pertemuan serbaguna untuk musyawarah warga dengan kapasitas hingga 150 orang serta dilengkapi area parkir yang luas.',
+            ],
+        ]);
+    }
 }
+

@@ -64,6 +64,14 @@ export function initAiAssistant() {
             inputProfileLivelihood: document.getElementById('aiProfileLivelihood'),
             inputProfileCulture: document.getElementById('aiProfileCulture'),
             inputProfileVision: document.getElementById('aiProfileVision'),
+            // Fasilitas Inputs
+            formFasilitasSection: document.getElementById('aiFasilitasFormSection'),
+            inputFacilityName: document.getElementById('aiFacilityName'),
+            inputFacilityCategory: document.getElementById('aiFacilityCategory'),
+            inputFacilityFunction: document.getElementById('aiFacilityFunction'),
+            inputFacilityHours: document.getElementById('aiFacilityHours'),
+            inputFacilityAmenities: document.getElementById('aiFacilityAmenities'),
+            inputFacilityRules: document.getElementById('aiFacilityRules'),
         };
     }
 
@@ -80,19 +88,28 @@ export function initAiAssistant() {
                     if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
                     if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'block';
                     if (elements.formProfileSection) elements.formProfileSection.style.display = 'none';
+                    if (elements.formFasilitasSection) elements.formFasilitasSection.style.display = 'none';
                 } else if (currentFeature === 'desa_draft' || currentFeature === 'dusun_draft') {
                     if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
                     if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
                     if (elements.formProfileSection) elements.formProfileSection.style.display = 'block';
+                    if (elements.formFasilitasSection) elements.formFasilitasSection.style.display = 'none';
+                } else if (currentFeature === 'fasilitas_draft') {
+                    if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
+                    if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
+                    if (elements.formProfileSection) elements.formProfileSection.style.display = 'none';
+                    if (elements.formFasilitasSection) elements.formFasilitasSection.style.display = 'block';
                 } else {
                     if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'block';
                     if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
                     if (elements.formProfileSection) elements.formProfileSection.style.display = 'none';
+                    if (elements.formFasilitasSection) elements.formFasilitasSection.style.display = 'none';
                 }
             } else {
                 if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
                 if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
                 if (elements.formProfileSection) elements.formProfileSection.style.display = 'none';
+                if (elements.formFasilitasSection) elements.formFasilitasSection.style.display = 'none';
                 if (elements.notesGroup) elements.notesGroup.style.display = 'block';
             }
 
@@ -105,6 +122,7 @@ export function initAiAssistant() {
             if (elements.form5w1hSection) elements.form5w1hSection.style.display = 'none';
             if (elements.formUmkmSection) elements.formUmkmSection.style.display = 'none';
             if (elements.formProfileSection) elements.formProfileSection.style.display = 'none';
+            if (elements.formFasilitasSection) elements.formFasilitasSection.style.display = 'none';
             if (elements.lengthGroup) elements.lengthGroup.style.display = 'none';
             if (elements.existingTextGroup) elements.existingTextGroup.style.display = 'block';
             if (elements.notesGroup) elements.notesGroup.style.display = 'block';
@@ -164,6 +182,20 @@ export function initAiAssistant() {
             if (entityName) {
                 elements.inputProfileEntityName.value = entityName;
             }
+        } else if (currentFeature === 'fasilitas_draft' && elements.inputFacilityName) {
+            // Auto pre-fill facility name if available from target title element or #nama in parent form
+            const formNameInput = targetTitleElement || document.getElementById('nama') || document.querySelector('input[name="nama"]');
+            if (formNameInput && formNameInput.value.trim() && !elements.inputFacilityName.value.trim()) {
+                elements.inputFacilityName.value = formNameInput.value.trim();
+            }
+            // Auto pre-fill facility category from parent form select if available
+            const formCategorySelect = document.getElementById('kategori_fasilitas_id') || document.querySelector('select[name="kategori_fasilitas_id"]');
+            if (formCategorySelect && formCategorySelect.selectedIndex > 0 && elements.inputFacilityCategory && !elements.inputFacilityCategory.value.trim()) {
+                const selectedOptionText = formCategorySelect.options[formCategorySelect.selectedIndex]?.text?.trim();
+                if (selectedOptionText && !selectedOptionText.startsWith('--')) {
+                    elements.inputFacilityCategory.value = selectedOptionText;
+                }
+            }
         }
 
         resetModal(elements);
@@ -178,6 +210,8 @@ export function initAiAssistant() {
                         elements.inputUmkmName?.focus();
                     } else if (currentFeature === 'desa_draft' || currentFeature === 'dusun_draft') {
                         elements.inputProfileGeographic?.focus();
+                    } else if (currentFeature === 'fasilitas_draft') {
+                        elements.inputFacilityFunction?.focus();
                     } else {
                         elements.input5wWhat?.focus();
                     }
@@ -326,6 +360,28 @@ export function initAiAssistant() {
                         livelihood: livelihood,
                         culture: culture,
                         vision: vision,
+                    };
+                } else if (currentFeature === 'fasilitas_draft') {
+                    const facilityName = elements.inputFacilityName?.value.trim() || '';
+                    const facilityCategory = elements.inputFacilityCategory?.value.trim() || '';
+                    const mainFunction = elements.inputFacilityFunction?.value.trim() || '';
+                    const operationalHours = elements.inputFacilityHours?.value.trim() || '';
+                    const amenitiesCapacity = elements.inputFacilityAmenities?.value.trim() || '';
+                    const accessRules = elements.inputFacilityRules?.value.trim() || '';
+
+                    if (!facilityName && !mainFunction && !amenitiesCapacity) {
+                        showError(elements, 'Silakan isi minimal Nama Fasilitas atau Fungsi Utama & Layanan Publik.');
+                        elements.inputFacilityFunction?.focus();
+                        return;
+                    }
+
+                    structuredInput = {
+                        facility_name: facilityName,
+                        facility_category: facilityCategory,
+                        main_function: mainFunction,
+                        operational_hours: operationalHours,
+                        amenities_capacity: amenitiesCapacity,
+                        access_rules: accessRules,
                     };
                 } else {
                     const who = elements.input5wWho?.value.trim() || '';

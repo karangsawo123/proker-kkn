@@ -330,6 +330,27 @@ INSTRUCTION;
                     $prompt .= "- Keunikan & Karakter Dusun: {$structuredInput['vision']}\n";
                 }
                 $prompt .= "\n";
+            } elseif ($feature === 'fasilitas_draft') {
+                $prompt .= "Rincian Profil & Layanan Fasilitas Umum Desa:\n";
+                if (! empty($structuredInput['facility_name'])) {
+                    $prompt .= "- Nama Fasilitas: {$structuredInput['facility_name']}\n";
+                }
+                if (! empty($structuredInput['facility_category'])) {
+                    $prompt .= "- Kategori Fasilitas: {$structuredInput['facility_category']}\n";
+                }
+                if (! empty($structuredInput['main_function'])) {
+                    $prompt .= "- Fungsi Utama & Layanan Publik: {$structuredInput['main_function']}\n";
+                }
+                if (! empty($structuredInput['operational_hours'])) {
+                    $prompt .= "- Jam Layanan / Waktu Buka: {$structuredInput['operational_hours']}\n";
+                }
+                if (! empty($structuredInput['amenities_capacity'])) {
+                    $prompt .= "- Sarana Pendukung & Daya Tampung: {$structuredInput['amenities_capacity']}\n";
+                }
+                if (! empty($structuredInput['access_rules'])) {
+                    $prompt .= "- Ketentuan Akses / Syarat Warga: {$structuredInput['access_rules']}\n";
+                }
+                $prompt .= "\n";
             }
         }
 
@@ -360,6 +381,10 @@ INSTRUCTION;
 
             case 'dusun_draft':
                 $prompt .= 'Susun draf deskripsi singkat profil dusun yang menarik, hangat, dan informatif untuk portal publik dusun. Kembalikan HANYA JSON: {"deskripsi": "Paragraf profil ringkas dusun..."}';
+                break;
+
+            case 'fasilitas_draft':
+                $prompt .= 'Susun draf deskripsi fasilitas umum desa yang informatif, jelas, dan komunikatif untuk warga desa. Kembalikan HANYA JSON: {"deskripsi": "Paragraf deskripsi fasilitas desa..."}';
                 break;
 
             case 'improve_text':
@@ -446,7 +471,7 @@ INSTRUCTION;
                     'judul' => $extractedJudul ?: 'Agenda Kegiatan',
                     'deskripsi' => $extractedIsi ?: '',
                 ],
-                'umkm_draft', 'desa_draft', 'dusun_draft' => [
+                'umkm_draft', 'desa_draft', 'dusun_draft', 'fasilitas_draft' => [
                     'deskripsi' => $extractedIsi ?: ($extractedJudul ?: $cleanText),
                 ],
                 default => [
@@ -470,7 +495,7 @@ INSTRUCTION;
                 'judul' => ltrim($firstLine, '#* -'),
                 'deskripsi' => $fallbackBody,
             ],
-            'umkm_draft', 'desa_draft', 'dusun_draft' => [
+            'umkm_draft', 'desa_draft', 'dusun_draft', 'fasilitas_draft' => [
                 'deskripsi' => $cleanText,
             ],
             default => [
@@ -493,8 +518,8 @@ INSTRUCTION;
                 'judul' => (string) ($data['judul'] ?? $data['nama_kegiatan'] ?? 'Agenda Kegiatan'),
                 'deskripsi' => (string) ($data['deskripsi'] ?? $data['isi'] ?? $fallback),
             ],
-            'umkm_draft', 'desa_draft', 'dusun_draft' => [
-                'deskripsi' => (string) ($data['deskripsi'] ?? $data['isi'] ?? $data['deskripsi_usaha'] ?? $data['teks_hasil'] ?? $fallback),
+            'umkm_draft', 'desa_draft', 'dusun_draft', 'fasilitas_draft' => [
+                'deskripsi' => (string) ($data['deskripsi'] ?? $data['isi'] ?? $data['deskripsi_usaha'] ?? $data['deskripsi_fasilitas'] ?? $data['teks_hasil'] ?? $fallback),
             ],
             default => [
                 'teks_hasil' => (string) ($data['teks_hasil'] ?? $data['hasil'] ?? $data['isi'] ?? $fallback),

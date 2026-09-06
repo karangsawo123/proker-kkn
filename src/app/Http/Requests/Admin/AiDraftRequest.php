@@ -20,7 +20,7 @@ class AiDraftRequest extends FormRequest
             'feature' => [
                 'required',
                 'string',
-                Rule::in(['pengumuman_draft', 'agenda_draft', 'umkm_draft', 'desa_draft', 'dusun_draft', 'improve_text']),
+                Rule::in(['pengumuman_draft', 'agenda_draft', 'umkm_draft', 'desa_draft', 'dusun_draft', 'fasilitas_draft', 'improve_text']),
             ],
             'mode' => [
                 'required',

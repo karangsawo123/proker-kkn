@@ -161,6 +161,48 @@
                     </div>
                 </div>
 
+                <!-- Structured Fasilitas Form -->
+                <div class="ai-structured-form" id="aiFasilitasFormSection" style="display: none;">
+                    <div class="ai-form-grid">
+                        <div class="form-group">
+                            <label for="aiFacilityName" class="form-label text-xs">
+                                <strong>Nama Fasilitas</strong> <span class="required-mark">*</span>
+                            </label>
+                            <input type="text" id="aiFacilityName" class="form-input form-input-sm" placeholder="Contoh: Balai Pertemuan Dusun Bendung I">
+                        </div>
+                        <div class="form-group">
+                            <label for="aiFacilityCategory" class="form-label text-xs">
+                                <strong>Kategori Fasilitas</strong>
+                            </label>
+                            <input type="text" id="aiFacilityCategory" class="form-input form-input-sm" placeholder="Contoh: Balai Pertemuan & Pos / Sarana Ibadah">
+                        </div>
+                        <div class="form-group span-2">
+                            <label for="aiFacilityFunction" class="form-label text-xs">
+                                <strong>Fungsi Utama & Layanan Publik</strong> <span class="required-mark">*</span>
+                            </label>
+                            <input type="text" id="aiFacilityFunction" class="form-input form-input-sm" placeholder="Contoh: Pusat musyawarah warga, kegiatan arisan, posko tanggap darurat, dan kegiatan sosial">
+                        </div>
+                        <div class="form-group">
+                            <label for="aiFacilityHours" class="form-label text-xs">
+                                <strong>Jam Pelayanan / Waktu Buka</strong> <span class="optional-tag">(Opsional)</span>
+                            </label>
+                            <input type="text" id="aiFacilityHours" class="form-input form-input-sm" placeholder="Contoh: Setiap hari 08.00 - 21.00 WIB / Sesuai jadwal kegiatan">
+                        </div>
+                        <div class="form-group">
+                            <label for="aiFacilityAmenities" class="form-label text-xs">
+                                <strong>Sarana Pendukung & Daya Tampung</strong> <span class="optional-tag">(Opsional)</span>
+                            </label>
+                            <input type="text" id="aiFacilityAmenities" class="form-input form-input-sm" placeholder="Contoh: Kapasitas ±150 orang, sound system, toilet, parkir motor luas">
+                        </div>
+                        <div class="form-group span-2">
+                            <label for="aiFacilityRules" class="form-label text-xs">
+                                <strong>Ketentuan Akses & Tata Tertib Warga</strong> <span class="optional-tag">(Opsional)</span>
+                            </label>
+                            <input type="text" id="aiFacilityRules" class="form-input form-input-sm" placeholder="Contoh: Bebas digunakan warga dengan konfirmasi ke kepala dusun, wajib menjaga kebersihan">
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Free Notes Input Group -->
                 <div class="form-group" id="aiNotesGroup" style="display: none;">
                     <label for="aiNotesInput" class="form-label">Catatan / Poin Fakta Mentah <span class="required-mark">*</span></label>

@@ -96,9 +96,14 @@
             </div>
 
             <div class="form-group">
-                <label for="deskripsi" class="form-label">
-                    Deskripsi Fasilitas <span class="required-mark">*</span>
-                </label>
+                <div class="form-label-row">
+                    <label for="deskripsi" class="form-label">
+                        Deskripsi Fasilitas <span class="required-mark">*</span>
+                    </label>
+                    <button type="button" class="btn-ai-assist" data-ai-feature="fasilitas_draft" data-target-text="deskripsi" data-target-title="nama">
+                        <span class="ai-sparkle-icon">✨</span> Bantu Tulis Deskripsi Fasilitas
+                    </button>
+                </div>
                 <textarea
                     name="deskripsi"
                     id="deskripsi"

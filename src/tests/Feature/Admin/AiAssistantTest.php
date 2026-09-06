@@ -672,6 +672,12 @@ class AiAssistantTest extends TestCase
                 'judul' => 'Pengumuman Darurat',
                 'isi' => 'Konten berhasil di-generate via fallback model.',
             ],
+            'meta' => [
+                'model' => 'groq/compound-mini',
+                'model_label' => 'Compound Mini',
+                'is_fallback' => true,
+                'attempt' => 2,
+            ],
         ]);
         $this->assertEquals(2, $attempt);
     }

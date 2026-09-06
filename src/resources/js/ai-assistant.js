@@ -43,6 +43,7 @@ export function initAiAssistant() {
             resultTitleGroup: document.getElementById('aiResultTitleGroup'),
             previewTitle: document.getElementById('aiPreviewTitle'),
             previewContent: document.getElementById('aiPreviewContent'),
+            modelBadge: document.getElementById('aiModelBadge'),
             modePills: document.querySelectorAll('.ai-mode-pill'),
             // 5W1H Inputs
             input5wWho: document.getElementById('ai5wWho'),
@@ -135,6 +136,7 @@ export function initAiAssistant() {
         if (elements.loadingState) elements.loadingState.style.display = 'none';
         if (elements.errorBox) elements.errorBox.style.display = 'none';
         if (elements.resultSection) elements.resultSection.style.display = 'none';
+        if (elements.modelBadge) elements.modelBadge.style.display = 'none';
         if (elements.generateBtn) {
             elements.generateBtn.style.display = 'inline-flex';
             elements.generateBtn.disabled = false;
@@ -461,7 +463,7 @@ export function initAiAssistant() {
             }
 
             generatedData = result.data;
-            renderPreview(elements, result.data);
+            renderPreview(elements, result.data, result.meta);
 
         } catch (err) {
             if (elements.loadingState) elements.loadingState.style.display = 'none';
@@ -478,11 +480,26 @@ export function initAiAssistant() {
         }
     }
 
-    function renderPreview(elements, data) {
+    function renderPreview(elements, data, meta) {
         if (elements.resultSection) elements.resultSection.style.display = 'block';
         if (elements.generateBtn) elements.generateBtn.style.display = 'none';
         if (elements.applyBtn) elements.applyBtn.style.display = 'inline-flex';
         if (elements.retryBtn) elements.retryBtn.style.display = 'inline-flex';
+
+        // Render AI Model Badge
+        if (elements.modelBadge && meta) {
+            elements.modelBadge.style.display = 'inline-flex';
+            const latencyStr = (meta.latency_seconds !== undefined && meta.latency_seconds !== null) ? `${meta.latency_seconds}s` : '0.8s';
+            if (meta.is_fallback) {
+                elements.modelBadge.className = 'ai-model-badge is-fallback';
+                elements.modelBadge.textContent = `⚡ Model: ${meta.model_label || 'Compound Mini'} (Dialihkan otomatis • Kuota Aman) • ${latencyStr}`;
+            } else {
+                elements.modelBadge.className = 'ai-model-badge is-primary';
+                elements.modelBadge.textContent = `✨ Model: ${meta.model_label || 'GPT-OSS 120B'} • ${latencyStr}`;
+            }
+        } else if (elements.modelBadge) {
+            elements.modelBadge.style.display = 'none';
+        }
 
         if (data.judul && targetTitleElement && elements.previewTitle && elements.resultTitleGroup) {
             elements.resultTitleGroup.style.display = 'block';

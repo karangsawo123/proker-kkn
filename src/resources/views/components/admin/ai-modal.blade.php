@@ -255,6 +255,7 @@
             <div class="ai-result-section" id="aiResultSection" style="display: none;">
                 <div class="ai-result-header">
                     <span class="ai-result-badge">Pratinjau Hasil Draf AI</span>
+                    <span class="ai-model-badge" id="aiModelBadge" style="display: none;"></span>
                 </div>
                 
                 <div class="form-group" id="aiResultTitleGroup" style="display: none;">

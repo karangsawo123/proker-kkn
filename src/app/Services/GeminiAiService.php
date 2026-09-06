@@ -27,6 +27,11 @@ class GeminiAiService
      */
     private array $fallbackModels;
 
+    /**
+     * @var array<string, mixed> Metadata of the last generation (model used, fallback flag, latency)
+     */
+    protected array $lastGenerationMeta = [];
+
     public function __construct()
     {
         $this->enabled = (bool) config('ai.enabled', true);
@@ -250,6 +255,16 @@ class GeminiAiService
                 }
 
                 $parsedData = $this->parseResponseContent($rawText, $feature);
+
+                $latencySeconds = max(0.1, round($latencyMs / 1000, 1));
+                $this->lastGenerationMeta = [
+                    'model' => $currentModel,
+                    'model_label' => $this->formatModelLabel($currentModel),
+                    'is_fallback' => ($attempt > 1),
+                    'attempt' => $attempt,
+                    'latency_ms' => $latencyMs,
+                    'latency_seconds' => $latencySeconds,
+                ];
 
                 Log::info('[AI_ASSISTANT] Draft generated successfully', [
                     'feature' => $feature,
@@ -588,5 +603,45 @@ INSTRUCTION;
                 'teks_hasil' => (string) ($data['teks_hasil'] ?? $data['hasil'] ?? $data['isi'] ?? $fallback),
             ],
         };
+    }
+
+    /**
+     * Get metadata of the last generation.
+     *
+     * @return array<string, mixed>
+     */
+    public function getLastGenerationMeta(): array
+    {
+        return $this->lastGenerationMeta;
+    }
+
+    /**
+     * Format raw AI model ID into user-friendly badge label.
+     */
+    public function formatModelLabel(?string $model): string
+    {
+        if (! $model) {
+            return 'AI Assistant';
+        }
+
+        $map = [
+            'openai/gpt-oss-120b' => 'GPT-OSS 120B',
+            'groq/compound-mini' => 'Compound Mini',
+            'openai/gpt-oss-20b' => 'GPT-OSS 20B',
+            'llama-3.3-70b-versatile' => 'Llama 3.3 70B',
+            'llama-3.1-8b-instant' => 'Llama 3.1 8B',
+            'gemini-1.5-flash' => 'Gemini 1.5 Flash',
+            'gemini-1.5-pro' => 'Gemini 1.5 Pro',
+            'gemini-2.0-flash' => 'Gemini 2.0 Flash',
+            'gemini-2.5-flash' => 'Gemini 2.5 Flash',
+        ];
+
+        if (isset($map[$model])) {
+            return $map[$model];
+        }
+
+        $clean = preg_replace('/^(openai\/|groq\/|meta-llama\/|google\/)/i', '', $model);
+
+        return strtoupper(str_replace('-', ' ', $clean));
     }
 }

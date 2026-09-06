@@ -26,10 +26,12 @@ class AiAssistantController extends Controller
             $draftLength = $validated['draft_length'] ?? 'standar';
 
             $result = $aiService->generate($feature, $mode, $notes, $existingText, $structuredInput, $draftLength);
+            $meta = $aiService->getLastGenerationMeta();
 
             return response()->json([
                 'success' => true,
                 'data' => $result,
+                'meta' => $meta,
             ]);
         } catch (Exception $e) {
             return response()->json([
